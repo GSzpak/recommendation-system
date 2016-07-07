@@ -1,6 +1,19 @@
 import csv
 
 import click
+import numpy as np
+
+
+def read_ratings_from_csv(input_file):
+    user_movie = []
+    ratings = []
+    with open(input_file, "r") as input:
+        reader = csv.reader(input)
+        for row in reader:
+            user_id, movie_id, rating, _timestamp = row
+            user_movie.append([user_id, movie_id])
+            ratings.append(rating)
+    return np.array(user_movie), np.array(ratings)
 
 
 @click.command()
