@@ -13,7 +13,7 @@ def read_ratings_from_csv(input_file):
             user_id, movie_id, rating, _timestamp = row
             user_movie.append([user_id, movie_id])
             ratings.append(rating)
-    return np.array(user_movie), np.array(ratings)
+    return np.array(user_movie), np.array(ratings).astype(np.int32)
 
 
 @click.command()

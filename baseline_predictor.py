@@ -10,8 +10,10 @@ class UserMeanRatingPredictor(BaseEstimator, ClassifierMixin):
     def __init__(self):
         self._user_ratings = defaultdict(dict)
         self._user_mean_rating = {}
+        self._mean_rating = 0.0
 
     def fit(self, X, y):
+        self._mean_rating = np.mean(y)
         for (user_id, movie_id), rating in itertools.izip(X, y):
             self._user_ratings[user_id][movie_id] = rating
         for user_id, user_ratings in self._user_ratings.iteritems():
@@ -20,7 +22,10 @@ class UserMeanRatingPredictor(BaseEstimator, ClassifierMixin):
     def predict(self, X):
         predictions = []
         for user_id, _ in X:
-            predictions.append(self._user_mean_rating[user_id])
+            if user_id in self._user_mean_rating:
+                predictions.append(self._user_mean_rating[user_id])
+            else:
+                predictions.append(self._mean_rating)
         return np.array(predictions)
 
 
@@ -29,8 +34,10 @@ class MovieMeanRatingPredictor(BaseEstimator, ClassifierMixin):
     def __init__(self):
         self._movie_ratings = defaultdict(dict)
         self._movie_mean_rating = {}
+        self._mean_rating = 0.0
 
     def fit(self, X, y):
+        self._mean_rating = np.mean(y)
         for (user_id, movie_id), rating in itertools.izip(X, y):
             self._movie_ratings[movie_id][user_id] = rating
         for movie_id, movie_ratings in self._movie_ratings.iteritems():
@@ -39,7 +46,10 @@ class MovieMeanRatingPredictor(BaseEstimator, ClassifierMixin):
     def predict(self, X):
         predictions = []
         for _, movie_id in X:
-            predictions.append(self._movie_mean_rating[movie_id])
+            if movie_id in self._movie_mean_rating:
+                predictions.append(self._movie_mean_rating[movie_id])
+            else:
+                predictions.append(self._mean_rating)
         return np.array(predictions)
 
 
