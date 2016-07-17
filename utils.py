@@ -35,8 +35,6 @@ def build_user_utility_matrix(input_file):
     for user_id, ratings in user_ratings_list:
         for movie_id, rating in ratings.iteritems():
             user_utility_matrix[user_id, movie_id] = rating
-    print user_utility_matrix.shape
-    print user_utility_matrix[0]
     return user_utility_matrix
 
 
