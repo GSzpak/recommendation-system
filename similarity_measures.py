@@ -14,7 +14,10 @@ def _get_common_ratings(v1, v2):
         if rating1 and rating2:
             v1_common.append(rating1)
             v2_common.append(rating2)
-    return np.array(v1_common), np.array(v2_common)
+        else:
+            v1_common.append(0)
+            v2_common.append(0)
+    return np.array(v1_common, dtype=np.int32), np.array(v2_common, dtype=np.int32)
 
 
 def _split_to_equal_ratings(rating_with_index):
@@ -46,18 +49,26 @@ def _get_rank_from_rating(ratings_array):
     return result
 
 
+def _nonzero_mean(v):
+    num_nonzero = np.count_nonzero(v)
+    return float(np.sum(v)) / num_nonzero if num_nonzero else 0
+
+
 def cosine(v1, v2):
     return distance.cosine(v1, v2)
 
 
 def pearson_corr(v1, v2):
+    # TODO: fix mean
     return distance.correlation(v1, v2)
 
 
-def jaccard(user1_ratings, user2_ratings):
-    intersection = len(user1_ratings.viewkeys() & user2_ratings.viewkeys())
-    sum_ = len(user1_ratings.viewkeys() | user2_ratings.viewkeys())
-    similarity = intersection / sum_ if sum_ > 0 else 0
+def jaccard(v1, v2):
+    v1_common, v2_common = _get_common_ratings(v1, v2)
+    intersection = np.count_nonzero(v1_common)
+    assert intersection == np.count_nonzero(v2_common)
+    sum_ = np.count_nonzero(v1 + v2)
+    similarity = float(intersection) / sum_ if sum_ > 0 else 0.0
     return 1 - similarity
 
 
@@ -67,17 +78,36 @@ def euclidean(v1, v2):
 
 def common_pearson_corr(v1, v2):
     v1_common, v2_common = _get_common_ratings(v1, v2)
-    return distance.correlation(v1_common, v2_common)
+    v1_mean = _nonzero_mean(v1)
+    v2_mean = _nonzero_mean(v2)
+    v1_common_centered = [x - v1_mean if x else 0.0 for x in v1_common]
+    v2_common_centered = [x - v2_mean if x else 0.0 for x in v2_common]
+    numerator = np.dot(v1_common_centered,  v2_common_centered)
+    denominator = np.linalg.norm(v1_common_centered) * np.linalg.norm(v2_common_centered)
+    similarity = numerator / denominator if denominator != 0 else 0
+    return 1 - similarity
+
+
+def mean_centered_cosine(v1, v2):
+    v1_mean = _nonzero_mean(v1)
+    v2_mean = _nonzero_mean(v2)
+    v1_centered = [x - v1_mean if x else 0.0 for x in v1]
+    v2_centered = [x - v2_mean if x else 0.0 for x in v2]
+    # TODO: pearson?
+    numerator = np.dot(v1_centered, v2_centered)
+    denominator = np.linalg.norm(v1_centered) * np.linalg.norm(v2_centered)
+    similarity = numerator / denominator if denominator != 0 else 0
+    return 1 - similarity
 
 
 def extended_jaccard(v1, v2):
     numerator = np.dot(v1, v2)
     denominator = np.dot(v1, v1) + np.dot(v2, v2) - np.dot(v1, v2)
-    similarity = numerator / denominator if denominator != 0 else 0
+    similarity = float(numerator) / denominator if denominator != 0 else 0
     return 1 - similarity
 
 
-def mean_centered_pearson_corr(v1, v2):
+def median_centered_pearson_corr(v1, v2):
     v1_common, v2_common = _get_common_ratings(v1, v2)
     numerator = np.dot(v1_common - RATINGS_MEDIAN, v2_common - RATINGS_MEDIAN)
     denominator = np.linalg.norm(v1_common - RATINGS_MEDIAN) * np.linalg.norm(v2_common - RATINGS_MEDIAN)
