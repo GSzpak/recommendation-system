@@ -11,8 +11,9 @@ from similarity_measures import (
     mean_centered_cosine,
     median_centered_pearson_corr,
     pearson_corr,
-    spearman_rank_correlation
+    spearman_rank_correlation,
 )
+from utils import nonzero_mean
 
 
 class TestSimilarityMeasures(unittest.TestCase):
@@ -22,12 +23,13 @@ class TestSimilarityMeasures(unittest.TestCase):
             [4, 0, 0, 5, 1, 0, 0],
             [5, 5, 4, 0, 0, 0, 0],
             [0, 0, 0, 2, 4, 5, 0],
-            [0, 3, 0, 0, 0, 0, 3],
+            [0, 3, 5, 0, 0, 0, 3],
+            [0, 0, 0, 2, 4, 5, 5],
         ], dtype=np.int32)
         self.user_matrix = matrix
         self.item_matrix = matrix.transpose()
-        self.user_means = [np.mean(user_ratings) for user_ratings in self.user_matrix]
-        self.item_means = [np.mean(item_ratings) for item_ratings in self.item_matrix]
+        self.user_means = [nonzero_mean(user_ratings) for user_ratings in self.user_matrix]
+        self.item_means = [nonzero_mean(item_ratings) for item_ratings in self.item_matrix]
 
     def test_cosine(self):
         result = cosine(self.user_matrix[0], self.user_matrix[1])
@@ -56,3 +58,15 @@ class TestSimilarityMeasures(unittest.TestCase):
     def test_euclidean(self):
         result = euclidean(self.user_matrix[0], self.user_matrix[1])
         self.assertAlmostEqual(result, 8.246, places=3)
+
+    def test_median_centered_pearson_corr(self):
+        result = median_centered_pearson_corr(self.user_matrix[1], self.user_matrix[3])
+        self.assertAlmostEqual(result, 0.553, places=3)
+
+    def test_adjusted_cosine_similarity(self):
+        result = adjusted_cosine_similarity(self.item_matrix[1], self.item_matrix[2], self.user_means)
+        self.assertAlmostEqual(result, 2, places=3)
+
+    def test_spearman_rank_correlation(self):
+        result = spearman_rank_correlation(self.user_matrix[0], self.user_matrix[4])
+        self.assertAlmostEqual(result, 1.447, places=3)

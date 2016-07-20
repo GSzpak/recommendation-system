@@ -3,6 +3,8 @@ import itertools
 import numpy as np
 from scipy.spatial import distance
 
+from utils import nonzero_mean
+
 
 RATINGS_MEDIAN = 3
 
@@ -31,7 +33,6 @@ def _split_to_equal_ratings(rating_with_index):
             current = []
         current.append(rating_with_index[i])
     result.append(current)
-    print result
     return result
 
 
@@ -42,16 +43,13 @@ def _get_rank_from_rating(ratings_array):
     current_rank = 1
     result = np.zeros(len(ratings_array))
     for equal_ratings_list in equal_ratings:
-        rank = int(float((current_rank + len(equal_ratings_list))) / 2)
-        current_rank += equal_ratings_list
+        if not equal_ratings_list[0][1]:
+            continue
+        rank = float((2 * current_rank + len(equal_ratings_list) - 1)) / 2
+        current_rank += len(equal_ratings_list)
         for ind, _ in equal_ratings_list:
             result[ind] = rank
     return result
-
-
-def _nonzero_mean(v):
-    num_nonzero = np.count_nonzero(v)
-    return float(np.sum(v)) / num_nonzero if num_nonzero else 0
 
 
 def cosine(v1, v2):
@@ -78,8 +76,8 @@ def euclidean(v1, v2):
 
 def common_pearson_corr(v1, v2):
     v1_common, v2_common = _get_common_ratings(v1, v2)
-    v1_mean = _nonzero_mean(v1)
-    v2_mean = _nonzero_mean(v2)
+    v1_mean = nonzero_mean(v1)
+    v2_mean = nonzero_mean(v2)
     v1_common_centered = [x - v1_mean if x else 0.0 for x in v1_common]
     v2_common_centered = [x - v2_mean if x else 0.0 for x in v2_common]
     numerator = np.dot(v1_common_centered,  v2_common_centered)
@@ -89,8 +87,8 @@ def common_pearson_corr(v1, v2):
 
 
 def mean_centered_cosine(v1, v2):
-    v1_mean = _nonzero_mean(v1)
-    v2_mean = _nonzero_mean(v2)
+    v1_mean = nonzero_mean(v1)
+    v2_mean = nonzero_mean(v2)
     v1_centered = [x - v1_mean if x else 0.0 for x in v1]
     v2_centered = [x - v2_mean if x else 0.0 for x in v2]
     # TODO: pearson?
@@ -109,8 +107,10 @@ def extended_jaccard(v1, v2):
 
 def median_centered_pearson_corr(v1, v2):
     v1_common, v2_common = _get_common_ratings(v1, v2)
-    numerator = np.dot(v1_common - RATINGS_MEDIAN, v2_common - RATINGS_MEDIAN)
-    denominator = np.linalg.norm(v1_common - RATINGS_MEDIAN) * np.linalg.norm(v2_common - RATINGS_MEDIAN)
+    v1_common_centered = [x - RATINGS_MEDIAN if x else 0.0 for x in v1_common]
+    v2_common_centered = [x - RATINGS_MEDIAN if x else 0.0 for x in v2_common]
+    numerator = np.dot(v1_common_centered, v2_common_centered)
+    denominator = np.linalg.norm(v1_common_centered) * np.linalg.norm(v2_common_centered)
     similarity = numerator / denominator if denominator != 0 else 0
     return 1 - similarity
 
@@ -118,7 +118,7 @@ def median_centered_pearson_corr(v1, v2):
 def spearman_rank_correlation(v1, v2):
     v1_ranks = _get_rank_from_rating(v1)
     v2_ranks = _get_rank_from_rating(v2)
-    return pearson_corr(v1_ranks, v2_ranks)
+    return common_pearson_corr(v1_ranks, v2_ranks)
 
 
 def adjusted_cosine_similarity(v1, v2, column_mean):

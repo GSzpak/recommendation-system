@@ -42,6 +42,11 @@ def build_item_utility_matrix(input_file):
     return build_user_utility_matrix(input_file).transpose()
 
 
+def nonzero_mean(v):
+    num_nonzero = np.count_nonzero(v)
+    return float(np.sum(v)) / num_nonzero if num_nonzero else 0
+
+
 @click.command()
 @click.argument('input-file', type=click.Path(exists=True))
 @click.argument('output-file', type=click.Path(exists=False))
