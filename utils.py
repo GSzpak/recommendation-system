@@ -31,7 +31,7 @@ def build_user_utility_matrix(input_file):
             last_movie_id = max(last_movie_id, movie_id)
             user_ratings[user_id][movie_id] = rating
     user_ratings_list = user_ratings.items()
-    user_utility_matrix = np.zeros((last_user_id + 1, last_movie_id + 1))
+    user_utility_matrix = np.zeros((last_user_id + 1, last_movie_id + 1), dtype=np.int32)
     for user_id, ratings in user_ratings_list:
         for movie_id, rating in ratings.iteritems():
             user_utility_matrix[user_id, movie_id] = rating
