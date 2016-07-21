@@ -1,11 +1,13 @@
 from collections import defaultdict
+from functools import partial
 import itertools
+import multiprocessing
 
 import numpy as np
 from sklearn.base import BaseEstimator, ClassifierMixin
 
 from utils import nonzero_mean
-
+import similarity_measures
 
 def _build_user_utility_matrix(X, y):
     user_ratings = defaultdict(dict)
@@ -29,6 +31,18 @@ def _build_items_utility_matrix(X, y):
     return _build_user_utility_matrix(X, y).transpose()
 
 
+def _do_find_nearest_neighbours(id_, rating_index, ratings, utility_matrix, similarity_measure_name, neighbours_ids):
+    neighbours = []
+    similarity_measure = getattr(similarity_measures, similarity_measure_name)
+    for neighbour in neighbours_ids:
+        neighbour_rating = utility_matrix[neighbour, rating_index]
+        if neighbour == id_ or not neighbour_rating:
+            continue
+        similarity = similarity_measure(ratings, utility_matrix[neighbour])
+        neighbours.append((similarity, neighbour, neighbour_rating))
+    return neighbours
+
+
 class CollaborativeFilteringPredictor(BaseEstimator, ClassifierMixin):
 
     def __init__(self, k, similarity_measure):
@@ -37,19 +51,18 @@ class CollaborativeFilteringPredictor(BaseEstimator, ClassifierMixin):
         self.similarity_measure = similarity_measure
         self._neighbours = {}
         self.mean_rating = 0.0
+        self.pool = multiprocessing.Pool(4)
 
     def _build_utility_matrix(self, X, y):
         raise NotImplementedError
 
     def _find_nearest_neighbours(self, id_, rating_index):
-        neighbours = []
+        neighbours_ids_lists = np.array_split(xrange(len(self.utility_matrix)), 4)
         ratings = self.utility_matrix[id_]
-        for neighbour, neighbour_ratings in enumerate(self.utility_matrix):
-            neighbour_rating = neighbour_ratings[rating_index]
-            if neighbour == id_ or not neighbour_rating:
-                continue
-            similarity = self.similarity_measure(ratings, neighbour_ratings)
-            neighbours.append((similarity, neighbour, neighbour_rating))
+        func_to_map = partial(_do_find_nearest_neighbours, id_, rating_index, ratings,
+                              self.utility_matrix, self.similarity_measure.__name__)
+        neighbours = self.pool.map(func_to_map, neighbours_ids_lists)
+        neighbours = [item for sublist in neighbours for item in sublist]
         neighbours.sort(reverse=True)
         return neighbours[:self.k]
 
@@ -78,14 +91,14 @@ class UserUserCollaborativeFilteringPredictor(CollaborativeFilteringPredictor):
         self.utility_matrix = _build_user_utility_matrix(X, y)
 
     def predict(self, X):
-        predictions = []
-        for user_id, movie_id in X:
+        predictions = np.zeros(len(X), dtype=np.float32)
+        for i, (user_id, movie_id) in enumerate(X):
             user_id = int(user_id) - 1
             movie_id = int(movie_id) - 1
             neighbours = self._find_nearest_neighbours(user_id, movie_id)
-            predictions.append(self.get_prediction_from_neighbours(user_id, movie_id, neighbours))
-            if len(predictions) % 1000 == 0:
-                print len(predictions)
+            predictions[i] = self.get_prediction_from_neighbours(user_id, movie_id, neighbours)
+            if i % 100 == 0:
+                print i
         return predictions
 
 
@@ -117,6 +130,6 @@ class ItemItemCollaborativeFilteringPredictor(CollaborativeFilteringPredictor):
             movie_id = int(movie_id) - 1
             neighbours = self._find_nearest_neighbours(movie_id, user_id)
             predictions[i] = self.get_prediction_from_neighbours(movie_id, user_id, neighbours)
-            if i % 1000 == 0:
+            if i % 10 == 0:
                 print i
         return predictions
