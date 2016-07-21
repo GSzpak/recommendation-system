@@ -10,15 +10,12 @@ RATINGS_MEDIAN = 3
 
 
 def _get_common_ratings(v1, v2):
-    v1_common = []
-    v2_common = []
-    for rating1, rating2 in itertools.izip(v1, v2):
+    v1_common = np.zeros(len(v1), dtype=np.int32)
+    v2_common = np.zeros(len(v2), dtype=np.int32)
+    for i, rating1, rating2 in itertools.izip(itertools.count(), np.nditer(v1), np.nditer(v2)):
         if rating1 and rating2:
-            v1_common.append(rating1)
-            v2_common.append(rating2)
-        else:
-            v1_common.append(0)
-            v2_common.append(0)
+            v1_common[i] = rating1
+            v2_common[i] = rating2
     return np.array(v1_common, dtype=np.int32), np.array(v2_common, dtype=np.int32)
 
 

@@ -1,8 +1,8 @@
 from collections import defaultdict
 import csv
 
-import click
 import numpy as np
+from sklearn import cross_validation
 
 
 def read_ratings_from_csv(input_file):
@@ -47,9 +47,6 @@ def nonzero_mean(v):
     return float(np.sum(v)) / num_nonzero if num_nonzero else 0
 
 
-@click.command()
-@click.argument('input-file', type=click.Path(exists=True))
-@click.argument('output-file', type=click.Path(exists=False))
 def convert_to_csv(input_file, output_file):
     with open(input_file, "r") as input, open(output_file, "w") as output:
         writer = csv.writer(output)
@@ -59,5 +56,12 @@ def convert_to_csv(input_file, output_file):
             writer.writerow(row)
 
 
-if __name__ == '__main__':
-    convert_to_csv()
+def get_cf_scores(input_file, metric_name, predictor_cls, k, similarity_measure, cv_folds):
+    movies, ratings = read_ratings_from_csv(input_file)
+    predictor = predictor_cls(k, similarity_measure)
+    print predictor
+    cv = cross_validation.KFold(len(movies), n_folds=cv_folds, shuffle=True, random_state=500)
+    scores = cross_validation.cross_val_score(predictor, movies, y=ratings,
+                                              cv=cv, scoring=metric_name)
+    print scores
+    return scores

@@ -41,38 +41,32 @@ class CollaborativeFilteringPredictor(BaseEstimator, ClassifierMixin):
     def _build_utility_matrix(self, X, y):
         raise NotImplementedError
 
-    def _find_nearest_neighbours(self, id_, ratings):
+    def _find_nearest_neighbours(self, id_, rating_index):
         neighbours = []
+        ratings = self.utility_matrix[id_]
         for neighbour, neighbour_ratings in enumerate(self.utility_matrix):
-            if neighbour == id_:
+            neighbour_rating = neighbour_ratings[rating_index]
+            if neighbour == id_ or not neighbour_rating:
                 continue
             similarity = self.similarity_measure(ratings, neighbour_ratings)
-            neighbours.append((similarity, neighbour))
+            neighbours.append((similarity, neighbour, neighbour_rating))
         neighbours.sort(reverse=True)
-        return neighbours
+        return neighbours[:self.k]
 
     def fit(self, X, y):
         self._build_utility_matrix(X, y)
-        for id_, ratings in enumerate(self.utility_matrix):
-            self._neighbours[id_] = self._find_nearest_neighbours(id_, ratings)
         self.mean_rating = np.mean(y)
 
-    def get_prediction_from_neighbours(self, id_, col_index):
-        if id_ not in self._neighbours:
+    def get_prediction_from_neighbours(self, id_, rating_index, neighbours):
+        if len(neighbours) == 0:
             return self.mean_rating
-        neighbours = self._neighbours[id_]
-        neighbours = [
-            (similarity, neighbour_id) for similarity, neighbour_id in neighbours
-            if self.utility_matrix[neighbour_id, col_index]
-        ]
-        neighbours = neighbours[:self.k]
         numerator = 0.0
         denominator = 0.0
-        for similarity, neighbour_id in neighbours:
-            neighbour_rating = self.utility_matrix[neighbour_id, col_index]
+        for similarity, neighbour_id, neighbour_rating in neighbours:
+            assert neighbour_rating
             numerator += similarity * neighbour_rating
             denominator += np.abs(similarity)
-        return numerator / denominator
+        return numerator / denominator if denominator else 0.0
 
     def predict(self, X):
         raise NotImplementedError
@@ -88,32 +82,27 @@ class UserUserCollaborativeFilteringPredictor(CollaborativeFilteringPredictor):
         for user_id, movie_id in X:
             user_id = int(user_id) - 1
             movie_id = int(movie_id) - 1
-            predictions.append(self.get_prediction_from_neighbours(user_id, movie_id))
-        return np.asarray(predictions)
+            neighbours = self._find_nearest_neighbours(user_id, movie_id)
+            predictions.append(self.get_prediction_from_neighbours(user_id, movie_id, neighbours))
+            if len(predictions) % 1000 == 0:
+                print len(predictions)
+        return predictions
 
 
 class ModifiedUserUserCollaborativeFilteringPredictor(UserUserCollaborativeFilteringPredictor):
 
-    def get_prediction_from_neighbours(self, user_id, item_id):
-        if user_id not in self._neighbours:
+    def get_prediction_from_neighbours(self, user_id, movie_id, neighbours):
+        if len(neighbours) == 0:
             return self.mean_rating
-        neighbours = self._neighbours[user_id]
-        neighbours = [
-            (similarity, neighbour_id) for similarity, neighbour_id in neighbours
-            if self.utility_matrix[neighbour_id, item_id]
-        ]
-        neighbours = neighbours[:self.k]
         user_mean = nonzero_mean(self.utility_matrix[user_id])
         numerator = 0.0
         denominator = 0.0
-        for similarity, neighbour_id in neighbours:
-            neighbour_rating = self.utility_matrix[neighbour_id, item_id]
-            if not neighbour_rating:
-                continue
+        for similarity, neighbour_id, neighbour_rating in neighbours:
+            assert neighbour_rating
             neighbour_mean = nonzero_mean(self.utility_matrix[neighbour_id])
             numerator += similarity * (neighbour_rating - neighbour_mean)
             denominator += np.abs(similarity)
-        return user_mean + (numerator / denominator)
+        return user_mean + (numerator / denominator) if denominator else 0.0
 
 
 class ItemItemCollaborativeFilteringPredictor(CollaborativeFilteringPredictor):
@@ -122,9 +111,12 @@ class ItemItemCollaborativeFilteringPredictor(CollaborativeFilteringPredictor):
         self.utility_matrix = _build_items_utility_matrix(X, y)
 
     def predict(self, X):
-        predictions = []
-        for user_id, movie_id in X:
+        predictions = np.zeros(len(X), dtype=np.float32)
+        for i, (user_id, movie_id) in enumerate(X):
             user_id = int(user_id) - 1
             movie_id = int(movie_id) - 1
-            predictions.append(self.get_prediction_from_neighbours(movie_id, user_id))
-        return np.asarray(predictions)
+            neighbours = self._find_nearest_neighbours(movie_id, user_id)
+            predictions[i] = self.get_prediction_from_neighbours(movie_id, user_id, neighbours)
+            if i % 1000 == 0:
+                print i
+        return predictions
