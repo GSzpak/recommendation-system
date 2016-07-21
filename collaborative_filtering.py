@@ -33,6 +33,7 @@ class CollaborativeFilteringPredictor(BaseEstimator, ClassifierMixin):
 
     def __init__(self, k, similarity_measure):
         self.utility_matrix = None
+        self.utility_matrix_transpose = None
         self.k = k
         self.similarity_measure = similarity_measure
         self._neighbours = {}
@@ -55,6 +56,7 @@ class CollaborativeFilteringPredictor(BaseEstimator, ClassifierMixin):
 
     def fit(self, X, y):
         self._build_utility_matrix(X, y)
+        self.utility_matrix_transpose = self.utility_matrix.transpose()
         self.mean_rating = np.mean(y)
 
     def get_prediction_from_neighbours(self, id_, rating_index, neighbours):
@@ -68,6 +70,17 @@ class CollaborativeFilteringPredictor(BaseEstimator, ClassifierMixin):
             denominator += np.abs(similarity)
         return numerator / denominator if denominator else 0.0
 
+    def _get_prediction(self, id_, rating_index):
+        if rating_index < self.utility_matrix.shape[1]:
+            with np.errstate(divide='raise', invalid='raise'):
+                try:
+                    neighbours = self._find_nearest_neighbours(id_, rating_index)
+                    return self.get_prediction_from_neighbours(id_, rating_index, neighbours)
+                except FloatingPointError:
+                    return nonzero_mean(self.utility_matrix_transpose[rating_index])
+        else:
+            return nonzero_mean(self.utility_matrix[id_])
+
     def predict(self, X):
         raise NotImplementedError
 
@@ -78,14 +91,13 @@ class UserUserCollaborativeFilteringPredictor(CollaborativeFilteringPredictor):
         self.utility_matrix = _build_user_utility_matrix(X, y)
 
     def predict(self, X):
-        predictions = []
-        for user_id, movie_id in X:
+        predictions = np.zeros(len(X), dtype=np.float32)
+        for i, (user_id, movie_id) in enumerate(X):
             user_id = int(user_id) - 1
             movie_id = int(movie_id) - 1
-            neighbours = self._find_nearest_neighbours(user_id, movie_id)
-            predictions.append(self.get_prediction_from_neighbours(user_id, movie_id, neighbours))
-            if len(predictions) % 1000 == 0:
-                print len(predictions)
+            predictions[i] = self._get_prediction(user_id, movie_id)
+            if i % 100 == 0:
+                print i
         return predictions
 
 
@@ -115,8 +127,7 @@ class ItemItemCollaborativeFilteringPredictor(CollaborativeFilteringPredictor):
         for i, (user_id, movie_id) in enumerate(X):
             user_id = int(user_id) - 1
             movie_id = int(movie_id) - 1
-            neighbours = self._find_nearest_neighbours(movie_id, user_id)
-            predictions[i] = self.get_prediction_from_neighbours(movie_id, user_id, neighbours)
-            if i % 1000 == 0:
+            predictions[i] = self._get_prediction(movie_id, user_id)
+            if i % 100 == 0:
                 print i
         return predictions

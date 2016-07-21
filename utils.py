@@ -65,3 +65,18 @@ def get_cf_scores(input_file, metric_name, predictor_cls, k, similarity_measure,
                                               cv=cv, scoring=metric_name)
     print scores
     return scores
+
+
+def get_scores_on_precomputed(metric, predictor_cls, k, similarity_measure):
+    predictor = predictor_cls(k, similarity_measure)
+    scores = []
+    for i in xrange(1, 6):
+        training_X, training_y = read_ratings_from_csv("data/training{}.csv".format(i))
+        testing_X, testing_y = read_ratings_from_csv("data/testing{}.csv".format(i))
+        predictor.fit(training_X, training_y)
+        predictions = predictor.predict(testing_X)
+        score = metric(testing_y, predictions)
+        print score
+        scores.append(score)
+    print scores
+    return scores

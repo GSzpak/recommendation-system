@@ -59,9 +59,7 @@ def pearson_corr(v1, v2):
 
 
 def jaccard(v1, v2):
-    v1_common, v2_common = _get_common_ratings(v1, v2)
-    intersection = np.count_nonzero(v1_common)
-    assert intersection == np.count_nonzero(v2_common)
+    intersection = np.count_nonzero(v1 * v2)
     sum_ = np.count_nonzero(v1 + v2)
     return float(intersection) / sum_ if sum_ > 0 else 0.0
 

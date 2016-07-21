@@ -1,12 +1,13 @@
 import click
 
+from sklearn import metrics
+
 from collaborative_filtering import (
     ModifiedUserUserCollaborativeFilteringPredictor,
     ItemItemCollaborativeFilteringPredictor
 )
 import similarity_measures
-from utils import get_cf_scores
-
+from utils import get_cf_scores, get_scores_on_precomputed
 
 PREDICTORS = {
     'modified_user_user': ModifiedUserUserCollaborativeFilteringPredictor,
@@ -24,7 +25,8 @@ PREDICTORS = {
 def run_cf(input_file, metric_name, predictor, k, similarity_measure_name, cv_folds):
     predictor_cls = PREDICTORS[predictor]
     similarity_measure = getattr(similarity_measures, similarity_measure_name)
-    print get_cf_scores(input_file, metric_name, predictor_cls, k, similarity_measure, cv_folds)
+    metric = getattr(metrics, metric_name)
+    print get_scores_on_precomputed(metric, predictor_cls, k, similarity_measure)
 
 
 if __name__ == '__main__':
