@@ -53,12 +53,12 @@ def _get_rank_from_rating(ratings_array):
 
 
 def cosine(v1, v2):
-    return distance.cosine(v1, v2)
+    return 1 - distance.cosine(v1, v2)
 
 
 def pearson_corr(v1, v2):
     # TODO: fix mean
-    return distance.correlation(v1, v2)
+    return 1 - distance.correlation(v1, v2)
 
 
 def jaccard(v1, v2):
@@ -66,12 +66,15 @@ def jaccard(v1, v2):
     intersection = np.count_nonzero(v1_common)
     assert intersection == np.count_nonzero(v2_common)
     sum_ = np.count_nonzero(v1 + v2)
-    similarity = float(intersection) / sum_ if sum_ > 0 else 0.0
-    return 1 - similarity
+    return float(intersection) / sum_ if sum_ > 0 else 0.0
 
 
 def euclidean(v1, v2):
-    return distance.euclidean(v1, v2)
+    dist = distance.euclidean(v1, v2)
+    if dist:
+        return 1. / dist
+    else:
+        return np.inf
 
 
 def common_pearson_corr(v1, v2):
@@ -82,8 +85,7 @@ def common_pearson_corr(v1, v2):
     v2_common_centered = [x - v2_mean if x else 0.0 for x in v2_common]
     numerator = np.dot(v1_common_centered,  v2_common_centered)
     denominator = np.linalg.norm(v1_common_centered) * np.linalg.norm(v2_common_centered)
-    similarity = numerator / denominator if denominator != 0 else 0
-    return 1 - similarity
+    return numerator / denominator if denominator != 0 else 0
 
 
 def mean_centered_cosine(v1, v2):
@@ -94,15 +96,13 @@ def mean_centered_cosine(v1, v2):
     # TODO: pearson?
     numerator = np.dot(v1_centered, v2_centered)
     denominator = np.linalg.norm(v1_centered) * np.linalg.norm(v2_centered)
-    similarity = numerator / denominator if denominator != 0 else 0
-    return 1 - similarity
+    return numerator / denominator if denominator != 0 else 0
 
 
 def extended_jaccard(v1, v2):
     numerator = np.dot(v1, v2)
     denominator = np.dot(v1, v1) + np.dot(v2, v2) - np.dot(v1, v2)
-    similarity = float(numerator) / denominator if denominator != 0 else 0
-    return 1 - similarity
+    return float(numerator) / denominator if denominator != 0 else 0
 
 
 def median_centered_pearson_corr(v1, v2):
@@ -111,8 +111,7 @@ def median_centered_pearson_corr(v1, v2):
     v2_common_centered = [x - RATINGS_MEDIAN if x else 0.0 for x in v2_common]
     numerator = np.dot(v1_common_centered, v2_common_centered)
     denominator = np.linalg.norm(v1_common_centered) * np.linalg.norm(v2_common_centered)
-    similarity = numerator / denominator if denominator != 0 else 0
-    return 1 - similarity
+    return numerator / denominator if denominator != 0 else 0
 
 
 def spearman_rank_correlation(v1, v2):
@@ -129,7 +128,20 @@ def adjusted_cosine_similarity(v1, v2, column_mean):
             column_mean[i] = 0.0
     numerator = np.dot(v1_common - column_mean, v2_common - column_mean)
     denominator = np.linalg.norm(v1_common - column_mean) * np.linalg.norm(v2_common - column_mean)
-    similarity = numerator / denominator if denominator != 0 else 0
-    return 1 - similarity
+    return numerator / denominator if denominator != 0 else 0
+
+
+MEASURES = [
+    adjusted_cosine_similarity,
+    common_pearson_corr,
+    cosine,
+    euclidean,
+    extended_jaccard,
+    jaccard,
+    mean_centered_cosine,
+    median_centered_pearson_corr,
+    pearson_corr,
+    spearman_rank_correlation,
+]
 
 # TODO: Pearson threshold
