@@ -3,7 +3,6 @@ import itertools
 
 import numpy as np
 from sklearn.base import BaseEstimator, ClassifierMixin
-from sortedcontainers import SortedSet
 
 from utils import nonzero_mean
 
@@ -43,18 +42,13 @@ class CollaborativeFilteringPredictor(BaseEstimator, ClassifierMixin):
         raise NotImplementedError
 
     def _find_nearest_neighbours(self, id_, ratings):
-        neighbours = SortedSet()
+        neighbours = []
         for neighbour, neighbour_ratings in enumerate(self.utility_matrix):
             if neighbour == id_:
                 continue
             similarity = self.similarity_measure(ratings, neighbour_ratings)
-            if len(neighbours) < self.k:
-                neighbours.add((similarity, neighbour))
-            else:
-                smallest_similarity = neighbours[0][1]
-                if smallest_similarity < similarity:
-                    neighbours.pop(0)
-                    neighbours.add((similarity, neighbour))
+            neighbours.append((similarity, neighbour))
+        neighbours.sort(reverse=True)
         return neighbours
 
     def fit(self, X, y):
@@ -67,6 +61,11 @@ class CollaborativeFilteringPredictor(BaseEstimator, ClassifierMixin):
         if id_ not in self._neighbours:
             return self.mean_rating
         neighbours = self._neighbours[id_]
+        neighbours = [
+            (similarity, neighbour_id) for similarity, neighbour_id in neighbours
+            if self.utility_matrix[neighbour_id, col_index]
+        ]
+        neighbours = neighbours[:self.k]
         numerator = 0.0
         denominator = 0.0
         for similarity, neighbour_id in neighbours:
@@ -99,11 +98,18 @@ class ModifiedUserUserCollaborativeFilteringPredictor(UserUserCollaborativeFilte
         if user_id not in self._neighbours:
             return self.mean_rating
         neighbours = self._neighbours[user_id]
+        neighbours = [
+            (similarity, neighbour_id) for similarity, neighbour_id in neighbours
+            if self.utility_matrix[neighbour_id, item_id]
+        ]
+        neighbours = neighbours[:self.k]
         user_mean = nonzero_mean(self.utility_matrix[user_id])
         numerator = 0.0
         denominator = 0.0
         for similarity, neighbour_id in neighbours:
             neighbour_rating = self.utility_matrix[neighbour_id, item_id]
+            if not neighbour_rating:
+                continue
             neighbour_mean = nonzero_mean(self.utility_matrix[neighbour_id])
             numerator += similarity * (neighbour_rating - neighbour_mean)
             denominator += np.abs(similarity)
