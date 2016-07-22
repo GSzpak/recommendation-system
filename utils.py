@@ -67,10 +67,12 @@ def get_cf_scores(input_file, metric_name, predictor_cls, k, similarity_measure,
     return scores
 
 
-def get_scores_on_precomputed(metric, predictor_cls, k, similarity_measure):
+def get_scores_on_precomputed_cv_split(metric, predictor_cls, k, similarity_measure):
     predictor = predictor_cls(k, similarity_measure)
     scores = []
+    print "TEST FOR {}, {}, {}, {}".format(metric.__name__, predictor_cls.__name__, k, similarity_measure.__name__)
     for i in xrange(1, 6):
+        print "Fold {}".format(i)
         training_X, training_y = read_ratings_from_csv("data/training{}.csv".format(i))
         testing_X, testing_y = read_ratings_from_csv("data/testing{}.csv".format(i))
         predictor.fit(training_X, training_y)
@@ -79,4 +81,5 @@ def get_scores_on_precomputed(metric, predictor_cls, k, similarity_measure):
         print score
         scores.append(score)
     print scores
+    print "Error (99% confidence interval): {0:.4} (+/- {1:.4})".format(np.mean(scores), np.std(scores) * 3)
     return scores

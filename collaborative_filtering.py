@@ -107,7 +107,7 @@ class UserUserCollaborativeFilteringPredictor(CollaborativeFilteringPredictor):
             user_id = int(user_id) - 1
             movie_id = int(movie_id) - 1
             predictions[i] = self._get_prediction(user_id, movie_id)
-            if i % 100 == 0:
+            if i % 1000 == 0:
                 print i
         return predictions
 
@@ -139,6 +139,6 @@ class ItemItemCollaborativeFilteringPredictor(CollaborativeFilteringPredictor):
             user_id = int(user_id) - 1
             movie_id = int(movie_id) - 1
             predictions[i] = self._get_prediction(movie_id, user_id)
-            if i % 100 == 0:
+            if i % 1000 == 0:
                 print i
         return predictions
