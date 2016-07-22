@@ -12,7 +12,9 @@ from similarity_measures import (
     median_centered_pearson_corr,
     pearson_corr,
     spearman_rank_correlation,
-    get_rank_from_rating)
+    mean_squared_difference,
+    get_rank_from_rating
+)
 from utils import nonzero_mean
 
 
@@ -74,6 +76,10 @@ class TestUserUserSimilarityMeasures(unittest.TestCase):
     def test_spearman_rank_correlation(self):
         result = spearman_rank_correlation(0, 4, self.utility_matrix, self.precomputed_data)
         self.assertAlmostEqual(result, -0.447, places=3)
+
+    def test_mean_squared_difference(self):
+        result = mean_squared_difference(1, 3, self.utility_matrix, self.precomputed_data)
+        self.assertAlmostEqual(result, 0.4, places=2)
 
 
 class TestItemItemSimilarityMeasures(unittest.TestCase):

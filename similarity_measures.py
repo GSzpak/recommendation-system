@@ -8,6 +8,7 @@ from utils import nonzero_mean
 
 
 RATINGS_MEDIAN = 3
+SIMILARITY_MAX = 1000
 
 
 def _get_common_ratings(v1, v2):
@@ -74,7 +75,7 @@ def euclidean(ind1, ind2, matrix, _):
     if dist:
         return 1. / dist
     else:
-        return np.inf
+        return SIMILARITY_MAX
 
 
 def common_pearson_corr(ind1, ind2, matrix, precomputed_data):
@@ -137,6 +138,16 @@ def adjusted_cosine_similarity(ind1, ind2, matrix, precomputed_data):
     return numerator / denominator if denominator != 0 else 0
 
 
+def mean_squared_difference(ind1, ind2, matrix, _):
+    v1 = matrix[ind1]
+    v2 = matrix[ind2]
+    v1_common, v2_common = _get_common_ratings(v1, v2)
+    num_common = np.count_nonzero(v1_common)
+    difference = v1_common - v2_common
+    dot_prod = np.dot(difference, difference)
+    return float(num_common) / dot_prod if dot_prod else SIMILARITY_MAX
+
+
 MEASURES = [
     adjusted_cosine_similarity,
     common_pearson_corr,
@@ -148,6 +159,7 @@ MEASURES = [
     median_centered_pearson_corr,
     pearson_corr,
     spearman_rank_correlation,
+    mean_squared_difference
 ]
 
 # TODO: Pearson threshold, Mean squared difference
