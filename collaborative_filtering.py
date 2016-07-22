@@ -4,6 +4,7 @@ import itertools
 import numpy as np
 from sklearn.base import BaseEstimator, ClassifierMixin
 
+from similarity_measures import get_rank_from_rating
 from utils import nonzero_mean
 
 
@@ -38,19 +39,19 @@ class CollaborativeFilteringPredictor(BaseEstimator, ClassifierMixin):
         self.similarity_measure = similarity_measure
         self._neighbours = {}
         self.mean_rating = 0.0
+        self.precomputed_data = {}
 
     def _build_utility_matrix(self, X, y):
         raise NotImplementedError
 
     def _find_nearest_neighbours(self, id_, rating_index):
         neighbours = []
-        ratings = self.utility_matrix[id_]
-        for neighbour, neighbour_ratings in enumerate(self.utility_matrix):
-            neighbour_rating = neighbour_ratings[rating_index]
-            if neighbour == id_ or not neighbour_rating:
+        for neighbour_id in xrange(len(self.utility_matrix)):
+            neighbour_rating = self.utility_matrix[neighbour_id, rating_index]
+            if neighbour_id == id_ or not neighbour_rating:
                 continue
-            similarity = self.similarity_measure(ratings, neighbour_ratings)
-            neighbours.append((similarity, neighbour, neighbour_rating))
+            similarity = self.similarity_measure(id_, neighbour_id, self.utility_matrix, self.precomputed_data)
+            neighbours.append((similarity, neighbour_id, neighbour_rating))
         neighbours.sort(reverse=True)
         return neighbours[:self.k]
 
@@ -58,6 +59,16 @@ class CollaborativeFilteringPredictor(BaseEstimator, ClassifierMixin):
         self._build_utility_matrix(X, y)
         self.utility_matrix_transpose = self.utility_matrix.transpose()
         self.mean_rating = np.mean(y)
+        row_means = map(nonzero_mean, self.utility_matrix)
+        column_means = map(nonzero_mean, self.utility_matrix_transpose)
+        rank_matrix = map(get_rank_from_rating, self.utility_matrix)
+        rank_matrix_row_means = map(nonzero_mean, rank_matrix)
+        self.precomputed_data.update({
+            'row_means': row_means,
+            'column_means': column_means,
+            'rank_matrix': rank_matrix,
+            'rank_matrix_row_means': rank_matrix_row_means
+        })
 
     def get_prediction_from_neighbours(self, id_, rating_index, neighbours):
         if len(neighbours) == 0:
