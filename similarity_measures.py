@@ -162,4 +162,4 @@ MEASURES = [
     mean_squared_difference
 ]
 
-# TODO: Pearson threshold, Mean squared difference
+# TODO: Pearson threshold

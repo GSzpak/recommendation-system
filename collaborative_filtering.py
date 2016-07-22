@@ -112,22 +112,6 @@ class UserUserCollaborativeFilteringPredictor(CollaborativeFilteringPredictor):
         return predictions
 
 
-class ModifiedUserUserCollaborativeFilteringPredictor(UserUserCollaborativeFilteringPredictor):
-
-    def get_prediction_from_neighbours(self, user_id, movie_id, neighbours):
-        if len(neighbours) == 0:
-            return self.mean_rating
-        user_mean = nonzero_mean(self.utility_matrix[user_id])
-        numerator = 0.0
-        denominator = 0.0
-        for similarity, neighbour_id, neighbour_rating in neighbours:
-            assert neighbour_rating
-            neighbour_mean = nonzero_mean(self.utility_matrix[neighbour_id])
-            numerator += similarity * (neighbour_rating - neighbour_mean)
-            denominator += np.abs(similarity)
-        return user_mean + (numerator / denominator) if denominator else 0.0
-
-
 class ItemItemCollaborativeFilteringPredictor(CollaborativeFilteringPredictor):
 
     def _build_utility_matrix(self, X, y):
@@ -142,3 +126,36 @@ class ItemItemCollaborativeFilteringPredictor(CollaborativeFilteringPredictor):
             if i % 1000 == 0:
                 print i
         return predictions
+
+
+class MeanCenteredCollaborativeFilteringPredictorMixin(CollaborativeFilteringPredictor):
+
+    def get_prediction_from_neighbours(self, id_, rating_index, neighbours):
+        if len(neighbours) == 0:
+            return self.mean_rating
+        user_mean = self.precomputed_data['row_means'][id_]
+        numerator = 0.0
+        denominator = 0.0
+        for similarity, neighbour_id, neighbour_rating in neighbours:
+            assert neighbour_rating
+            neighbour_mean = self.precomputed_data['row_means'][neighbour_id]
+            numerator += similarity * (neighbour_rating - neighbour_mean)
+            denominator += np.abs(similarity)
+        return user_mean + (numerator / denominator) if denominator else 0.0
+
+
+class MeanCenteredUserUserCollaborativeFilteringPredictor(
+    MeanCenteredCollaborativeFilteringPredictorMixin,
+    UserUserCollaborativeFilteringPredictor
+):
+    pass
+
+
+class MeanCenteredItemItemCollaborativeFilteringPredictor(
+    MeanCenteredCollaborativeFilteringPredictorMixin,
+    ItemItemCollaborativeFilteringPredictor
+):
+    pass
+
+
+# TODO: Z-score
