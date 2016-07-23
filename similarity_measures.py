@@ -118,7 +118,7 @@ def median_centered_pearson_corr(ind1, ind2, matrix, _):
     return numerator / denominator if denominator != 0 else 0
 
 
-def spearman_rank_correlation(ind1, ind2, _, precomputed_data):
+def common_spearman_rank_correlation(ind1, ind2, _, precomputed_data):
     return common_pearson_corr(ind1, ind2, precomputed_data['rank_matrix'],
                                {'row_means': precomputed_data['rank_matrix_row_means']})
 
@@ -143,6 +143,10 @@ def mean_squared_difference(ind1, ind2, matrix, _):
     return float(num_common) / dot_prod if dot_prod else SIMILARITY_MAX
 
 
+def spearman_rank_correlation(ind1, ind2, _, precomputed_data):
+    return pearson_corr(ind1, ind2, precomputed_data['rank_matrix'], {})
+
+
 MEASURES = [
     cosine,
     euclidean,
@@ -153,8 +157,9 @@ MEASURES = [
     mean_centered_cosine,
     median_centered_pearson_corr,
     pearson_corr,
+    common_spearman_rank_correlation,
+    mean_squared_difference,
     spearman_rank_correlation,
-    mean_squared_difference
 ]
 
 
