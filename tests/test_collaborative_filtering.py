@@ -4,7 +4,9 @@ import numpy as np
 
 from collaborative_filtering import (
     ItemItemCollaborativeFilteringPredictor,
-    MeanCenteredUserUserCollaborativeFilteringPredictor)
+    MeanCenteredUserUserCollaborativeFilteringPredictor,
+    MeanUserUserCollaborativeFilteringPredictor
+)
 from similarity_measures import common_pearson_corr, cosine
 
 
@@ -34,14 +36,20 @@ class TestCollaborativeFiltering(unittest.TestCase):
             [3, 4]
         ])
 
-    def test_user_user_cf(self):
-        predictor = MeanCenteredUserUserCollaborativeFilteringPredictor(2, common_pearson_corr)
-        predictor.fit(self.training_X, self.training_y)
-        result = predictor.predict(self.test_X)
-        np.testing.assert_almost_equal(result, np.asarray([4.594]), decimal=3)
-
     def test_item_item_cf(self):
         predictor = ItemItemCollaborativeFilteringPredictor(2, cosine)
         predictor.fit(self.training_X, self.training_y)
         result = predictor.predict(self.test_X)
         np.testing.assert_almost_equal(result, np.asarray([3.84]), decimal=2)
+
+    def test_mean_user_user_cf(self):
+        predictor = MeanCenteredUserUserCollaborativeFilteringPredictor(2, common_pearson_corr)
+        predictor.fit(self.training_X, self.training_y)
+        result = predictor.predict(self.test_X)
+        np.testing.assert_almost_equal(result, np.asarray([4.594]), decimal=3)
+
+    def test_mean_centered_user_user_cf(self):
+        predictor = MeanUserUserCollaborativeFilteringPredictor(2, common_pearson_corr)
+        predictor.fit(self.training_X, self.training_y)
+        result = predictor.predict(self.test_X)
+        np.testing.assert_almost_equal(result, np.asarray([3.5]), decimal=2)

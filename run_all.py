@@ -24,6 +24,10 @@ PREDICTORS = [
     # ItemItemCollaborativeFilteringPredictor,
     # MeanCenteredUserUserCollaborativeFilteringPredictor,
     # MeanCenteredItemItemCollaborativeFilteringPredictor,
+    MeanUserUserCollaborativeFilteringPredictor,
+    MeanItemItemCollaborativeFilteringPredictor,
+    ZScoredUserUserCollaborativeFilteringPredictor,
+    ZScoredItemItemCollaborativeFilteringPredictor,
 ]
 
 

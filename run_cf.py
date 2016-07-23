@@ -10,7 +10,12 @@ from collaborative_filtering import (
     ItemItemCollaborativeFilteringPredictor,
     UserUserCollaborativeFilteringPredictor,
     MeanCenteredUserUserCollaborativeFilteringPredictor,
-    MeanCenteredItemItemCollaborativeFilteringPredictor
+    MeanCenteredItemItemCollaborativeFilteringPredictor,
+    RegressionUserUserCollaborativeFilteringPredictor,
+    MeanUserUserCollaborativeFilteringPredictor,
+    MeanItemItemCollaborativeFilteringPredictor,
+    ZScoredUserUserCollaborativeFilteringPredictor,
+    ZScoredItemItemCollaborativeFilteringPredictor
 )
 import similarity_measures
 from utils import get_scores_on_precomputed_cv_split
@@ -21,8 +26,13 @@ PREDICTORS = {
     'movie_mean': MovieMeanRatingPredictor,
     'user_user': UserUserCollaborativeFilteringPredictor,
     'item_item': ItemItemCollaborativeFilteringPredictor,
-    'mean_user_user': MeanCenteredUserUserCollaborativeFilteringPredictor,
-    'mean_item_item': MeanCenteredItemItemCollaborativeFilteringPredictor,
+    'mean_user_user': MeanUserUserCollaborativeFilteringPredictor,
+    'mean_item_item': MeanItemItemCollaborativeFilteringPredictor,
+    'mean_centered_user_user': MeanCenteredUserUserCollaborativeFilteringPredictor,
+    'mean_centered_item_item': MeanCenteredItemItemCollaborativeFilteringPredictor,
+    'regr': RegressionUserUserCollaborativeFilteringPredictor,
+    'z_user_user': ZScoredUserUserCollaborativeFilteringPredictor,
+    'z_item_item': ZScoredItemItemCollaborativeFilteringPredictor,
 }
 
 

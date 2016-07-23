@@ -47,6 +47,11 @@ def nonzero_mean(v):
     return float(np.sum(v)) / num_nonzero if num_nonzero else 0
 
 
+def nonzero_std(v):
+    nonzero_v = [x for x in v if x]
+    return np.std(nonzero_v)
+
+
 def convert_to_csv(input_file, output_file):
     with open(input_file, "r") as input, open(output_file, "w") as output:
         writer = csv.writer(output)

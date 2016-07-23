@@ -3,9 +3,11 @@ import itertools
 
 import numpy as np
 from sklearn.base import BaseEstimator, ClassifierMixin
+from sklearn.linear_model import LinearRegression
+from sklearn.svm import SVR
 
 from similarity_measures import get_rank_from_rating
-from utils import nonzero_mean
+from utils import nonzero_mean, nonzero_std
 
 
 def _build_user_utility_matrix(X, y):
@@ -83,11 +85,11 @@ class CollaborativeFilteringPredictor(BaseEstimator, ClassifierMixin):
 
     def _get_prediction(self, id_, rating_index):
         if id_ >= self.utility_matrix.shape[0] and rating_index >= self.utility_matrix.shape[1]:
-            return nonzero_mean(self.utility_matrix)
+            return self.mean_rating
         elif id_ >= self.utility_matrix.shape[0]:
-            return nonzero_mean(self.utility_matrix_transpose[rating_index])
+            return self.precomputed_data['column_means'][rating_index]
         elif rating_index >= self.utility_matrix.shape[1]:
-            return nonzero_mean(self.utility_matrix[id_])
+            return self.precomputed_data['row_means'][id_]
         else:
             with np.errstate(divide='raise', invalid='raise'):
                 try:
@@ -132,6 +134,29 @@ class ItemItemCollaborativeFilteringPredictor(CollaborativeFilteringPredictor):
         return predictions
 
 
+class MeanCollaborativeFilteringPredictorMixin(CollaborativeFilteringPredictor):
+
+    def get_prediction_from_neighbours(self, id_, rating_index, neighbours):
+        if len(neighbours) == 0:
+            return self.mean_rating
+        ratings_sum = sum([neighbour_info[2] for neighbour_info in neighbours])
+        return float(ratings_sum) / len(neighbours)
+
+
+class MeanUserUserCollaborativeFilteringPredictor(
+    MeanCollaborativeFilteringPredictorMixin,
+    UserUserCollaborativeFilteringPredictor
+):
+    pass
+
+
+class MeanItemItemCollaborativeFilteringPredictor(
+    MeanCollaborativeFilteringPredictorMixin,
+    ItemItemCollaborativeFilteringPredictor
+):
+    pass
+
+
 class MeanCenteredCollaborativeFilteringPredictorMixin(CollaborativeFilteringPredictor):
 
     def get_prediction_from_neighbours(self, id_, rating_index, neighbours):
@@ -162,4 +187,81 @@ class MeanCenteredItemItemCollaborativeFilteringPredictor(
     pass
 
 
-# TODO: Z-score
+class RegressionUserUserCollaborativeFilteringPredictor(UserUserCollaborativeFilteringPredictor):
+
+    def fit(self, X, y):
+        super(RegressionUserUserCollaborativeFilteringPredictor, self).fit(X, y)
+        self.regressor = SVR()
+        regressor_X = []
+        regressor_y = y[:10000]
+        i = 0
+        for (user_id, movie_id), rating in itertools.izip(X[:10000], regressor_y):
+            user_id = int(user_id) - 1
+            movie_id = int(movie_id) - 1
+            neighbours = self._find_nearest_neighbours(user_id, movie_id)
+            similarities = [sim_info[0] for sim_info in neighbours]
+            if len(similarities) < self.k:
+                similarities += [0.0 for _ in xrange(self.k - len(similarities))]
+            ratings = [sim_info[2] for sim_info in neighbours]
+            if len(ratings) < self.k:
+                ratings += [0.0 for _ in xrange(self.k - len(ratings))]
+            regressor_X.append(similarities + ratings)
+            i += 1
+            if i % 100 == 0:
+                print i
+        assert len(regressor_X) == len(regressor_y)
+        regressor_X = np.asarray(regressor_X)
+        self.regressor.fit(regressor_X, regressor_y)
+        print "Fitted"
+
+    def get_prediction_from_neighbours(self, id_, rating_index, neighbours):
+        if len(neighbours) == 0:
+            return self.mean_rating
+        similarities = [sim_info[0] for sim_info in neighbours]
+        if len(similarities) < self.k:
+            similarities += [0.0 for _ in xrange(self.k - len(similarities))]
+        ratings = [sim_info[2] for sim_info in neighbours]
+        if len(ratings) < self.k:
+                ratings += [0.0 for _ in xrange(self.k - len(ratings))]
+        to_predict = np.asarray([similarities + ratings])
+        prediction = self.regressor.predict(to_predict)
+        return prediction[0]
+
+
+class ZScoredCollaborativeFilteringPredictorMixin(CollaborativeFilteringPredictor):
+
+    def fit(self, X, y):
+        super(ZScoredCollaborativeFilteringPredictorMixin, self).fit(X, y)
+        row_stds = map(nonzero_std, self.utility_matrix)
+        self.precomputed_data.update({
+            'row_stds': row_stds
+        })
+
+    def get_prediction_from_neighbours(self, id_, rating_index, neighbours):
+        if len(neighbours) == 0:
+            return self.mean_rating
+        user_mean = self.precomputed_data['row_means'][id_]
+        user_std = self.precomputed_data['row_stds'][id_]
+        numerator = 0.0
+        denominator = 0.0
+        for similarity, neighbour_id, neighbour_rating in neighbours:
+            assert neighbour_rating
+            neighbour_mean = self.precomputed_data['row_means'][neighbour_id]
+            neighbour_std = self.precomputed_data['row_stds'][neighbour_id]
+            numerator += (similarity * (neighbour_rating - neighbour_mean)) / neighbour_std
+            denominator += np.abs(similarity)
+        return user_mean + user_std * (numerator / denominator) if denominator else 0.0
+
+
+class ZScoredUserUserCollaborativeFilteringPredictor(
+    ZScoredCollaborativeFilteringPredictorMixin,
+    UserUserCollaborativeFilteringPredictor
+):
+    pass
+
+
+class ZScoredItemItemCollaborativeFilteringPredictor(
+    ZScoredCollaborativeFilteringPredictorMixin,
+    ItemItemCollaborativeFilteringPredictor
+):
+    pass
