@@ -1,10 +1,5 @@
-import copy
-import itertools
-
 import numpy as np
 from scipy.spatial import distance
-
-from utils import nonzero_mean
 
 
 RATINGS_MEDIAN = 3
