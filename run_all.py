@@ -8,7 +8,11 @@ from collaborative_filtering import (
     UserUserCollaborativeFilteringPredictor,
     ItemItemCollaborativeFilteringPredictor,
     MeanCenteredUserUserCollaborativeFilteringPredictor,
-    MeanCenteredItemItemCollaborativeFilteringPredictor
+    MeanCenteredItemItemCollaborativeFilteringPredictor,
+    MeanUserUserCollaborativeFilteringPredictor,
+    MeanItemItemCollaborativeFilteringPredictor,
+    ZScoredUserUserCollaborativeFilteringPredictor,
+    ZScoredItemItemCollaborativeFilteringPredictor
 )
 from similarity_measures import MEASURES
 from utils import get_scores_on_precomputed_cv_split
@@ -31,7 +35,7 @@ PREDICTORS = [
 ]
 
 
-K = 50
+K = 10
 
 
 def save_predictor_output(predictor_cls):
