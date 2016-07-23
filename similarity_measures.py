@@ -149,10 +149,10 @@ def mean_squared_difference(ind1, ind2, matrix, _):
 
 
 MEASURES = [
-    adjusted_cosine_similarity,
-    common_pearson_corr,
     cosine,
     euclidean,
+    adjusted_cosine_similarity,
+    common_pearson_corr,
     extended_jaccard,
     jaccard,
     mean_centered_cosine,
@@ -161,5 +161,6 @@ MEASURES = [
     spearman_rank_correlation,
     mean_squared_difference
 ]
+
 
 # TODO: Pearson threshold

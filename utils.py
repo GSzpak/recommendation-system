@@ -82,4 +82,4 @@ def get_scores_on_precomputed_cv_split(metric, predictor_cls, k, similarity_meas
         scores.append(score)
     print scores
     print "Error (99% confidence interval): {0:.4} (+/- {1:.4})".format(np.mean(scores), np.std(scores) * 3)
-    return scores
+    return np.mean(scores)

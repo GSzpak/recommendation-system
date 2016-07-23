@@ -82,15 +82,19 @@ class CollaborativeFilteringPredictor(BaseEstimator, ClassifierMixin):
         return numerator / denominator if denominator else 0.0
 
     def _get_prediction(self, id_, rating_index):
-        if rating_index < self.utility_matrix.shape[1]:
+        if id_ >= self.utility_matrix.shape[0] and rating_index >= self.utility_matrix.shape[1]:
+            return nonzero_mean(self.utility_matrix)
+        elif id_ >= self.utility_matrix.shape[0]:
+            return nonzero_mean(self.utility_matrix_transpose[rating_index])
+        elif rating_index >= self.utility_matrix.shape[1]:
+            return nonzero_mean(self.utility_matrix[id_])
+        else:
             with np.errstate(divide='raise', invalid='raise'):
                 try:
                     neighbours = self._find_nearest_neighbours(id_, rating_index)
                     return self.get_prediction_from_neighbours(id_, rating_index, neighbours)
                 except FloatingPointError:
                     return nonzero_mean(self.utility_matrix_transpose[rating_index])
-        else:
-            return nonzero_mean(self.utility_matrix[id_])
 
     def predict(self, X):
         raise NotImplementedError

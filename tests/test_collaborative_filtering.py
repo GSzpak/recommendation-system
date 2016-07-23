@@ -3,9 +3,8 @@ import unittest
 import numpy as np
 
 from collaborative_filtering import (
-    ModifiedUserUserCollaborativeFilteringPredictor,
-    ItemItemCollaborativeFilteringPredictor
-)
+    ItemItemCollaborativeFilteringPredictor,
+    MeanCenteredUserUserCollaborativeFilteringPredictor)
 from similarity_measures import common_pearson_corr, cosine
 
 
@@ -36,7 +35,7 @@ class TestCollaborativeFiltering(unittest.TestCase):
         ])
 
     def test_user_user_cf(self):
-        predictor = ModifiedUserUserCollaborativeFilteringPredictor(2, common_pearson_corr)
+        predictor = MeanCenteredUserUserCollaborativeFilteringPredictor(2, common_pearson_corr)
         predictor.fit(self.training_X, self.training_y)
         result = predictor.predict(self.test_X)
         np.testing.assert_almost_equal(result, np.asarray([4.594]), decimal=3)
