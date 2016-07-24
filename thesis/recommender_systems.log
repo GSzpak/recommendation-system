@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.6)  24 JUL 2016 18:49
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.6)  24 JUL 2016 23:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -85,56 +85,56 @@ File: latin2.def 2015/03/17 v1.2c Input encoding file
 (./recommender_systems.aux)
 \openout1 = `recommender_systems.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Checking defaults for OT4/cmr/m/n on input line 88.
-LaTeX Font Info:    ... okay on input line 88.
-LaTeX Font Info:    Try loading font information for OML+plm on input line 89.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Checking defaults for OT4/cmr/m/n on input line 85.
+LaTeX Font Info:    ... okay on input line 85.
+LaTeX Font Info:    Try loading font information for OML+plm on input line 86.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/polski/omlplm.fd
 File: omlplm.fd 2008/02/24 v1.2.1 Font defs for fonts PL (MW)
 )
-LaTeX Font Info:    Try loading font information for OMS+plsy on input line 89.
+LaTeX Font Info:    Try loading font information for OMS+plsy on input line 86.
 
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/polski/omsplsy.fd
 File: omsplsy.fd 2008/02/24 v1.2.1 Font defs for fonts PL (MW)
 )
-LaTeX Font Info:    Try loading font information for OMX+plex on input line 89.
+LaTeX Font Info:    Try loading font information for OMX+plex on input line 86.
 
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/polski/omxplex.fd
 File: omxplex.fd 2008/02/24 v1.2.1 Font defs for fonts PL (MW)
 )
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <12> on input line 89.
+(Font)              <12> on input line 86.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <8> on input line 89.
+(Font)              <8> on input line 86.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <6> on input line 89.
+(Font)              <6> on input line 86.
  [1
 
 {/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <10.95> on input line 94.
-
-Underfull \hbox (badness 10000) in paragraph at lines 99--99
+Underfull \hbox (badness 10000) in paragraph at lines 97--97
 
  []
 
 [1] [2
 
-] (./recommender_systems.toc)
+] (./recommender_systems.toc
+LaTeX Font Info:    External font `plex10' loaded for size
+(Font)              <10.95> on input line 1.
+)
 \tf@toc=\write3
 \openout3 = `recommender_systems.toc'.
 
@@ -147,42 +147,42 @@ Underfull \hbox (badness 10000) in paragraph at lines 99--99
 ]
 Rozdzia\PlPrIeC {\l } 1.
 [7]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 184.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 182.
 
  (/usr/local/texlive/2015/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 184.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 182.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <9> on input line 190.
+(Font)              <9> on input line 188.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <5> on input line 190.
+(Font)              <5> on input line 188.
  [8]
 Rozdzia\PlPrIeC {\l } 2.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <14.4> on input line 242.
+(Font)              <14.4> on input line 240.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <10> on input line 242.
+(Font)              <10> on input line 240.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <7> on input line 242.
+(Font)              <7> on input line 240.
 [9
 
 ] [10]
 Rozdzia\PlPrIeC {\l } 3.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <24.88> on input line 261.
+(Font)              <24.88> on input line 259.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <20.74> on input line 261.
+(Font)              <20.74> on input line 259.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <17.28> on input line 261.
+(Font)              <17.28> on input line 259.
 [11
 
 ] [12
 
 ]
 Rozdzia\PlPrIeC {\l } 4.
-LaTeX Font Info:    Try loading font information for OT4+cmtt on input line 284
+LaTeX Font Info:    Try loading font information for OT4+cmtt on input line 282
 .
 (/usr/local/texlive/2015/texmf-dist/tex/latex/polski/ot4cmtt.fd
 File: ot4cmtt.fd 2008/02/24 v1.2.1 Font defs for fonts PL (MW)
@@ -235,7 +235,7 @@ onts/type1/public/pl/plsy10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1
 /public/pl/plsy8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/pl/
 plti10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/pl/pltt10.pfb
 >
-Output written on recommender_systems.pdf (25 pages, 150967 bytes).
+Output written on recommender_systems.pdf (25 pages, 151458 bytes).
 PDF statistics:
  164 PDF objects out of 1000 (max. 8388607)
  117 compressed objects within 2 object streams

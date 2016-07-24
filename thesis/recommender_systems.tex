@@ -53,8 +53,8 @@
 % (podaæ tytu³/stopieñ imiê i nazwisko opiekuna
 % Instytut
 % ew. Wydzia³ ew. Uczelnia (je¿eli nie MIM UW))
-\opiekun{prof. Andrzeja Skowrona\\
-  Instytut Matematyki\\
+\opiekun{prof. Andrzeja Skowrona / dr. Marcina Szczuki\\
+  Instytut Matematyki / Instytut Informatyki\\
   }
 
 % miesi±c i~rok:
@@ -63,8 +63,8 @@
 %Podaæ dziedzinê wg klasyfikacji Socrates-Erasmus:
 \dziedzina{ 
 %11.0 Matematyka, Informatyka:\\ 
-%11.1 Matematyka\\ 
-11.2 Statystyka\\ 
+11.1 Matematyka\\ 
+%11.2 Statystyka\\ 
 %11.3 Informatyka\\ 
 %11.4 Sztuczna inteligencja\\ 
 %11.5 Nauki aktuarialne\\
@@ -72,13 +72,10 @@
 }
 
 %Klasyfikacja tematyczna wedlug AMS (matematyka) lub ACM (informatyka)
-\klasyfikacja{D. Software\\
-  D.127. Blabalgorithms\\
-  D.127.6. Numerical blabalysis}
+\klasyfikacja{68T05 Learning and adaptive systems}
 
 % S³owa kluczowe:
-\keywords{blabaliza ró¿nicowa, fetory $\sigma$-$\rho$, fooizm,
-  blarbarucja, blaba, fetoryka, baleronik}
+\keywords{eksploracja danych, systemy rekomendacyjne, wspólna filtracja, algorytm k - najbli¿szych s±siadów}
 
 % Tu jest dobre miejsce na Twoje w³asne makra i~¶rodowiska:
 \newtheorem{defi}{Definicja}[section]
@@ -90,12 +87,13 @@
 
 %tu idzie streszczenie na strone poczatkowa
 \begin{abstract}
-  W~pracy przedstawiono prototypow± implementacjê blabalizatora
-  ró¿nicowego bazuj±c± na teorii fetorów $\sigma$-$\rho$ profesora
-  Fifaka.  Wykorzystanie teorii Fifaka daje wreszcie mo¿liwo¶æ
-  efektywnego wykonania blabalizy numerycznej.  Fakt ten stanowi
-  prze³om technologiczny, którego konsekwencje trudno z~góry
-  przewidzieæ.
+  W pracy przedstawiono analizê systemów rekomendacyjnych opartych
+  na metodzie wspólnej filtracji. Zaprezentowane zosta³y dwa podstawowe typy
+  wspólnej filtracji - filtracja oparta o u¿ytkowników oraz filtracja oparta o
+  przedmioty. Autor skupia siê na implementacji tej metody opartej na algorytmie
+  k - najbli¿szych s±siadów. Przedstawione zostaj± ró¿ne warianty poszczególnych
+  sk³adowych algorytmu (wybór funkcji podobieñstwa, rozmiar s±siedztwa, sposób ustalania
+  oceny na podstawie ocen s±siadów) i ich wp³yw na jako¶æ systemu.
 \end{abstract}
 
 \tableofcontents
