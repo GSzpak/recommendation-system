@@ -12,8 +12,8 @@ from collaborative_filtering import (
     MeanUserUserCollaborativeFilteringPredictor,
     MeanItemItemCollaborativeFilteringPredictor,
     ZScoredUserUserCollaborativeFilteringPredictor,
-    ZScoredItemItemCollaborativeFilteringPredictor
-)
+    ZScoredItemItemCollaborativeFilteringPredictor,
+    RegressionUserUserCollaborativeFilteringPredictor)
 from similarity_measures import MEASURES
 from utils import get_scores_on_precomputed_cv_split
 
@@ -25,13 +25,14 @@ BASELINE = [
 
 PREDICTORS = [
     UserUserCollaborativeFilteringPredictor,
-    # ItemItemCollaborativeFilteringPredictor,
-    # MeanCenteredUserUserCollaborativeFilteringPredictor,
-    # MeanCenteredItemItemCollaborativeFilteringPredictor,
+    ItemItemCollaborativeFilteringPredictor,
+    MeanCenteredUserUserCollaborativeFilteringPredictor,
+    MeanCenteredItemItemCollaborativeFilteringPredictor,
     MeanUserUserCollaborativeFilteringPredictor,
     MeanItemItemCollaborativeFilteringPredictor,
     ZScoredUserUserCollaborativeFilteringPredictor,
     ZScoredItemItemCollaborativeFilteringPredictor,
+    RegressionUserUserCollaborativeFilteringPredictor,
 ]
 
 

@@ -162,7 +162,7 @@ class MeanCenteredCollaborativeFilteringPredictorMixin(CollaborativeFilteringPre
     def get_prediction_from_neighbours(self, id_, rating_index, neighbours):
         if len(neighbours) == 0:
             return self.mean_rating
-        user_mean = self.precomputed_data['row_means'][id_]
+        row_mean = self.precomputed_data['row_means'][id_]
         numerator = 0.0
         denominator = 0.0
         for similarity, neighbour_id, neighbour_rating in neighbours:
@@ -170,7 +170,7 @@ class MeanCenteredCollaborativeFilteringPredictorMixin(CollaborativeFilteringPre
             neighbour_mean = self.precomputed_data['row_means'][neighbour_id]
             numerator += similarity * (neighbour_rating - neighbour_mean)
             denominator += np.abs(similarity)
-        return user_mean + (numerator / denominator) if denominator else 0.0
+        return row_mean + (numerator / denominator) if denominator else 0.0
 
 
 class MeanCenteredUserUserCollaborativeFilteringPredictor(
@@ -240,17 +240,21 @@ class ZScoredCollaborativeFilteringPredictorMixin(CollaborativeFilteringPredicto
     def get_prediction_from_neighbours(self, id_, rating_index, neighbours):
         if len(neighbours) == 0:
             return self.mean_rating
-        user_mean = self.precomputed_data['row_means'][id_]
-        user_std = self.precomputed_data['row_stds'][id_]
+        row_mean = self.precomputed_data['row_means'][id_]
+        row_std = self.precomputed_data['row_stds'][id_]
+        if np.isnan(row_std):
+            row_std = 1.
         numerator = 0.0
         denominator = 0.0
         for similarity, neighbour_id, neighbour_rating in neighbours:
             assert neighbour_rating
             neighbour_mean = self.precomputed_data['row_means'][neighbour_id]
             neighbour_std = self.precomputed_data['row_stds'][neighbour_id]
+            if np.isnan(neighbour_std):
+                neighbour_std = 1
             numerator += (similarity * (neighbour_rating - neighbour_mean)) / neighbour_std
             denominator += np.abs(similarity)
-        return user_mean + user_std * (numerator / denominator) if denominator else 0.0
+        return row_mean + row_std * (numerator / denominator) if denominator else 0.0
 
 
 class ZScoredUserUserCollaborativeFilteringPredictor(
