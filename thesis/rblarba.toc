@@ -1,0 +1,16 @@
+\contentsline {chapter}{Wprowadzenie}{5}
+\contentsline {chapter}{\numberline {1}Podstawowe poj\k ecia}{7}
+\contentsline {section}{\numberline {1.1}Definicje}{7}
+\contentsline {section}{\numberline {1.2}Blabalizator r\'o\.znicowy}{7}
+\contentsline {chapter}{\numberline {2}Wcze\'sniejsze implementacje blabalizatora r\'o\.znicowego}{9}
+\contentsline {section}{\numberline {2.1}Podej\'scie wprost}{9}
+\contentsline {section}{\numberline {2.2}Metody wykorzystuj\k ace teori\k e G\IeC {\l }ombaskiego}{9}
+\contentsline {section}{\numberline {2.3}Metody wykorzystuj\k ace w\IeC {\l }asno\'sci fetor\'ow $\sigma $}{9}
+\contentsline {chapter}{\numberline {3}Teoria fetor\'ow $\sigma $-$\rho $}{11}
+\contentsline {chapter}{\numberline {4}Dokumentacja u\.zytkowa i\nobreakspace {}opis implementacji}{13}
+\contentsline {chapter}{\numberline {5}Podsumowanie}{15}
+\contentsline {section}{\numberline {5.1}Perspektywy wykorzystania w\nobreakspace {}przemy\'sle}{15}
+\contentsline {chapter}{\numberline {A}G\IeC {\l }\'owna p\k etla programu zapisana w\nobreakspace {}j\k ezyku T\=oFoo}{17}
+\contentsline {chapter}{\numberline {B}Przyk\IeC {\l }adowe dane wej\'sciowe algorytmu}{19}
+\contentsline {chapter}{\numberline {C}Przyk\IeC {\l }adowe wyniki blabalizy (ze\nobreakspace {}wsp\'o\IeC {\l }czynnikami\nobreakspace {}$\sigma $-$\rho $)}{21}
+\contentsline {chapter}{Bibliografia}{23}
