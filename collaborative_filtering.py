@@ -222,7 +222,7 @@ class RegressionUserUserCollaborativeFilteringPredictor(UserUserCollaborativeFil
             similarities += [0.0 for _ in xrange(self.k - len(similarities))]
         ratings = [sim_info[2] for sim_info in neighbours]
         if len(ratings) < self.k:
-                ratings += [0.0 for _ in xrange(self.k - len(ratings))]
+            ratings += [0.0 for _ in xrange(self.k - len(ratings))]
         to_predict = np.asarray([similarities + ratings])
         prediction = self.regressor.predict(to_predict)
         return prediction[0]
@@ -269,3 +269,44 @@ class ZScoredItemItemCollaborativeFilteringPredictor(
     ItemItemCollaborativeFilteringPredictor
 ):
     pass
+
+
+class RegressionItemItemCollaborativeFilteringPredictor(ItemItemCollaborativeFilteringPredictor):
+
+    def fit(self, X, y):
+        super(RegressionItemItemCollaborativeFilteringPredictor, self).fit(X, y)
+        self.regressor = SVR()
+        regressor_X = []
+        regressor_y = y[:10000]
+        i = 0
+        for (user_id, movie_id), rating in itertools.izip(X[:10000], regressor_y):
+            user_id = int(user_id) - 1
+            movie_id = int(movie_id) - 1
+            neighbours = self._find_nearest_neighbours(movie_id, user_id)
+            similarities = [sim_info[0] for sim_info in neighbours]
+            if len(similarities) < self.k:
+                similarities += [0.0 for _ in xrange(self.k - len(similarities))]
+            ratings = [sim_info[2] for sim_info in neighbours]
+            if len(ratings) < self.k:
+                ratings += [0.0 for _ in xrange(self.k - len(ratings))]
+            regressor_X.append(similarities + ratings)
+            i += 1
+            if i % 100 == 0:
+                print i
+        assert len(regressor_X) == len(regressor_y)
+        regressor_X = np.asarray(regressor_X)
+        self.regressor.fit(regressor_X, regressor_y)
+        print "Fitted"
+
+    def get_prediction_from_neighbours(self, id_, rating_index, neighbours):
+        if len(neighbours) == 0:
+            return self.mean_rating
+        similarities = [sim_info[0] for sim_info in neighbours]
+        if len(similarities) < self.k:
+            similarities += [0.0 for _ in xrange(self.k - len(similarities))]
+        ratings = [sim_info[2] for sim_info in neighbours]
+        if len(ratings) < self.k:
+            ratings += [0.0 for _ in xrange(self.k - len(ratings))]
+        to_predict = np.asarray([similarities + ratings])
+        prediction = self.regressor.predict(to_predict)
+        return prediction[0]

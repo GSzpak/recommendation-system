@@ -13,7 +13,9 @@ from collaborative_filtering import (
     MeanItemItemCollaborativeFilteringPredictor,
     ZScoredUserUserCollaborativeFilteringPredictor,
     ZScoredItemItemCollaborativeFilteringPredictor,
-    RegressionUserUserCollaborativeFilteringPredictor)
+    RegressionUserUserCollaborativeFilteringPredictor,
+    RegressionItemItemCollaborativeFilteringPredictor
+)
 from similarity_measures import MEASURES
 from utils import get_scores_on_precomputed_cv_split
 
@@ -33,6 +35,7 @@ PREDICTORS = [
     ZScoredUserUserCollaborativeFilteringPredictor,
     ZScoredItemItemCollaborativeFilteringPredictor,
     RegressionUserUserCollaborativeFilteringPredictor,
+    RegressionItemItemCollaborativeFilteringPredictor
 ]
 
 
