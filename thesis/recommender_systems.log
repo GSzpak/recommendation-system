@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.6)  24 JUL 2016 23:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.6)  25 JUL 2016 01:47
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -142,54 +142,56 @@ LaTeX Font Info:    External font `plex10' loaded for size
 
 ] [4
 
-] [5] [6
-
 ]
 Rozdzia\PlPrIeC {\l } 1.
-[7]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 182.
+[5] [6]
+Rozdzia\PlPrIeC {\l } 2.
+[7
+
+]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 195.
 
  (/usr/local/texlive/2015/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 182.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 195.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <9> on input line 188.
+(Font)              <9> on input line 201.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <5> on input line 188.
+(Font)              <5> on input line 201.
  [8]
-Rozdzia\PlPrIeC {\l } 2.
+Rozdzia\PlPrIeC {\l } 3.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <14.4> on input line 240.
+(Font)              <14.4> on input line 253.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <10> on input line 240.
+(Font)              <10> on input line 253.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <7> on input line 240.
+(Font)              <7> on input line 253.
 [9
 
 ] [10]
-Rozdzia\PlPrIeC {\l } 3.
+Rozdzia\PlPrIeC {\l } 4.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <24.88> on input line 259.
+(Font)              <24.88> on input line 272.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <20.74> on input line 259.
+(Font)              <20.74> on input line 272.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <17.28> on input line 259.
+(Font)              <17.28> on input line 272.
 [11
 
 ] [12
 
 ]
-Rozdzia\PlPrIeC {\l } 4.
-LaTeX Font Info:    Try loading font information for OT4+cmtt on input line 282
+Rozdzia\PlPrIeC {\l } 5.
+LaTeX Font Info:    Try loading font information for OT4+cmtt on input line 295
 .
 (/usr/local/texlive/2015/texmf-dist/tex/latex/polski/ot4cmtt.fd
 File: ot4cmtt.fd 2008/02/24 v1.2.1 Font defs for fonts PL (MW)
 ) [13] [14
 
 ]
-Rozdzia\PlPrIeC {\l } 5.
+Rozdzia\PlPrIeC {\l } 6.
 [15] [16
 
 ]
@@ -212,7 +214,7 @@ Here is how much of TeX's memory you used:
  4143 multiletter control sequences out of 15000+600000
  22682 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 27i,8n,24p,264b,287s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 27i,8n,24p,266b,287s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2015/texmf-dist/fonts/e
 nc/dvips/pl/pltt.enc}{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/pl/plm
 i.enc}{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/pl/plrm.enc}{/usr/loc
@@ -235,7 +237,7 @@ onts/type1/public/pl/plsy10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1
 /public/pl/plsy8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/pl/
 plti10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/pl/pltt10.pfb
 >
-Output written on recommender_systems.pdf (25 pages, 151458 bytes).
+Output written on recommender_systems.pdf (25 pages, 154780 bytes).
 PDF statistics:
  164 PDF objects out of 1000 (max. 8388607)
  117 compressed objects within 2 object streams
