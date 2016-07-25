@@ -14,7 +14,7 @@
 \documentclass[licencjacka]{pracamgr}
 
 \usepackage{polski}
-
+\usepackage{amssymb}
 %Jesli uzywasz kodowania polskich znakow ISO-8859-2 nastepna linia powinna byc 
 %odkomentowana
 \usepackage[latin2]{inputenc}
@@ -102,7 +102,7 @@
 
 \chapter{Wprowadzenie}
 %\addcontentsline{toc}{chapter}{Wprowadzenie}
-\section{Systemy rekomendacyjne}
+\section{Systemy rekomendacyjne i ich znaczenie}
 Ka¿dego dnia stawiani jeste¶my przed szeregiem wyborów. Któr± ksi±¿kê przeczytaæ?
 Jaki film obejrzeæ? Któr± stronê internetow± odwiedziæ? Jako ¿e ilo¶æ informacji w
 otaczaj±cym nas ¶wiecie ro¶nie du¿o szybciej ni¿ nasze mo¿liwo¶ci poznawcze, konieczne sta³o siê stworzenie technologii, która bêdzie w stanie
@@ -112,192 +112,154 @@ oczywi¶cie ogólne i w zale¿no¶ci od zastosowania mog± reprezentowaæ ró¿ne zjawis
 
 Przydatno¶æ systemów rekomendacyjnych obrazuje najlepiej tak zwany "fenomen d³ugiego ogona" (ang. \textit{long tail phenomenon}). + ile w google netflix
 \section{Fenomen "d³ugiego ogona"}
+
 \section{Typy systemów rekomendacyjnych}
-dcdscds
-\section{The Netflix Prize}
-
-Blabalizator ró¿nicowy jest podstawowym narzêdziem blabalii
-fetorycznej.  Dlatego naukowcy z~ca³ego ¶wiata prze¶cigaj± siê
-w~próbach efektywnej implementacji.  Opracowana przez prof. Fifaka
-teoria fetorów $\sigma$-$\rho$ otwiera w~tej dziedzinie nowe
-mo¿liwo¶ci.  Wykorzystujemy je w~niniejszej pracy.
-
-Przystêpne wprowadzenie do blabalii fetorycznej mo¿na znale¼æ w~pracy
-Fifaka i~Gryzogrzechotalskiego \cite{ffgg}.  Dlatego w~niniejszym
-tek¶cie ograniczymy siê do przypomnienia pojêæ podstawowych.
-
-Praca sk³ada siê z~piêciu rozdzia³ów i~dodatków.
-W~rozdziale~\ref{r:pojecia} przypomniano podstawowe pojêcia blabalii
-fetorycznej.  Dotychczasowe próby implementacji blablizatora
-ró¿nicowego zestawiono w~rozdziale~\ref{r:losers}.
-Rozdzia³~\ref{r:fifak} przedstawia teoriê Fifaka i~wyja¶nia sposób jej
-wykorzystania w~implementacji blabalizatora.  W~rozdziale \ref{r:impl}
-przedstawiono algorytm blabalizy i~realizuj±cy go program komputerowy.
-Ostatni rozdzia³ zawiera przemy¶lenia dotycz±ce mo¿liwego wp³ywu
-dostêpno¶ci efektywnej blabalizy numerycznej na rozwój blabalii
-fetorycznej.  W~dodatkach umieszczono najciekawszy fragment programu,
-przyk³adowe dane i~wyniki dzia³ania programu.
-
-\chapter{Podstawowe pojêcia}\label{r:pojecia}
-
-Pojêciem pierwotnym blabalii fetorycznej jest \emph{blaba}.
-Blabali¶ci nie podaj± jego definicji, mówi±c za Ciach-Pfe t-\=am
-K\^un (fooistyczny mêdrzec, XIX w. p.n.e.):
-\begin{quote}
-  Blaba, który jest blaba, nie jest prawdziwym blaba.
-
-\raggedleft\slshape t³um. z~chiñskiego Robert Blarbarucki
-\end{quote}
-
-\section{Definicje}
-
-Oto dwie definicje wprowadzaj±ce podstawowe pojêcia blabalii
-fetorycznej:
-
-\begin{defi}\label{skupienie}
-  Silny, zwarty i gotowy fetor bazowy nazwiemy \emph{skupieniem}.
-\end{defi}
-
-\begin{defi}\label{fetor}
-  \emph{Fetorem} nazwiemy skupienie blaba spe³niaj±ce nastêpuj±cy
-  \emph{aksjomat reperkusatywno¶ci}:
-  $$\forall \mathcal{X}\in Z(t)\ \exists
-  \pi\subseteq\oint_{\Omega^2}\kappa\leftrightarrow 42$$
-\end{defi}
-
-
-\section{Blabalizator ró¿nicowy}
-
-Teoretycy blabalii (zob. np. pracê~\cite{grglo}) zadowalaj± siê
-niekonstruktywnym opisem natury fetorów.
-
-Podstawowym narzêdziem blabalii empirycznej jest blabalizator
-ró¿nicowy.  Przyrz±d ten pozwala w~sposób przybli¿ony uzyskaæ
-wspó³czynniki rozk³adu G³ombaskiego dla fetorów bazowych
-i~harmonicznych.  Praktyczne znaczenie tego procesu jest oczywiste:
-korzystaj±c z~reperkusatywno¶ci pozwala on przej¶æ do przestrzeni
-$\Lambda^{\nabla}$, a~tym samym znale¼æ retroizotonalne wspó³czynniki
-semi-quasi-celibatu dla klatek Rozkoszy (zob.~\cite{JR}).
-
-Klasyczne algorytmy dla blabalizatora ró¿nicowego wykorzystuj±:
+W zale¿no¶ci od zastosowanych metod, systemy rekomendacyjne dzieli siê na 4 kategorie:
 \begin{enumerate}
-\item dualizm falowo\dywiz korpuskularny, a w szczególno¶ci
-  \begin{enumerate}
-  \item korpuskularn± naturê fetorów,
-  \item falow± naturê blaba,
-  \item falowo\dywiz korpuskularn± naturê gryzmo³ów;
-  \end{enumerate}
-\item postêpuj±c± gryzmolizacjê poszczególnych dziedzin nauki, w
-  szczególno¶ci badañ systemowych i rozcieñczonych;
-\item dynamizm fazowy stetryczenia parajonizacyjnego;
-\item wreszcie tradycyjne opozycje:
-  \begin{itemize}
-  \item duch --- bakteria,
-  \item mieæ --- chcieæ,
-  \item my¶l --- owsianka,
-  \item parafina --- durszlak\footnote{Wiêcej o tym przypadku --- patrz
-      prace Gryzybór\dywiz G³ombaskiego i innych teoretyków nurtu
-      teoretyczno\dywiz praktycznego badañ w~Instytucie Podstawowych
-      Problemów Blabalii w~Fifie.},
-  \item logos --- termos%\footnote{Szpotañski}
-  \end{itemize}
-  z w³a¶ciwym im przedziwym dynamizmem.
+\item \textbf{Systemy bazuj±ce na wspólnej filtracji (ang. \textit{collaborative filtering})}
+
+    Podej¶cie wspólnej filtracji polega na wyznaczaniu preferencji danego u¿ytkownika
+    bazuj±c na preferencjach u¿ytkowników o podobnym gu¶cie. Podobieñstwo to jest
+    wyznaczane na podstawie wcze¶niejszych zachowañ u¿ytkownika. Ze wzglêdu na
+    prostotê implementacji i wysok± wydajno¶æ, wspólne filtrowanie
+    jest najbardziej popularn± i najczê¶ciej stosowan± technikê rekomendacji.
+    Dodatkow± zalet± tej metody jest jej elastyczno¶æ i mo¿liwo¶æ stosowania w wielu
+    dziedzinach - system oparty na wspólnej filtracji jest w stanie udzielaæ dok³adnych
+    rekomendacji bez potrzeby "zrozumienia" samego przedmiotu.
+    
+    W pozosta³ej czê¶ci pracy autor skupi siê na ró¿nych wariantach
+    \textit{collaborative filtering} i spróbuje
+    w oparciu o tê technikê zbudowaæ jak najbardziej wydajny system rekomendacji.
+
+\item \textbf{Systemy oparte na zawarto¶ci (ang. \textit{content - based}))}
+
+    To podej¶cie koncentruje siê na charakterystyce samych przedmiotów. Przedmiot
+    reprezentowany jest przez zbiór cech. Cechami filmu
+    mog± byæ na przyk³ad: gatunek, rok produkcji, obsada aktorska, re¿yser.
+    Na podstawie warto¶ci atrybutów wyznaczane jest podobieñstwo miêdzy przedmiotami,
+    nastêpnie u¿ytkownikowi prezentowane s± przedmioty podobne do dotychczas
+    polubionych. Przyk³adowo, je¶li u¿ytkownik czêsto ogl±da³ filmy sensacyjne
+    wyre¿yserowane przez Martina Scorsese, system bêdzie rekomendowa³ inne filmy
+    tego re¿ysera.
+    
+    Metoda bazuj±ca na zawarto¶ci tak¿e jest szeroko stosowana. Do jej zalet zaliczyæ
+    mo¿na:
+    \begin{itemize}
+        \item niski poziom skomplikowania
+        \item w przeciwieñstwie do wspólnej filtracji, rekomendacja dla danego u¿ytkownika
+        nie zale¿y od ocen innych u¿ytkowników
+        \item transparentno¶æ - rekomendacje mog± byæ w ³atwy sposób wyt³umaczone
+        na podstawie modelu (które cechy przedmiotu zadecydowa³y o jego wyborze)
+        \item mo¿liwo¶æ rekomendacji przedmiotów nieocenionych jeszcze przez
+        ¿adnego u¿ytkownika.
+    \end{itemize}       
+    
+    Tego typu podej¶cie wymaga jednak czêsto wiedzy eksperckiej przy tworzeniu
+    atrybutów przedmiotów. Z racji swojej natury, s³abo sprawdza siê te¿ przy
+    rekomendacji przedmiotów o innej charakterystyce ni¿ dotychczas ocenione przez
+    u¿ytkownika.
+
+\item \textbf{Systemy bazuj±ce na osobowo¶ci}
+
+    To stosunkowo nowe podej¶cie, zosta³o zaproponowane przez Ricardo Buettnera w [3].
+    Polega na stworzeniu profilu osobowo¶ciowego u¿ytkownika na podstawie jego zachowañ
+    w sieciach spo³eczno¶ciowych i prezentowaniu tre¶ci dopasowanych do tego profilu.
+
+\item \textbf{Systemy hybrydowe}
+
+    Polegaj± na ³±czeniu wy¿ej opisanych technik. Systemy hybrydowe mog± byæ
+    implementowane w wielu wersjach: przez wykorzystanie wspólnej filtracji oraz
+    rekomendacji opartej na zawarto¶ci osobno, a nastêpnie po³±czeniu wyników,
+    przez wykorzystanie dodatkowej wiedzy o u¿ytkownikach czy przedmiotach
+    w metodzie collaborative filtering czy przez zunifikowanie ró¿nych podej¶æ w jeden
+    model. £±czenie ró¿nych podej¶æ mo¿e czêsto wyra¼nie podnie¶æ jako¶æ
+    rekomendacji. Wad± tego typu systemów jest zwykle wysoki poziom skomplikowania.
 \end{enumerate}
 
-\begin{figure}[tp]
-  \centering
-  \framebox{\vbox to 4cm{\vfil\hbox to
-      7cm{\hfil\tiny.\hfil}\vfil}}
-  \caption{Artystyczna wizja blaba w~obrazie wêgierskiego artysty
-    Josipa~A. Rozkoszy pt.~,,Blaba''}
-\end{figure}
+\section{The Netflix Prize}
+Do znacznego rozwoju badañ nad systemami rekomendacyjnymi przyczyni³
+siê konkurs The Netflix Prize, zorganizowany przez internetow± wypo¿yczalniê filmów Netflix\footnote{https://www.netflix.com} w 2006 roku. Konkurs polega³ na przewidywaniu ocen, jakie u¿ytkownicy wystawiliby filmom, na podstawie historycznych danych. 
+Opublikowany zbiór treningowy zawiera³ 100,480,507 ocen wystawionych przez
+480,189 u¿ytkowników 17,770 filmom. Aby otrzymaæ g³ówn± nagrodê - \$1,000,000 - 
+nale¿a³o poprawiæ wynik algorytmu firmy Netflix (o nazwie Cinematch) o co najmniej 10\%.
+Zawody zosta³y rozstrzygniête dopiero w roku 2009, kiedy algorytm zespo³u BellKor's Pragmatic Chaos poprawi³ wynik algorytmu Cinematch o 10.6\%. Zwyciêski
+algorytm by³ algorytmem hybrydowym opartym miêdzy innymi na wspólnej filtracji,
+rozk³adzie SVD macierzy oraz wzmacnianych drzewach decyzyjnych (ang.
+\textit{gradient boosted decision trees}).
 
-\chapter{Wcze¶niejsze implementacje blabalizatora
-  ró¿nicowego}\label{r:losers}
+\chapter{Formalizacja problemu rekomendacji}\label{r:definitions}
+\section{Podstawowe pojêcia}
+    Dwoma glównymi pojêciami wyorzystywanymi w systemach rekomendacyjnych s±
+    \textit{U¿ytkownik} oraz \textit{przedmiot}. U¿ytkownicy maj± preferencje wobec
+    niektórych przedmiotów, nazywane \textit{ocen±}.
+    Preferencje s± czêsto reprezentowane jako zbiór trójek $(\textit{u¿ytkownik, przedmiot, ocena})$. Jak wspomniano wcze¶niej, to, czym dok³adnie jest \textit{ocena}, zale¿y od
+    charakteru serwisu. Ocena mo¿e byæ liczb± ca³kowit± pochodz±c± z okre¶lonego
+    przedzia³u (przyk³adowo: piêciopunktowa skala ocen w serwisie Netflix) lub mieæ
+    postaæ binarn± (u¿ywane w serwisach spo³eczno¶ciowych "lubiê" / "nie lubiê").
+    Unarne oceny, jak na przyk³ad informacja, czy u¿ytkownik kupi³ dany przedmiot,
+    s± z kolei zwykle wykorzystywane w sklepach internetowych.
+    
+    \begin{defi}\label{macierz}
+      Zbiór wszystkich trójek $(\textit{U¿ytkownik, przedmiot, ocena})$ tworzy macierz,
+      któr± nazwiemy \textbf{macierz± u¿yteczno¶ci} lub \textbf{macierz± ocen}.
+    \end{defi}
+    Przyk³ad macierzy u¿yteczno¶ci prezentuje tabela 1 TODO
 
-\section{Podej¶cie wprost}
+\section{Oznaczenia}    
+    Niech $U = \{u_1,u_2,\cdots,u_k\}$ oznacza zbiór u¿ytkowników, $I = \{i_1,i_2,\cdots,i_l\}$ - zbiór przedmiotów, a $R= \{r_1,r_2,\cdots,r_m\}$ - zbiór ocen Do ka¿dego u¿ytkownika $u$ przypisany jest zbiór
+    $I_u \subseteq I$ ocenionych przez niego przedmiotów. Analogicznie, $U_i \subseteq U$
+    oznaczaæ bêdzie zbiór u¿ytkowników, którzy ocenili przedmiot $i$. Niech dalej $M$
+    reprezentuje macierz u¿yteczno¶ci, gdzie $r_{ui}$ jest ocen± udzielon±
+    przedmiotowi $i$ przez u¿ytkownika $u$, a $r_u$ i $r_i$ - wektorami ocen
+    (odpowiednio) danego u¿ytkownika oraz danego przedmiotu.
+    
+\section{Formalna definicja problemu}
+    Przy ocenie jako¶ci systemu rekomendacyjnego definiuje siê zwykle ([1], [2] TODO)
+    dwa problemy:
+    \begin{enumerate}
+    \item Zadanie rekomendacji: maj±c danego u¿ytkownika $u$, wyznaczyæ $n$
+    przedmiotów najbardziej pasuj±cych do gustu tego u¿ytkownika.
 
-Najprostszym sposobem wykonania blabalizy jest si³owe przeszukanie
-ca³ej przestrzeni rozwi±zañ.  Jednak, jak ³atwo wyliczyæ, rozmiar
-przestrzeni rozwi±zañ ro¶nie wyk³adniczo z~liczb± fetorów bazowych.
-Tak wiêc przegl±d wszystkich rozwi±zañ sprawdza siê jedynie dla bardzo
-prostych przestrzeni lamblialnych.  Oznacza to, ¿e taka metoda ma
-niewielkie znaczenie praktyczne --- w~typowym przypadku z~¿ycia trzeba
-rozwa¿aæ przestrzenie lamblialne wymiaru rzêdu 1000.
+    \item Zadanie regresji - niech $S_{train} \subseteq U \times I \times R$ bêdzie
+    zbiorem ocen dostêpnych w systemie, a $S_{test} \subseteq U \times I$ -
+    zbiorem par $(\textit{u¿ytkownik, przedmiot})$, dla których preferencje s± nieznane.
+    Celem jest nauczenie funkcji $f: U \times I \rightarrow R$, która bêdzie
+    minimalizowaæ pewn± funkcjê b³êdu $e: (U \times I \rightarrow R) \times (U \times I) \rightarrow \mathbb{R}$.
+    
+    Dwie najczê¶ciej u¿ywane funkcje straty to ¶redni bezwzglêdny b³±d
+    (ang. \textit{Mean Absolute Error}, MAE):
+    \begin{equation} \label{mae}
+        MAE(f, S_{test}) = \frac{1}{S_{test}} \sum_{(u,i) \in S_{test}} |f(u,i) - r_ui|
+    \end{equation}
+    oraz pierwiastek b³êdu ¶redniokwadratowego
+    (ang. \textit{Root Mean Squared Error}, RMSE):
+    \begin{equation} \label{rmse}
+        RMSE(f, S_{test}) = \sqrt{\frac{1}{S_{test}} \sum_{(u,i) \in S_{test}} (f(u,i) - r_ui)^2}
+    \end{equation}
+    
+    \end{enumerate}
+    W dalszej czê¶ci pracy autor skupi siê na problemie rekomendacji sformu³owanym
+    jako problem regresji.
+\chapter{Wspólna filtracja}\label{r:filtracja}    
 
-W~literaturze mo¿na znale¼æ kilka prób opracowania heurystyk dla
-problemu blabalizy (por. \cite{heu}).  Korzystaj±c z~heurystyk daje
-siê z~pewnym trudem dokonaæ blabalizy w~przestrzeni o~np.~500 fetorach
-bazowych.  Nale¿y jednak pamiêtaæ, ¿e heurystyka nie daje gwarancji
-znalezienia najlepszego rozwi±zania.  Fifak w~pracy~\cite{ff-sr}
-podaje, jak dla dowolnie zadanej funkcji oceniaj±cej skonstruowaæ
-dane, dla których rozwi±zanie wygenerowane przez algorytm heurystyczny
-jest dowolnie odleg³e od rzeczywistego.
+\section{Filtracja w oparciu o u¿ytkowników}
+    Najczê¶ciej u¿ywan± wersj± metody wspólnej filtracji jest podej¶cie oparte
+    na algorytmie najbli¿szych s±siadów. Schemat dzia³ania algorytmu przy wyznaczaniu
+    $r_ui$ polega kolejno na:
+    \begin{enumerate}
+        \item TODO
+        \item Wyborze $k$ u¿ytkowników o 
+    \end{enumerate}
+    Schemat algorytmu prezentuje rys 1 TODO
+\subsection{Miary podobieñstwa}\label{r:similarity}
 
-\section{Metody wykorzystuj±ce teoriê G³ombaskiego}
+\subsection{Filtracja w oparciu o przedmioty}
 
-Teoria G³ombaskiego (zob.~\cite{grglo}) dostarcza eleganckiego
-narzêdzia opisu przej¶cia do przestrzeni $\Lambda^{\nabla}$.
-Wystarczy mianowicie przedstawiæ fetory bazowe wyj¶ciowej przestrzeni
-lamblialnej w~nieskoñczonej bazie tak zwanych wy¿szych aromatów.
-(Formaln± definicjê tego pojêcia przedstawiê w~rozdziale po¶wiêconym
-teorii Fifaka).  Podstawow± cech± wy¿szych aromatów jest ulotno¶æ.  To
-za¶ oznacza, ¿e odpowiednio dobieraj±c wspó³czynniki przej¶cia do
-przestrzeni wy¿szych aromatów mo¿na zagwarantowaæ dowoln± z~góry
-zadan± dok³adno¶æ przybli¿onego rozwi±zania problemu blabalizy.
+\chapter{Wp³yw funkcji podobieñstwa na jako¶æ predykcji}\label{r:experiments}
 
-Oczywi¶cie ze wzglêdu na nieskoñczony wymiar przestrzeni wy¿szych
-aromatów koszt poszukiwania wspó³czynników blabalizy jest liniowy ze
-wzglêdu na wymiar wyj¶ciowej przestrzeni lamblialnej.
+\chapter{Wyznaczanie s±siedztwa w algorytmie kNN}\label{r:neighbourhood_size}
 
-\section{Metody wykorzystuj±ce w³asno¶ci fetorów $\sigma$}
-
-Najchêtniej wykorzystywan± przestrzeni± wy¿szych aromatów jest
-przestrzeñ fetorów~$\sigma$.  Fetory $\sigma$ daj± szczególnie prost±
-bazê podprzestrzeni wid³owej.  Wi±¿e siê to z~faktem, ¿e w~tym przypadku
-fetory harmoniczne wy¿szych rzêdów s± pomijalne (rzêdu $2^{-t^3}$,
-gdzie $t$ jest wymiarem wyj¶ciowej przestrzeni lamblialnej).
-
-Niestety z~fetorami $\sigma$ wi±¿e siê te¿ przykre ograniczenie: mo¿na
-wykazaæ (zob.~\cite[s. 374]{ff-sr}), ¿e dla dowolnie dobranej bazy
-w~podprzestrzeni wid³owej istnieje ograniczenie dolne w~metryce sierpa
-na odleg³o¶æ rzutu dok³adnego rozwi±zania problemu blabalizy na
-podprzestrzeñ wid³ow±.  Poniewa¿ rzut ten stanowi najlepsze
-przybli¿one rozwi±zanie, jakie mo¿na osi±gn±æ nie naruszaj±c aksjomatu
-reperkusatywno¶ci, wiêc istnieje pewien nieprzekraczalny próg
-dok³adno¶ci dla blabalizy wykonanej przez przej¶cie do przestrzeni
-fetorów $\sigma$.  Warto¶æ retroinicjaln± tego progu nazywa siê
-\textit{reziduum blabicznym}.
-
-\chapter{Teoria fetorów $\sigma$-$\rho$}\label{r:fifak}
-
-G³ównym odkryciem Fifaka jest, ¿e fetor suprakowariantny mo¿e
-gryzmolizowaæ dowolny idea³ w~podprzestrzeni wid³owej przestrzeni
-lamblialnej funkcji Rozkoszy.
-
-Udowodnienie tego faktu wymaga³o wykorzystania twierdzeñ pochodz±cych
-z~kilku niezale¿nych teorii matematycznych (zob. na przyk³ad:
-\cite{russell,spyrpt,JR,beaman,hopp,srinis}).  Jednym z~filarów
-dowodu jest teoria odwzorowañ owalnych Leukocyta (zob.~\cite{leuk}).
-
-Znaczenie twierdzenia Fifaka dla problemu blabalizy polega na tym, ¿e
-znaj±c retroizotonalne wspó³czynniki dla klatek Rozkoszy mo¿na
-przeprowadziæ fetory bazowe na dwie nieskoñczone bazy fetorów $\sigma$
-w~przestrzeni $K_7$ i~fetorów $\rho$ w~odpowiedniej
-quasi-quasi-przestrzeni równoleg³ej (zob.~\cite{hopp}).  Zasadnicza
-ró¿nica w~stosunku do innych metod blabalizy polega na tym, ¿e
-przedstawienie to jest dok³adne.
-
-\chapter{Dokumentacja u¿ytkowa i~opis implementacji}\label{r:impl}
-
-Program przygotowany dla systemu operacyjnego M\$ Windows uruchamia
-siê energicznym dwumlaskiem na jego ikonce w~folderze
-\verb+\\FIDO\FOO\BLABA+.  Nastêpnie kolistym ruchem rêki nale¿y
-naprowadziæ kursor na menu \texttt{Blabaliza} i~uaktywniæ pozycjê
-\texttt{Otwórz plik}.  Po wybraniu pliku i~zatwierdzeniu wyboru
-przyciskiem \texttt{OK} rozpocznie siê proces blabalizy.  Wyniki
-zostan± zapisane w~pliku o~nazwie \texttt{99-1a.tx.43} w~bie¿±cym
-folderze.
+\chapter{Metody wyznaczania oceny na podstawie ocen s±siadów}\label{r:result_calc}
 
 \chapter{Podsumowanie}
 
