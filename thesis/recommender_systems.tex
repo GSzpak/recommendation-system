@@ -184,7 +184,7 @@ Opublikowany zbiór treningowy zawiera³ 100,480,507 ocen wystawionych przez
 nale¿a³o poprawiæ wynik algorytmu firmy Netflix (o nazwie Cinematch) o co najmniej 10\%.
 Zawody zosta³y rozstrzygniête dopiero w roku 2009, kiedy algorytm zespo³u BellKor's Pragmatic Chaos poprawi³ wynik algorytmu Cinematch o 10.6\%. Zwyciêski
 algorytm by³ algorytmem hybrydowym opartym miêdzy innymi na wspólnej filtracji,
-rozk³adzie SVD macierzy oraz wzmacnianych drzewach decyzyjnych (ang.
+rozk³adzie macierzy wed³ug warto¶ci osobliwych oraz wzmacnianych drzewach decyzyjnych (ang.
 \textit{gradient boosted decision trees}).
 
 \chapter{Formalizacja problemu rekomendacji}\label{r:definitions}
@@ -222,26 +222,47 @@ rozk³adzie SVD macierzy oraz wzmacnianych drzewach decyzyjnych (ang.
 
     \item Zadanie regresji - niech $S_{train} \subseteq U \times I \times R$ bêdzie
     zbiorem ocen dostêpnych w systemie, a $S_{test} \subseteq U \times I$ -
-    zbiorem par $(\textit{u¿ytkownik, przedmiot})$, dla których preferencje s± nieznane.
+    zbiorem par $(\textit{u¿ytkownik, przedmiot})$, dla których preferencje chcemy okre¶liæ.
     Celem jest nauczenie funkcji $f: U \times I \rightarrow R$, która bêdzie
     minimalizowaæ pewn± funkcjê b³êdu $e: (U \times I \rightarrow R) \times (U \times I) \rightarrow \mathbb{R}$.
     
     Dwie najczê¶ciej u¿ywane funkcje straty to ¶redni bezwzglêdny b³±d
     (ang. \textit{Mean Absolute Error}, MAE):
     \begin{equation} \label{mae}
-        MAE(f, S_{test}) = \frac{1}{S_{test}} \sum_{(u,i) \in S_{test}} |f(u,i) - r_ui|
+        MAE(f, S_{test}) = \frac{1}{S_{test}} \sum_{(u,i) \in S_{test}} |f(u,i) - r_{ui}|
     \end{equation}
     oraz pierwiastek b³êdu ¶redniokwadratowego
     (ang. \textit{Root Mean Squared Error}, RMSE):
     \begin{equation} \label{rmse}
-        RMSE(f, S_{test}) = \sqrt{\frac{1}{S_{test}} \sum_{(u,i) \in S_{test}} (f(u,i) - r_ui)^2}
+        RMSE(f, S_{test}) = \sqrt{\frac{1}{S_{test}} \sum_{(u,i) \in S_{test}} (f(u,i) - r_{ui})^2}
     \end{equation}
     
     \end{enumerate}
     W dalszej czê¶ci pracy autor skupi siê na problemie rekomendacji sformu³owanym
     jako problem regresji.
-\chapter{Wspólna filtracja}\label{r:filtracja}    
 
+
+\chapter{Wspólna filtracja}\label{r:filtracja}    
+    G³ówna idea, na której bazuje metoda \textit{collaborative filtering},
+    polega na tym, ¿e ocena u¿ytkownika $u$ dla przedmiotu $i$ bêdzie podobna
+    do oceny innego u¿ytkownika $v$, którego dotychczasowy schemat oceniania by³
+    zbli¿ony do ocen $u$.
+    Analogicznie, preferencje u¿ytkownika $u$ wobec przedmiotów $i$ oraz
+    $j$ bêd± podobne, je¶li pozostali u¿ytkownicy oceniali oba przedmioty w
+    analogiczny sposób.
+    
+    Algorytmy wspólnej filtracji mo¿na podzieliæ na dwa typy:
+    \begin{itemize}
+    \item wspólna filtracja oparta na modelu - systemy oparte na tym podej¶ciu
+    wykorzystuj± dostêpne oceny w celu wyuczenia modelu, który nastêpnie
+    bêdzie przewidywa³ nieznane warto¶ci $r_{ui}$. W tego typu metodzie u¿ywa siê
+    na przyk³ad rozk³adu macierzy u¿yteczno¶ci wed³ug warto¶ci osobliwych,
+    maszyn wektorów wspieraj±cych, sieci Bayesowskie (TODO: bibliografia) oraz
+    algorytm Expectation - Maximisation.
+    \item wspólna filtracja oparta na s±siedztwie
+    \end{itemize}
+    
+    
 \section{Filtracja w oparciu o u¿ytkowników}
     Najczê¶ciej u¿ywan± wersj± metody wspólnej filtracji jest podej¶cie oparte
     na algorytmie najbli¿szych s±siadów. Schemat dzia³ania algorytmu przy wyznaczaniu
@@ -283,76 +304,6 @@ oczywiste mo¿na wskazaæ ju¿ teraz.  S± to:
 
 Ze wzglêdu na znaczenie strategiczne wyników pracy ten punkt uleg³
 utajnieniu.
-
-\appendix
-
-\chapter{G³ówna pêtla programu zapisana w~jêzyku T\=oFoo}
-
-\begin{verbatim}
-[[foo]{,}[[a3,(([(,),{[[]]}]),
-  [1; [{,13},[[[11],11],231]]].
-  [13;[!xz]].
-  [42;[{,x},[[2],{'a'},14]]].
-  [br;[XQ*10]].
- ), 2q, for, [1,]2, [..].[7]{x}],[(((,[[1{{123,},},;.112]],
-        else 42;
-   . 'b'.. '9', [[13141],{13414}], 11),
- [1; [[134,sigma],22]].
- [2; [[rho,-],11]].
- )[14].
- ), {1234}],]. [map [cc], 1, 22]. [rho x 1]. {22; [22]},
-       dd.
- [11; sigma].
-        ss.4.c.q.42.b.ll.ls.chmod.aux.rm.foo;
- [112.34; rho];
-        001110101010101010101010101010101111101001@
- [22%f4].
- cq. rep. else 7;
- ]. hlt
-\end{verbatim}
-
-\chapter{Przyk³adowe dane wej¶ciowe algorytmu}
-
-\begin{center}
-  \begin{tabular}{rrr}
-    $\alpha$ & $\beta$ & $\gamma_7$ \\
-    901384 & 13784 & 1341\\
-    68746546 & 13498& 09165\\
-    918324719& 1789 & 1310 \\
-    9089 & 91032874& 1873 \\
-    1 & 9187 & 19032874193 \\
-    90143 & 01938 & 0193284 \\
-    309132 & $-1349$ & $-149089088$ \\
-    0202122 & 1234132 & 918324098 \\
-    11234 & $-109234$ & 1934 \\
-  \end{tabular}
-\end{center}
-
-\chapter{Przyk³adowe wyniki blabalizy
-    (ze~wspó³czynnikami~$\sigma$-$\rho$)}
-
-\begin{center}
-  \begin{tabular}{lrrrr}
-    & Wspó³czynniki \\
-    & G³ombaskiego & $\rho$ & $\sigma$ & $\sigma$-$\rho$\\
-    $\gamma_{0}$ & 1,331 & 2,01 & 13,42 & 0,01 \\
-    $\gamma_{1}$ & 1,331 & 113,01 & 13,42 & 0,01 \\
-    $\gamma_{2}$ & 1,332 & 0,01 & 13,42 & 0,01 \\
-    $\gamma_{3}$ & 1,331 & 51,01 & 13,42 & 0,01 \\
-    $\gamma_{4}$ & 1,332 & 3165,01 & 13,42 & 0,01 \\
-    $\gamma_{5}$ & 1,331 & 1,01 & 13,42 & 0,01 \\
-    $\gamma_{6}$ & 1,330 & 0,01 & 13,42 & 0,01 \\
-    $\gamma_{7}$ & 1,331 & 16435,01 & 13,42 & 0,01 \\
-    $\gamma_{8}$ & 1,332 & 865336,01 & 13,42 & 0,01 \\
-    $\gamma_{9}$ & 1,331 & 34,01 & 13,42 & 0,01 \\
-    $\gamma_{10}$ & 1,332 & 7891432,01 & 13,42 & 0,01 \\
-    $\gamma_{11}$ & 1,331 & 8913,01 & 13,42 & 0,01 \\
-    $\gamma_{12}$ & 1,331 & 13,01 & 13,42 & 0,01 \\
-    $\gamma_{13}$ & 1,334 & 789,01 & 13,42 & 0,01 \\
-    $\gamma_{14}$ & 1,331 & 4897453,01 & 13,42 & 0,01 \\
-    $\gamma_{15}$ & 1,329 & 783591,01 & 13,42 & 0,01 \\
-  \end{tabular}
-\end{center}
 
 \begin{thebibliography}{99}
 \addcontentsline{toc}{chapter}{Bibliografia}

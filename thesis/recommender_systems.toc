@@ -16,7 +16,4 @@
 \contentsline {chapter}{\numberline {6}Metody wyznaczania oceny na podstawie ocen s\k asiad\'ow}{17}
 \contentsline {chapter}{\numberline {7}Podsumowanie}{19}
 \contentsline {section}{\numberline {7.1}Perspektywy wykorzystania w\nobreakspace {}przemy\'sle}{19}
-\contentsline {chapter}{\numberline {A}G\IeC {\l }\'owna p\k etla programu zapisana w\nobreakspace {}j\k ezyku T\=oFoo}{21}
-\contentsline {chapter}{\numberline {B}Przyk\IeC {\l }adowe dane wej\'sciowe algorytmu}{23}
-\contentsline {chapter}{\numberline {C}Przyk\IeC {\l }adowe wyniki blabalizy (ze\nobreakspace {}wsp\'o\IeC {\l }czynnikami\nobreakspace {}$\sigma $-$\rho $)}{25}
-\contentsline {chapter}{Bibliografia}{27}
+\contentsline {chapter}{Bibliografia}{21}
