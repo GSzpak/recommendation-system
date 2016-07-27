@@ -21,6 +21,19 @@
 %Jesli uzywasz kodowania polskich znakow CP-1250 to ta linia powinna byc 
 %odkomentowana
 %\usepackage[cp1250]{inputenc}
+\usepackage[linesnumbered]{algorithm2e}
+\usepackage{caption}
+\usepackage{afterpage}
+
+\usepackage{amsmath}
+
+\newcommand*\mean[1]{\bar{#1}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand\blankpage{%
+    \null
+    \thispagestyle{empty}%
+    \addtocounter{page}{-1}%
+    \newpage}
 
 % Dane magistranta:
 
@@ -28,7 +41,7 @@
 
 \nralbumu{319400}
 
-\title{Systemy rekomendacyjne oparte o wspóln± filtracjê}
+\title{Systemy rekomendacji bazuj±ce na metodzie wspólnej filtracji}
 
 \tytulang{Recommender systems based on collaborative filtering}
 
@@ -116,7 +129,7 @@ Przydatno¶æ systemów rekomendacyjnych obrazuje najlepiej tak zwany "fenomen d³ug
 \section{Typy systemów rekomendacyjnych}
 W zale¿no¶ci od zastosowanych metod, systemy rekomendacyjne dzieli siê na 4 kategorie:
 \begin{enumerate}
-\item \textbf{Systemy bazuj±ce na wspólnej filtracji (ang. \textit{collaborative filtering})}
+\item \textbf{Systemy bazuj±ce na wspólnej filtracji (ang. \textit{collaborative filtering, CF})}
 
     Podej¶cie wspólnej filtracji polega na wyznaczaniu preferencji danego u¿ytkownika
     bazuj±c na preferencjach u¿ytkowników o podobnym gu¶cie. Podobieñstwo to jest
@@ -206,12 +219,16 @@ rozk³adzie macierzy wed³ug warto¶ci osobliwych oraz wzmacnianych drzewach decyzy
     Przyk³ad macierzy u¿yteczno¶ci prezentuje tabela 1 TODO
 
 \section{Oznaczenia}    
-    Niech $U = \{u_1,u_2,\cdots,u_k\}$ oznacza zbiór u¿ytkowników, $I = \{i_1,i_2,\cdots,i_l\}$ - zbiór przedmiotów, a $R= \{r_1,r_2,\cdots,r_m\}$ - zbiór ocen Do ka¿dego u¿ytkownika $u$ przypisany jest zbiór
+    Niech $U = \{u_1,u_2,\cdots,u_k\}$ oznacza zbiór u¿ytkowników, $I = \{i_1,i_2,\cdots,i_l\}$ - zbiór przedmiotów, a $R= \{r_1,r_2,\cdots,r_m\}$ - zbiór ocen. Do ka¿dego u¿ytkownika $u$ przypisany jest zbiór
     $I_u \subseteq I$ ocenionych przez niego przedmiotów. Analogicznie, $U_i \subseteq U$
     oznaczaæ bêdzie zbiór u¿ytkowników, którzy ocenili przedmiot $i$. Niech dalej $M$
     reprezentuje macierz u¿yteczno¶ci, gdzie $r_{ui}$ jest ocen± udzielon±
-    przedmiotowi $i$ przez u¿ytkownika $u$, a $r_u$ i $r_i$ - wektorami ocen
-    (odpowiednio) danego u¿ytkownika oraz danego przedmiotu.
+    przedmiotowi $i$ przez u¿ytkownika $u$. Niech $r_u$ oznacza $|I|$ - wymiarowy
+    wektor ocen u¿ytkownika $u$ (brak oceny reprezentowany jest przez $0$), 
+    a $\mean{r}_u$ - ¶redni± z ocen wystawionych przez
+    tego u¿ytkownika, tj. $\mean{r}_u = \frac{\sum_{i \in I_u} r_{ui}}{|I_u|}$.
+    Podobnie $c_i$ reprezentowaæ bêdzie $|U|$ - wymiarowy wektor ocen wystawionych
+    przedmiotowi $i$, za¶ $\mean{c}_i$ - jego ¶redni± notê.
     
 \section{Formalna definicja problemu}
     Przy ocenie jako¶ci systemu rekomendacyjnego definiuje siê zwykle ([1], [2] TODO)
@@ -236,10 +253,14 @@ rozk³adzie macierzy wed³ug warto¶ci osobliwych oraz wzmacnianych drzewach decyzy
     \begin{equation} \label{rmse}
         RMSE(f, S_{test}) = \sqrt{\frac{1}{S_{test}} \sum_{(u,i) \in S_{test}} (f(u,i) - r_{ui})^2}
     \end{equation}
-    
+    TODO normalized mean squared error
     \end{enumerate}
-    W dalszej czê¶ci pracy autor skupi siê na problemie rekomendacji sformu³owanym
-    jako problem regresji.
+    Zalet± obydwu funkcji jest zachowanie skali, z której pochodz± oceny - przyk³adowo
+    w piêciopunktowej skali, reprezentowanej przez liczby ca³kowite z przedzia³u
+    $[1,5] $, MAE o warto¶ci $0.7$ oznacza, ¿e algorytm ¶rednio myli³
+    siê o $0.7$ punktu.
+
+\afterpage{\blankpage}
 
 
 \chapter{Wspólna filtracja}\label{r:filtracja}    
@@ -259,46 +280,277 @@ rozk³adzie macierzy wed³ug warto¶ci osobliwych oraz wzmacnianych drzewach decyzy
     na przyk³ad rozk³adu macierzy u¿yteczno¶ci wed³ug warto¶ci osobliwych,
     maszyn wektorów wspieraj±cych, sieci Bayesowskie (TODO: bibliografia) oraz
     algorytm Expectation - Maximisation.
-    \item wspólna filtracja oparta na s±siedztwie
+    \item wspólna filtracja oparta na s±siedztwie - w tej metodzie ustala siê
+    funkcjê podobieñstwa, a nastêpnie u¿ywa siê jej do wyznaczenia zbioru \textit{s±siadów} -
+    u¿ytkowników b±d¼ przedmiotów charakteryzuj±cych siê podobnym schematem oceniania.
+    Ostateczna ocena wyznaczana jest tylko na podstawie ocen s±siadów.
     \end{itemize}
+        
+    Szczegó³ow± analizê filtracji opartej na modelu mo¿na znale¼æ w TODO. W dalszej czê¶ci pracy
+    autor skupi siê na podej¶ciu bazuj±cym na s±siedztwie.
     
     
 \section{Filtracja w oparciu o u¿ytkowników}
-    Najczê¶ciej u¿ywan± wersj± metody wspólnej filtracji jest podej¶cie oparte
-    na algorytmie najbli¿szych s±siadów. Schemat dzia³ania algorytmu przy wyznaczaniu
-    $r_ui$ polega kolejno na:
-    \begin{enumerate}
-        \item TODO
-        \item Wyborze $k$ u¿ytkowników o 
-    \end{enumerate}
-    Schemat algorytmu prezentuje rys 1 TODO
-\subsection{Miary podobieñstwa}\label{r:similarity}
+    Podej¶cie bazuj±ce na u¿ytkownikach by³o pierwsz± zautomatyzowan±
+    metod± wspólnej filtracji. Zosta³o wprowadzone pierwszy raz w ramach
+   \textit{GroupLens Research Project}
+   \footnote{Projekt badawczy prowadzony na Uniwersytecie Minnesota}
+   [TODO bibliografia].
+    
+    Za³ó¿my, ¿e dana jest funkcja podobieñstwa $s_{users}: U \times U \rightarrow \mathbb{R}$.
+    Schemat wyznaczania oceny u¿ytkownika $u$ dla przedmiotu $i$
+    jest nastêpuj±cy (TODO rys 1.):
+    \begin{algorithm}[ht]\label{alg}
+    \LinesNumbered{
+    \ForEach{$u' \in U \setminus \{u\}$}{
+        Oblicz $s_{users}(u, u')$\;
+    }        
+    Wyznacz $N_i(u)$ - zbiór s±siadów, którzy ocenili $i$\; \label{alg:select}
+    Wyznacz $r_{ui}$ na podstawie $\{r_{vi} \; | \; v \in N_i(u)\}1$\; \label{alg:result}
+    }
+    \end{algorithm}
+    
+    Najczê¶ciej spotykan± metod± wyznaczania zbioru s±siadów $N_i(u)$
+    (linia \ref{alg:select})
+    jest wybranie $k$ u¿ytkowników o najwiêkszej warto¶ci funkcji podobieñstwa,
+    gdzie $k$ jest parametrem algorytmu. Podstawow± metod± wyznaczania oceny
+    (linia \ref{alg:result}) jest z kolei wziêcie ¶redniej oceny ze zbioru s±siadów:
+     \begin{equation} \label{result:mean}
+        r_{ui} = \frac{1}{|N_i(u)|} \sum_{v \in N_i(u) r_{vi}} r_{vi}
+    \end{equation}
 
-\subsection{Filtracja w oparciu o przedmioty}
+\subsection{Wyznaczanie podobieñstwa miêdzy u¿ytkownikami} \label{subs:user_sim}
 
-\chapter{Wp³yw funkcji podobieñstwa na jako¶æ predykcji}\label{r:experiments}
+    Wybór odpowiedniej funkcji podobieñstwa $s_{users}$ jest najwa¿niejsz± czê¶ci± algorytmu
+    wspólnej filtracji. Odgrywa ona podwójn± rolê:
+    \begin{itemize}
+    \item umo¿liwia wyznaczenie odpowiedniego zbioru $N_i(u)$
+    \item w niektórych podej¶ciach warto¶ci funkcji $s_{users}$ pozwalaj± na dok³adniejsze
+    wyznaczenie ostatecznego wyniku (wiêcej w rozdziale \ref{r:optimization})
+    \end{itemize}
+    Poni¿ej znajduje siê przegl±d funkcji podobieñstwa najczê¶ciej opisywanych w literaturze.
+    
+\subsubsection{Miary podobieñstwa bazuj±ce na korelacji}
+ \subsubsection{Inne miary podobieñstwa}
+    \begin{itemize}
+    \item \textbf{Wspó³czynnik korelacji liniowej Pearsona}
+    
+    Wspó³czynnik Pearsona okre¶la poziom zale¿no¶ci liniowej miêdzy zmiennymi losowymi.
+    Estymator wspó³czynnika korelacji liniowej dla wektorów prób losowych
+    $x, y \in \mathbb{R}^n$ jest zdefiniowany nastêpuj±co:
+    \begin{equation}
+         pearson_{xy} = \frac{\sum_{i=1}^n(x_i - \mean{x})(y_i - \mean{y})}{\sqrt{\sum_{i=1}^n (x_i - \mean{x})^2}\sqrt{\sum_{i=1}^n (y_i - \mean{y})^2}},
+    \end{equation}
+    gdzie $\mean{x}$, $\mean{y}$ oznaczaj± warto¶ci ¶rednie z tych prób, tj
+    $\mean{x} = \frac{\sum_{i=1}^n x_i}{n}$, $\mean{y} = \frac{\sum_{i=1}^n y_i}{n}$.
+    Wspó³czynnik korelacji pearsona przyjmuje warto¶ci z przedzia³u $[-1,1]$. Warto¶ci
+    bliskie $1$ oznaczaj± siln± zale¿no¶æ liniow± miêdzy $x$ a $y$, warto¶ci bliskie zera - 
+    brak liniowej zale¿no¶ci, natomiast warto¶ci bliskie $-1$ - ujemn± liniow± zale¿no¶æ.
+    
+    W kontek¶cie systemów rekomendacyjnych, wspó³czynnik korelacji okre¶la siê jak poni¿ej:
+    \begin{equation}
+        pearson\_corr(u, v) = \frac{\sum_{i \in I_u \cap I_v}(r_{ui} - \mean{r}_u)(r_{vi} - \mean{r}_v)}{\sqrt{\sum_{i \in I_u \cap I_v}(r_{ui} - \mean{r}_u)^2}\sqrt{\sum_{i \in I_u \cap I_v}(r_{vi} - \mean{r}_v)}} \label{sim:pearson}
+    \end{equation}
+    Jest to najbardziej popularna funkcja do okre¶lania podobieñstwa miêdzy u¿ytkownikami.
+    Wad± korelacji Pearsona jest zwracanie wysokiego podobieñstwa dla par u¿ytkowników,
+    którzy ocenili niewielk± liczbê takich samych przedmiotów. Jednym z mo¿liwych
+    sposobów obej¶cia tego problemu jest ustalenie progu $T$ i przeskalowanie
+    wyniku, przyk³adowo przez pomno¿enie go przez $min(\frac{|I_u \cap I_v|}{T}, 1)$.
+    
+    \item \textbf{Zmodyfikowana korelacja Pearsona}
+    
+    Niektóre systemy interpretuj± medianê ze skali ocen $r_m$ jako neutralne nastawienie
+    u¿ytkownika wobec przedmiotu. Ekstrand i in. zaproponowali w [3] (TODO bibliografia)
+    modyfikacjê wspó³czynnika korelacji Pearsona, w której wektor ocen jest normalizowany
+    przy u¿yciu owej mediany zamiast ¶redniej:
+    \begin{equation}
+        median\_centered\_corr(u, v) = \frac{\sum_{i \in I_u \cap I_v}(r_{ui} - r_m)(r_{vi} - r_m)}{\sqrt{\sum_{i \in I_u \cap I_v}(r_{ui} - r_m)^2}\sqrt{\sum_{i \in I_u \cap I_v}(r_{vi} - r_m)}}
+    \end{equation}
+   
+    \item \textbf{Wspó³czynnik korelacji rang Spearmana}
+    
+    Podczas gdy wspó³czynnik Pearsona wykorzystuje bezpo¶rednie warto¶ci
+    ocen $r_{ui}$ do wyznaczenia korelacji, metoda Spearmana polega na przyznaniu
+    tym ocenom rang. Wektor ocen $r_u$ jest przekszta³cany w wektor rang w nastêpuj±cy
+    sposób: najwy¿ej oceniony przedmiot otrzymuje rangê $1$, kolejne przedmioty
+    otrzymuj± wy¿sze rangi. Przedmiotom z t± sam± ocen± przyznaje siê ¶redni± rangê
+    dla ich pozycji. Oznaczaj±c przez $k_{ui}$ rangê przyznan± przedmiotowi $i$
+    w kontek¶cie u¿ytkownika $u$, otrzymujemy wzór:
+    \begin{equation}
+        spearman\_corr(u, v) = \frac{\sum_{i \in I_u \cap I_v}(k_{ui} - \mean{k}_u)(k_{vi} - \mean{k}_v)}{\sqrt{\sum_{i \in I_u \cap I_v}(k_{ui} - \mean{k}_u)^2}\sqrt{\sum_{i \in I_u \cap I_v}(k_{vi} - \mean{k}_v)}}
+    \end{equation}
+        
+    G³ówn± zalet± wspó³czynnika Spearmana jest unikniêcie problemu normalizacji
+    ocen (wiêcej o normalizacji w rozdziale \ref{r:optimization}). Obliczanie rang wymaga
+    jednak dodatkowego kosztu.
+    
+    \item \textbf{Podobieñstwo cosinusowe}
+    
+    Cosinus k±ta miêdzy wektorami $x$, $y$ w przestrzeni euklidesowej $(V, < \cdot >)$
+    wyra¿a siê przez:
+    \begin{equation}
+        cos(x, y) = \frac{<x, y>}{\norm{x} \norm{y}}
+    \end{equation}
+    Dla wektorów z przestrzeni $\mathbb{R}^n$ ze standardowym iloczynem skalarnym,
+    im wiêksza warto¶æ bezwzglêdna cosinusa, tym mniejszy k±t miêdzy nimi,
+    co z kolei odpowiada intuicyjnie wiêkszemu "podobieñstwu" miêdzy wektorami.
+    
+    Ta intuicja le¿y u podstaw wykorzystania miary cosinusowe jako funkcji podobieñstwa,
+    definuj±c j± jak poni¿ej:
+    \begin{equation}
+        cosine(u, v) = \frac{r_u \cdot r_v}{\norm{r_u}_2 \norm{r_v}_2} \label{sim:cosine}
+    \end{equation}
+    
+    Wad± wydawaæ siê mo¿e reprezentowanie nieznanych ocen przez $0$, co czêsto
+    upodabnia brak oceny do oceny negatywnej. Co wiêcej, u¿ywanie tej funkcji
+    podobieñstwa nie bierze pod uwagê statystycznych ró¿nic miêdzy ocenami u¿ytkowników
+    (ró¿nych ¶rednich czy wariancji ocen).
+    Mimo wymienionych wad, podobieñstwo cosinusowe daje zaskakuj±co dobre wyniki w praktyce,
+    co poka¿± kolejne rozdzia³y.
+    \end{itemize}
+    
+\subsubsection{Inne miary podobieñstwa}
+    \begin{itemize}
+    
+    \item \textbf{Podobieñstwo Jaccarda}
+    
+    Wspó³czynnik podobieñstwa Jaccarda (inaczej: \textit{indeks Jaccarda}) mierzy podobieñstwo miêdzy dwoma zbiorami i jest zdefiniowany jako iloraz mocy przeciêcia
+    zbiorów i mocy sum tych zbiorów. W kontek¶cie systemów rekomendacji
+    wylicza siê go zatem nastêpuj±co:
+    \begin{equation}
+        jaccard(u, v) = \frac{|I_u \cap I_v|}{|I_u \cup I_v|} \label{sim:jaccard}
+    \end{equation}
+    Jako ¿e indeks Jaccarda ignoruje warto¶ci ocen, jego oczywist± wad± jest fakt utraty
+    informacji przy skalach ocen innych unarna.
+        
+    \item \textbf{Rozszerzone podobieñstwo Jaccarda}
+    
+    Jest to wersja podobieñstwa Jaccarda dla wektorów z $\mathbb{R}^n$:
+    \begin{equation}
+        extended\_jaccard(x, y) = \frac{x \cdot y}{\norm{x}_2^2 + \norm{y}_2^2 - x \cdot y},
+    \end{equation}
+    czyli u¿ywane jako miara podobieñstwa u¿ytkowników bêdzie mia³o postaæ:
+    \begin{equation}
+        extended\_jaccard(u, v) = \frac{r_u \cdot r_v}{\norm{r_u}_2^2 + \norm{r_v}_2^2 - r_u \cdot r_v}, \label{sim:ext_jaccard}
+    \end{equation}
+    
+    \item \textbf{Podobieñstwo euklidesowe}
+    
+    Odleg³o¶æ euklidesowa miêdzy
+    u¿ytkownikami okre¶lona jest w naturalny sposób przez:
+    \begin{equation}
+       d_2(u, v) = \sqrt{\sum_{i \in I_u \cap I_v} (r_{ui} - r_{vi})^2}.
+    \end{equation}
+    S± ró¿ne mo¿liwo¶ci przekszta³cenia tej miary odleg³o¶ci w funkcjê podobieñstwa
+    (id±c± w $[0, 1]$, gdzie 1 oznacza najwiêksze podobieñstwo).
+    Do najczê¶ciej u¿ywanych nale¿±:
+    \begin{equation}
+       euclidean1(u, v) = \frac{1}{1 + d_2(u, v)} \label{sim:euclidean1}
+    \end{equation}
+    oraz
+    \begin{equation}
+       euclidean2(u, v) = e^{-d_2(u, v)} \label{sim:euclidean2}
+    \end{equation}
+    TODO: przewaga drugiej
+    Te miary mo¿e byæ uogólniona poprzez u¿ycie odleg³o¶ci Minkowskiego:
+    \begin{equation}
+       d_p(u, v) = \bigg(\sum_{i \in I_u \cap I_v} |r_{ui} - r_{vi}|^p \bigg)^{\frac{1}{p}}
+    \end{equation}   
+     
+    \item \textbf{Ró¿nica ¶redniokwadratowa (ang. \textit{mean squared difference, MSD})}
+    
+    Podobn±, bazuj±c± na odleg³o¶ci miêdzy ocenami funkcj± podobieñstwa jest ró¿nica
+    ¶redniokwadratowa. Definiuje siê j± jako odwrotno¶æ ¶redniego kwadratu ró¿nicy
+    miêdzy ocenami u¿ytkowników $u$ i $v$:
+    \begin{equation}
+        MSD(u, v) = \frac{|I_u \cap I_v |}{\sum_{i \in I_u \cap I_v} (r_{ui} - r_{vi})^2}
+    \end{equation}
+    
+    Ró¿nica ¶redniokwadratowa, podobnie jak podobieñstwo euklidesowe,
+    nie odzwierciedla ujemnej korelacji miêdzy u¿ytkownikami. Posiadanie informacji
+    o takiej korelacji mo¿e czasami zwiêkszyæ jako¶æ predykcji (TODO bibliografia).
+    \end{itemize}
 
-\chapter{Wyznaczanie s±siedztwa w algorytmie kNN}\label{r:neighbourhood_size}
+\section{Filtracja w oparciu o przedmioty}
+    Obok wielu zalet, wspólna filtracja bazuj±ca na u¿ytkownikach ma jedn± powa¿n±
+    wadê - brak skalowalno¶ci. Wyznaczanie zbioru $N_i(u)$ jest operacj± o z³o¿ono¶ci
+    $\mathcal{O}(|U|)$ (lub gorszej - bezpo¶rednie wyliczanie warto¶ci funkcji podobieñstwa
+    $s$ wymaga czasu $\mathcal{O}(|U||I|)$). W dobie serwisów maj±cych setki milionów
+    u¿ytkowników potrzebne by³o bardziej skalowalne podej¶cie.
+    
+    Naturalnym pomys³em wydawa³o siê zastosowanie tej samej metody,
+    zmodyfikowanej przez zast±pienie u¿ytkowników przedmiotami. Zamiast szukania
+    podobieñstw miêdzy zachowaniami u¿ytkowników, do wyznaczania rekomendacji
+    wykorzystywane s± podobieñstwa miêdzy schematami oceniania przedmiotów.
+    Je¶li dwa przedmioty $i$ i $j$ cieszy³y siê podobn± opini± w¶ród
+    u¿ytkowników, mo¿na uznaæ je za podobne i wykorzystaæ ocenê, jak± u¿ytkownik $u$
+    wystawi³ przedmiotowi $i$ do predykcji oceny dla przedmiotu $j$.
+    Warto zauwa¿yæ, ¿e ta wersja metody \textit{collaborative filtering} jest podobna
+    do rekomendacji opartej na zawarto¶ci, z t± ró¿nic±, ¿e
+    do wyznaczania podobieñstwa u¿ywa siê preferencji u¿ytkowników zamiast cech
+    przedmiotów.
+    
+    Zamiast funkcji $s_{users}$ mamy zatem funkcjê
+    $s_{items}: I \times I \rightarrow \mathbb{R}$, na której podstawie
+    wyznaczamy zbiór $N_u(i)$ przedmiotów najbardziej podobnych do $i$
+    ocenionych przez $u$. Porównanie z³o¿ono¶ci czasowej i obliczeniowej obu
+    sposobów wspólnej filtracji przedstawia tabela \ref{t:complexities}.
+\hfill \\  
+\begin{table}[ht]
+\centering
+\captionsetup{justification=centering}
+\captionsetup{width=0.8\textwidth}
+\caption{Porównanie z³o¿ono¶ci pamiêciowej i obliczeniowej obu \\wersji wspólnej filtracji} \label{t:complexities}
+\label{my-label}
+\begin{tabular}{|l|l|l|l|}
+\hline
+            & Pamiêæ               & Czas uczenia            & Czas zapytania     \\ \hline
+U¿ytkownicy & $\mathcal{O}(|U|^2)$ & $\mathcal{O}(|U|^2|I|)$ & $\mathcal{O}(|U|)$ \\ \hline
+Przedmioty  & $\mathcal{O}(|I|^2)$ & $\mathcal{O}(|I|^2|U|)$ & $\mathcal{O}(|I|)$ \\ \hline
+\end{tabular}
+\end{table}
 
-\chapter{Metody wyznaczania oceny na podstawie ocen s±siadów}\label{r:result_calc}
+\hfill \\
+Zak³adaj±c, ¿e $|U| \gg |I|$ (co jest prawd± w przypadku wiêkszo¶ci serwisów), ³atwo
+zauwa¿yæ, ¿e "przedmiotowe" podej¶cie do wspólnej filtracji pozwala w znacz±cy sposób
+zmniejszyæ z³o¿ono¶æ zarówno czasow±, jak i pamiêciow± algorytmu. Warto przy tym
+zaznaczyæ, ¿e macierz u¿yteczno¶ci jest czêsto macierz± rzadk±, co znacznie przyspiesza
+obliczanie warto¶ci funkcji podobieñstwa i co za tym idzie, czyni metodê wspólnej filtracji
+opart± na s±siedztwie jeszcze bardziej skalowaln±.
+
+\subsection{Wyznaczanie podobieñstwa miêdzy przedmiotami} \label{subs:item_sim}
+
+Nietrudno zauwa¿yæ, ¿e wymienione w sekcji \ref{subs:user_sim} funkcje podobieñstwa
+mog± byæ z powodzeniem uogólnione i zastosowane przy wyznaczaniu podobieñstwa miêdzy
+przedmiotami. Przyk³adowo, wspó³czynnik korelacji liniowej Pearsona (równanie \ref{sim:pearson}) dla przedmiotów mo¿na
+zdefiniowaæ jako:
+\begin{equation}
+  pearson\_corr(i, j) = \frac{\sum_{u \in U_i \cap U_j}(r_{ui} - \mean{c}_i)(r_{uj} - \mean{c}_j)}{\sqrt{\sum_{u \in U_i \cap U_j}(r_{ui} - \mean{c}_i)^2}\sqrt{\sum_{u \in U_i \cap U_v}(r_{uj} - \mean{c}_j)}}
+\end{equation}
+Analogicznie zdefiniowaæ mo¿na pozosta³e miary.
+
+Miarê podobieñstwa przeznaczon± specjalnie dla przedmiotów
+zaproponowali Sarwar i in. w [4]. (TODO bibliografia) Bazuje ona na obserwacji,
+i¿ ró¿nice w skalach ocen poszczególnych u¿ytkowników czêsto s± znacznie
+wyra¼niejsze ni¿ w przypadku przedmiotów. Dlatego przy obliczaniu podobieñstwa
+miêdzy przedmiotami wiêkszy sens mo¿e mieæ normalizacja oceny wzglêdem ¶redniej
+oceny \textit{u¿ytkownika} zamiast \textit{przedmiotu}. Formalnie ta miara, zwana
+\textbf{dopasowanym podobieñstwem cosinusowym (ang. \textit{Adjusted Cosine Similarity})} okre¶lona jest jako:
+\begin{equation}
+adjusted\_cosine\_sim(i, j) = \frac{\sum_{u \in U_i \cap U_j}(r_{ui} - \mean{r}_u)(r_{uj} - \mean{r}_u)}{\sqrt{\sum_{u \in U_i \cap U_j}(r_{ui} - \mean{r}_u)^2}\sqrt{\sum_{u \in U_i \cap U_v}(r_{uj} - \mean{r}_u)}} \label{sim:adjusted_cos}
+\end{equation}
+
+W niektórych przypadkach tak okre¶lona funkcja podobieñstwa daje lepsze wyniki ni¿
+zwykle u¿ywane miary (TODO bibliografia).
+
+\afterpage{\blankpage}
+
+
+\chapter{Wp³yw miary podobieñstwa na jako¶æ predykcji}
+
+\chapter{Optymalizacja algorytmu opartego na s±siedztwie}\label{r:optimization}
 
 \chapter{Podsumowanie}
-
-W~pracy przedstawiono pierwsz± efektywn± implementacjê blabalizatora
-ró¿nicowego.  Umiejêtno¶æ wykonania blabalizy numerycznej dla danych
-,,z ¿ycia'' stanowi dla blabalii fetorycznej podobny prze³om, jak dla
-innych dziedzin wiedzy stanowi³o og³oszenie teorii Miko³aja Kopernika
-i~Gryzybór G³ombaskiego.  Z~pewno¶ci± w~rozpocznynaj±cym siê XXI wieku
-bêdziemy obserwowaæ rozkwit blabalii fetorycznej.
-
-Trudno przewidzieæ wszystkie nowe mo¿liwo¶ci, ale te co bardziej
-oczywiste mo¿na wskazaæ ju¿ teraz.  S± to:
-\begin{itemize}
-\item degryzmolizacja wieñców telecentrycznych,
-\item realizacja zimnej reakcji lambliarnej,
-\item loty celulityczne,
-\item dok³adne obliczenie wieku Wszech¶wiata.
-\end{itemize}
 
 \section{Perspektywy wykorzystania w~przemy¶le}
 
@@ -314,39 +566,6 @@ utajnieniu.
 \bibitem[Blar16]{eb1} Elizjusz Blarbarucki, \textit{O pewnych
     aspektach pewnych aspektów}, Astrolog Polski, Zeszyt 16, Warszawa
   1916.
-
-\bibitem[Fif00]{ffgg} Filigran Fifak, Gizbert Gryzogrzechotalski,
-  \textit{O blabalii fetorycznej}, Materia³y Konferencji Euroblabal
-  2000.
-
-\bibitem[Fif01]{ff-sr} Filigran Fifak, \textit{O fetorach
-    $\sigma$-$\rho$}, Acta Fetorica, 2001.
-
-\bibitem[G³omb04]{grglo} Gryzybór G³ombaski, \textit{Parazytonikacja
-    blabiczna fetorów --- nowa teoria wszystkiego}, Warszawa 1904.
-
-\bibitem[Hopp96]{hopp} Claude Hopper, \textit{On some $\Pi$-hedral
-    surfaces in quasi-quasi space}, Omnius University Press, 1996.
-
-\bibitem[Leuk00]{leuk} Lechoslav Leukocyt, \textit{Oval mappings ab ovo},
-  Materia³y Bia³ostockiej Konferencji Hodowców Drobiu, 2000.
-
-\bibitem[Rozk93]{JR} Josip A.~Rozkosza, \textit{O pewnych w³asno¶ciach
-    pewnych funkcji}, Pó³nocnopomorski Dziennik Matematyczny 63491
-  (1993).
-
-\bibitem[Spy59]{spyrpt} Mrowclaw Spyrpt, \textit{A matrix is a matrix
-    is a matrix}, Mat. Zburp., 91 (1959) 28--35.
-
-\bibitem[Sri64]{srinis} Rajagopalachari Sriniswamiramanathan,
-  \textit{Some expansions on the Flausgloten Theorem on locally
-    congested lutches}, J. Math.  Soc., North Bombay, 13 (1964) 72--6.
-
-\bibitem[Whi25]{russell} Alfred N. Whitehead, Bertrand Russell,
-  \textit{Principia Mathematica}, Cambridge University Press, 1925.
-
-\bibitem[Zen69]{heu} Zenon Zenon, \textit{U¿yteczne heurystyki
-    w~blabalizie}, M³ody Technik, nr~11, 1969.
 
 \end{thebibliography}
 
