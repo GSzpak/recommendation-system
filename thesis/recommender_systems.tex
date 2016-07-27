@@ -221,7 +221,6 @@ rozk³adzie macierzy wed³ug warto¶ci osobliwych oraz wzmacnianych drzewach decyzy
       Taka macierz nazywana bêdzie \textbf{macierz± u¿yteczno¶ci} lub \textbf{macierz± ocen}.
     \end{defi}
     Przyk³ad macierzy u¿yteczno¶ci prezentuje tabela \ref{t:ratings_matrix}:
-    \hfill \\
 
 \begin{table}[ht]
 \centering
@@ -597,11 +596,13 @@ MAE oraz RMSE.
 Zbiór s±siadów wyznaczany by³ przez wziêcie 10 najbardziej podobnych u¿ytkowników b±d¼
 przedmiotów. Ostateczna ocena wyliczana by³a jako ¶rednia z ocen s±siadów (zgodnie ze wzorem \ref{result:mean}).
 
-Lalala
+Aby uzyskaæ punkt odniesienia, dla obydwu podej¶æ zosta³ równie¿ dodany wynik
+predyktora bazowego (\textit{baseline}) - w przypadku u¿ytkowników zwraca³ on ¶redni±
+ocenê dla danego u¿ytkownika ($r_{ui} = \mean{r}_u$), a w przypadku przedmiotów -
+¶redni± ocenê wystawion± przedmiotowi ($r_{ui} = \mean{c}_i$).
 
-lala
 \section{Wyniki}
-Wyniki w zale¿no¶ci od postaci funkcji podobieñstwa $s_{users}$ prezentuje tabela
+Wyniki dla metody bazuj±cej na u¿ytkownikach w zale¿no¶ci od postaci funkcji podobieñstwa $s_{users}$ prezentuje tabela
 \ref{t:exp_users}.
 
 \begin{table}[ht]
@@ -613,6 +614,7 @@ Wyniki w zale¿no¶ci od postaci funkcji podobieñstwa $s_{users}$ prezentuje tabel
 \begin{tabular}{|c|c|c|}
 \hline
                          & MAE & RMSE \\ \hline
+\textbf{$baseline$}      & \textbf{0.828} & \textbf{1.031} \\ \hline
 $pearson\_corr$          & 5   & 1    \\ \hline
 $median\_centered\_corr$ & 1   & 5    \\ \hline
 $spearman\_rank\_corr$   & 2   & ?    \\ \hline
@@ -626,7 +628,7 @@ $MSD$                    &     &      \\ \hline
 \end{table}
 
 \hfill \\
-Wyniki w zale¿no¶ci od postaci funkcji podobieñstwa $s_{items}$ prezentuje tabela
+Wyniki dla metody bazuj±cej na przedmiotach w zale¿no¶ci od postaci funkcji podobieñstwa $s_{items}$ prezentuje tabela
 \ref{t:exp_items}.
 
 \begin{table}[ht]
@@ -638,6 +640,7 @@ Wyniki w zale¿no¶ci od postaci funkcji podobieñstwa $s_{items}$ prezentuje tabel
 \begin{tabular}{|c|c|c|}
 \hline
                          & MAE & RMSE \\ \hline
+\textbf{$baseline$}      & \textbf{0.803} & \textbf{1.000} \\ \hline
 $pearson\_corr$          & 5   & 1    \\ \hline
 $median\_centered\_corr$ & 1   & 5    \\ \hline
 $spearman\_rank\_corr$   & 2   & ?    \\ \hline
