@@ -6,7 +6,7 @@
 \contentsline {chapter}{\numberline {2}Formalizacja problemu rekomendacji}{9}
 \contentsline {section}{\numberline {2.1}Podstawowe poj\k ecia}{9}
 \contentsline {section}{\numberline {2.2}Oznaczenia}{9}
-\contentsline {section}{\numberline {2.3}Formalna definicja problemu}{9}
+\contentsline {section}{\numberline {2.3}Formalna definicja problemu}{10}
 \contentsline {chapter}{\numberline {3}Wsp\'olna filtracja}{11}
 \contentsline {section}{\numberline {3.1}Filtracja w oparciu o u\.zytkownik\'ow}{11}
 \contentsline {subsection}{\numberline {3.1.1}Wyznaczanie podobie\'nstwa mi\k edzy u\.zytkownikami}{12}
@@ -16,6 +16,11 @@
 \contentsline {section}{\numberline {3.2}Filtracja w oparciu o przedmioty}{15}
 \contentsline {subsection}{\numberline {3.2.1}Wyznaczanie podobie\'nstwa mi\k edzy przedmiotami}{15}
 \contentsline {chapter}{\numberline {4}Wp\IeC {\l }yw miary podobie\'nstwa na jako\'s\'c predykcji}{17}
+\contentsline {section}{\numberline {4.1}Opis eksperymentu}{17}
+\contentsline {subsection}{\numberline {4.1.1}Opis zbioru danych}{17}
+\contentsline {subsection}{\numberline {4.1.2}Spos\'ob przeprowadzenia eksperymentu}{17}
+\contentsline {section}{\numberline {4.2}Wyniki}{18}
+\contentsline {section}{\numberline {4.3}Wnioski}{18}
 \contentsline {chapter}{\numberline {5}Optymalizacja algorytmu opartego na s\k asiedztwie}{19}
 \contentsline {chapter}{\numberline {6}Podsumowanie}{21}
 \contentsline {section}{\numberline {6.1}Perspektywy wykorzystania w\nobreakspace {}przemy\'sle}{21}

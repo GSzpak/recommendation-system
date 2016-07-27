@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.6)  27 JUL 2016 18:41
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.6)  28 JUL 2016 00:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -321,6 +321,11 @@ LaTeX Font Info:    External font `plex10' loaded for size
 
 ]
 Rozdzia\PlPrIeC {\l } 2.
+
+Underfull \hbox (badness 10000) in paragraph at lines 223--225
+
+ []
+
 [9] [10] [10
 
 ]
@@ -329,52 +334,49 @@ Rozdzia\PlPrIeC {\l } 3.
 
 ]
 Rozdzia\PlPrIeC {\l } 4.
-[17] [18
-
-]
+[17] [18]
 Rozdzia\PlPrIeC {\l } 5.
-[19] [20
+[19
+
+] [20
 
 ]
 Rozdzia\PlPrIeC {\l } 6.
 [21] [22
 
-] [23] (./recommender_systems.aux)
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
- ) 
+] [23] (./recommender_systems.aux) ) 
 Here is how much of TeX's memory you used:
- 3991 strings out of 493089
- 57351 string characters out of 6134843
+ 3995 strings out of 493089
+ 57413 string characters out of 6134843
  138821 words of memory out of 5000000
- 7439 multiletter control sequences out of 15000+600000
+ 7443 multiletter control sequences out of 15000+600000
  21481 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  36i,12n,38p,294b,406s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/pl/plrm.enc}{/usr/local/t
-exlive/2015/texmf-dist/fonts/enc/dvips/pl/plms.enc}{/usr/local/texlive/2015/tex
-mf-dist/fonts/enc/dvips/pl/plmi.enc}{/usr/local/texlive/2015/texmf-dist/fonts/e
-nc/dvips/pl/plme.enc}{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/pl/pli
-t.enc}</usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
-.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/symbols/ms
-bm10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/pl/plbx10.pfb><
-/usr/local/texlive/2015/texmf-dist/fonts/type1/public/pl/plbx12.pfb></usr/local
-/texlive/2015/texmf-dist/fonts/type1/public/pl/plbx8.pfb></usr/local/texlive/20
-15/texmf-dist/fonts/type1/public/pl/plbxti10.pfb></usr/local/texlive/2015/texmf
--dist/fonts/type1/public/pl/plex10.pfb></usr/local/texlive/2015/texmf-dist/font
-s/type1/public/pl/plmi10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/pu
-blic/pl/plmi6.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/pl/plm
-i8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/pl/plr10.pfb></us
-r/local/texlive/2015/texmf-dist/fonts/type1/public/pl/plr12.pfb></usr/local/tex
-live/2015/texmf-dist/fonts/type1/public/pl/plr17.pfb></usr/local/texlive/2015/t
-exmf-dist/fonts/type1/public/pl/plr6.pfb></usr/local/texlive/2015/texmf-dist/fo
-nts/type1/public/pl/plr8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/pu
-blic/pl/plr9.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/pl/plsy
-10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/pl/plsy6.pfb></us
-r/local/texlive/2015/texmf-dist/fonts/type1/public/pl/plsy8.pfb></usr/local/tex
-live/2015/texmf-dist/fonts/type1/public/pl/plti10.pfb>
-Output written on recommender_systems.pdf (27 pages, 180909 bytes).
+{/usr/local/texlive/2015/texmf-dist/fonts/e
+nc/dvips/pl/plrm.enc}{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/pl/plm
+s.enc}{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/pl/plmi.enc}{/usr/loc
+al/texlive/2015/texmf-dist/fonts/enc/dvips/pl/plme.enc}{/usr/local/texlive/2015
+/texmf-dist/fonts/enc/dvips/pl/plit.enc}</usr/local/texlive/2015/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2015/texmf-dist/font
+s/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2015/texmf-dist/
+fonts/type1/public/pl/plbx10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type
+1/public/pl/plbx12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/p
+l/plbx8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/pl/plbxti10.
+pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/pl/plex10.pfb></usr/
+local/texlive/2015/texmf-dist/fonts/type1/public/pl/plmi10.pfb></usr/local/texl
+ive/2015/texmf-dist/fonts/type1/public/pl/plmi6.pfb></usr/local/texlive/2015/te
+xmf-dist/fonts/type1/public/pl/plmi8.pfb></usr/local/texlive/2015/texmf-dist/fo
+nts/type1/public/pl/plr10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/p
+ublic/pl/plr12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/pl/pl
+r17.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/pl/plr6.pfb></us
+r/local/texlive/2015/texmf-dist/fonts/type1/public/pl/plr8.pfb></usr/local/texl
+ive/2015/texmf-dist/fonts/type1/public/pl/plr9.pfb></usr/local/texlive/2015/tex
+mf-dist/fonts/type1/public/pl/plsy10.pfb></usr/local/texlive/2015/texmf-dist/fo
+nts/type1/public/pl/plsy6.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/p
+ublic/pl/plsy8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/pl/pl
+ti10.pfb>
+Output written on recommender_systems.pdf (27 pages, 186403 bytes).
 PDF statistics:
  177 PDF objects out of 1000 (max. 8388607)
  126 compressed objects within 2 object streams

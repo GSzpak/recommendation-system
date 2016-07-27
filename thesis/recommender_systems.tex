@@ -212,14 +212,38 @@ rozk³adzie macierzy wed³ug warto¶ci osobliwych oraz wzmacnianych drzewach decyzy
     Unarne oceny, jak na przyk³ad informacja, czy u¿ytkownik kupi³ dany przedmiot,
     s± z kolei zwykle wykorzystywane w sklepach internetowych.
     
-    \begin{defi}\label{macierz}
-      Zbiór wszystkich trójek $(\textit{U¿ytkownik, przedmiot, ocena})$ tworzy macierz,
-      któr± nazwiemy \textbf{macierz± u¿yteczno¶ci} lub \textbf{macierz± ocen}.
-    \end{defi}
-    Przyk³ad macierzy u¿yteczno¶ci prezentuje tabela 1 TODO
-
 \section{Oznaczenia}    
-    Niech $U = \{u_1,u_2,\cdots,u_k\}$ oznacza zbiór u¿ytkowników, $I = \{i_1,i_2,\cdots,i_l\}$ - zbiór przedmiotów, a $R= \{r_1,r_2,\cdots,r_m\}$ - zbiór ocen. Do ka¿dego u¿ytkownika $u$ przypisany jest zbiór
+    Niech $U = \{u_1,u_2,\cdots,u_k\}$ oznacza zbiór u¿ytkowników, $I = \{i_1,i_2,\cdots,i_l\}$ - zbiór przedmiotów, a $R= \{r_1,r_2,\cdots,r_m\}$ - zbiór ocen.
+    
+    \begin{defi}\label{macierz}
+      Zbiór $S \subset U \times I \times R$ tworzy macierz o wymiarach $|U| \times |I|$,
+      w której element $r$ o wspó³rzêdnych $(x, y)$ odpowiada trójce $(u_x, i_y, r)$.
+      Taka macierz nazywana bêdzie \textbf{macierz± u¿yteczno¶ci} lub \textbf{macierz± ocen}.
+    \end{defi}
+    Przyk³ad macierzy u¿yteczno¶ci prezentuje tabela \ref{t:ratings_matrix}:
+    \hfill \\
+
+\begin{table}[ht]
+\centering
+\captionsetup{justification=centering}
+\captionsetup{width=0.8\textwidth}
+\caption{Przyk³adowa macierz ocen}
+\label{t:ratings_matrix}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+             & Matrix & Szklana Pu³apka & Titanic & Forrest Gump & Wall-E \\ \hline
+U¿ytkownik A & 5      & 1               & ?       & 2            & 2      \\ \hline
+U¿ytkownik B & 1      & 5               & 2       & 5            & 5      \\ \hline
+U¿ytkownik C & 2      & ?               & 3       & 5            & 4      \\ \hline
+U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hline
+\end{tabular}
+\end{table}    
+    \hfill \\
+    Parom $(u, i)$, dla których u¿ytkownik $u$ nie oceni³ jeszcze przedmiotu $i$,
+    odpowiadaj± puste pola w macierzy ocen. Te pola s± zaznaczone symbolem "?".
+    
+    
+    Do ka¿dego u¿ytkownika $u$ przypisany jest zbiór
     $I_u \subseteq I$ ocenionych przez niego przedmiotów. Analogicznie, $U_i \subseteq U$
     oznaczaæ bêdzie zbiór u¿ytkowników, którzy ocenili przedmiot $i$. Niech dalej $M$
     reprezentuje macierz u¿yteczno¶ci, gdzie $r_{ui}$ jest ocen± udzielon±
@@ -377,13 +401,16 @@ rozk³adzie macierzy wed³ug warto¶ci osobliwych oraz wzmacnianych drzewach decyzy
     dla ich pozycji. Oznaczaj±c przez $k_{ui}$ rangê przyznan± przedmiotowi $i$
     w kontek¶cie u¿ytkownika $u$, otrzymujemy wzór:
     \begin{equation}
-        spearman\_corr(u, v) = \frac{\sum_{i \in I_u \cap I_v}(k_{ui} - \mean{k}_u)(k_{vi} - \mean{k}_v)}{\sqrt{\sum_{i \in I_u \cap I_v}(k_{ui} - \mean{k}_u)^2}\sqrt{\sum_{i \in I_u \cap I_v}(k_{vi} - \mean{k}_v)}}
+        spearman\_rank\_corr(u, v) = \frac{\sum_{i \in I_u \cap I_v}(k_{ui} - \mean{k}_u)(k_{vi} - \mean{k}_v)}{\sqrt{\sum_{i \in I_u \cap I_v}(k_{ui} - \mean{k}_u)^2}\sqrt{\sum_{i \in I_u \cap I_v}(k_{vi} - \mean{k}_v)}}
     \end{equation}
         
     G³ówn± zalet± wspó³czynnika Spearmana jest unikniêcie problemu normalizacji
     ocen (wiêcej o normalizacji w rozdziale \ref{r:optimization}). Obliczanie rang wymaga
     jednak dodatkowego kosztu.
+    \end{itemize}
     
+\subsubsection{Inne miary podobieñstwa}
+    \begin{itemize}
     \item \textbf{Podobieñstwo cosinusowe}
     
     Cosinus k±ta miêdzy wektorami $x$, $y$ w przestrzeni euklidesowej $(V, < \cdot >)$
@@ -406,11 +433,7 @@ rozk³adzie macierzy wed³ug warto¶ci osobliwych oraz wzmacnianych drzewach decyzy
     podobieñstwa nie bierze pod uwagê statystycznych ró¿nic miêdzy ocenami u¿ytkowników
     (ró¿nych ¶rednich czy wariancji ocen).
     Mimo wymienionych wad, podobieñstwo cosinusowe daje zaskakuj±co dobre wyniki w praktyce,
-    co poka¿± kolejne rozdzia³y.
-    \end{itemize}
-    
-\subsubsection{Inne miary podobieñstwa}
-    \begin{itemize}
+    co poka¿e rozdzia³ \ref{r:experiment}.
     
     \item \textbf{Podobieñstwo Jaccarda}
     
@@ -501,7 +524,6 @@ rozk³adzie macierzy wed³ug warto¶ci osobliwych oraz wzmacnianych drzewach decyzy
 \captionsetup{justification=centering}
 \captionsetup{width=0.8\textwidth}
 \caption{Porównanie z³o¿ono¶ci pamiêciowej i obliczeniowej obu \\wersji wspólnej filtracji} \label{t:complexities}
-\label{my-label}
 \begin{tabular}{|l|l|l|l|}
 \hline
             & Pamiêæ               & Czas uczenia            & Czas zapytania     \\ \hline
@@ -537,7 +559,7 @@ miêdzy przedmiotami wiêkszy sens mo¿e mieæ normalizacja oceny wzglêdem ¶redniej
 oceny \textit{u¿ytkownika} zamiast \textit{przedmiotu}. Formalnie ta miara, zwana
 \textbf{dopasowanym podobieñstwem cosinusowym (ang. \textit{Adjusted Cosine Similarity})} okre¶lona jest jako:
 \begin{equation}
-adjusted\_cosine\_sim(i, j) = \frac{\sum_{u \in U_i \cap U_j}(r_{ui} - \mean{r}_u)(r_{uj} - \mean{r}_u)}{\sqrt{\sum_{u \in U_i \cap U_j}(r_{ui} - \mean{r}_u)^2}\sqrt{\sum_{u \in U_i \cap U_v}(r_{uj} - \mean{r}_u)}} \label{sim:adjusted_cos}
+adjusted\_cosine(i, j) = \frac{\sum_{u \in U_i \cap U_j}(r_{ui} - \mean{r}_u)(r_{uj} - \mean{r}_u)}{\sqrt{\sum_{u \in U_i \cap U_j}(r_{ui} - \mean{r}_u)^2}\sqrt{\sum_{u \in U_i \cap U_v}(r_{uj} - \mean{r}_u)}} \label{sim:adjusted_cos}
 \end{equation}
 
 W niektórych przypadkach tak okre¶lona funkcja podobieñstwa daje lepsze wyniki ni¿
@@ -545,8 +567,91 @@ zwykle u¿ywane miary (TODO bibliografia).
 
 \afterpage{\blankpage}
 
+\chapter{Wp³yw miary podobieñstwa na jako¶æ predykcji} \label{r:experiment}
 
-\chapter{Wp³yw miary podobieñstwa na jako¶æ predykcji}
+W poni¿szym rozdziale przedstawione zostan± wyniki eksperymentu, maj±cego na celu
+ukazanie, jak wybór metody wspólnej filtracji oraz funkcji podobieñstwa wp³ywa
+na jako¶æ systemu rekomendacji.
+
+\section{Opis eksperymentu} \label{s:experiment}
+\subsection{Opis zbioru danych}
+
+W pracy wykorzystany zosta³ zbiór ocen filmów MovieLens \footnote{https://movielens.org/}. Zbiór sk³ada siê ze 100,000 ocen udzielonych 1682 filmom przez 943
+u¿ytkowników, przy czym ka¿dy u¿ytkownik oceni³ co najmniej 20 filmów.
+Skala ocen jest piêciopunktowa. Obok samych ocen, zbiór zawiera³ podstawowe informacje na temat filmów (m.in. tytu³, gatunek, datê wydania) oraz u¿ytkowników (wiek, p³eæ, zawód,
+kod pocztowy). Dane zbierane
+by³y w ramach wspomnianego wcze¶niej projektu GroupLens przez 7 miesiêcy.
+
+\subsection{Sposób przeprowadzenia eksperymentu}
+
+Jako¶æ predykcji sprawdzana by³a przy u¿yciu piêciowarstwowej walidacji krzy¿owej.
+Zbiór ocen by³ podzielony na 5 równolicznych, roz³±cznych podzbiorów - skorzystano 
+z gotowego podzia³u dostarczonego razem ze zbiorem danych przez zespó³ GroupLens.
+Nastêpnie kolejno ka¿dy z podzbiorów s³u¿y³ jako zbiór testowy, a cztery pozosta³e
+podzbiory tworzy³y zbiór treningowy. Ostateczny wynik jest ¶redni± z wyników piêciu
+przeprowadzonych analiz.
+
+Do oceny jako¶ci predykcji u¿yto funkcji straty opisanych w rozdziale \ref{r:definitions} -
+MAE oraz RMSE.
+
+Zbiór s±siadów wyznaczany by³ przez wziêcie 10 najbardziej podobnych u¿ytkowników b±d¼
+przedmiotów. Ostateczna ocena wyliczana by³a jako ¶rednia z ocen s±siadów (zgodnie ze wzorem \ref{result:mean}).
+
+Lalala
+
+lala
+\section{Wyniki}
+Wyniki w zale¿no¶ci od postaci funkcji podobieñstwa $s_{users}$ prezentuje tabela
+\ref{t:exp_users}.
+
+\begin{table}[ht]
+\centering
+\captionsetup{justification=centering}
+\captionsetup{width=0.8\textwidth}
+\caption{Wyniki dla podej¶cia opartego na u¿ytkownikach}
+\label{t:exp_users}
+\begin{tabular}{|c|c|c|}
+\hline
+                         & MAE & RMSE \\ \hline
+$pearson\_corr$          & 5   & 1    \\ \hline
+$median\_centered\_corr$ & 1   & 5    \\ \hline
+$spearman\_rank\_corr$   & 2   & ?    \\ \hline
+$cosine$                 & 4   & 3    \\ \hline
+$jaccard$                &     &      \\ \hline
+$extended\_jaccard$      &     &      \\ \hline
+$euclidean1$             &     &      \\ \hline
+$euclidean2$             &     &      \\ \hline
+$MSD$                    &     &      \\ \hline
+\end{tabular}
+\end{table}
+
+\hfill \\
+Wyniki w zale¿no¶ci od postaci funkcji podobieñstwa $s_{items}$ prezentuje tabela
+\ref{t:exp_items}.
+
+\begin{table}[ht]
+\centering
+\captionsetup{justification=centering}
+\captionsetup{width=0.8\textwidth}
+\caption{Wyniki dla podej¶cia opartego na przedmiotach}
+\label{t:exp_items}
+\begin{tabular}{|c|c|c|}
+\hline
+                         & MAE & RMSE \\ \hline
+$pearson\_corr$          & 5   & 1    \\ \hline
+$median\_centered\_corr$ & 1   & 5    \\ \hline
+$spearman\_rank\_corr$   & 2   & ?    \\ \hline
+$cosine$                 & 4   & 3    \\ \hline
+$jaccard$                &     &      \\ \hline
+$extended\_jaccard$      &     &      \\ \hline
+$euclidean1$             &     &      \\ \hline
+$euclidean2$             &     &      \\ \hline
+$MSD$                    &     &      \\ \hline
+$adjusted\_cosine$       &     &      \\ \hline
+\end{tabular}
+\end{table}
+
+\section{Wnioski}
 
 \chapter{Optymalizacja algorytmu opartego na s±siedztwie}\label{r:optimization}
 
