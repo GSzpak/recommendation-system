@@ -134,11 +134,25 @@ W zale¿no¶ci od zastosowanych metod, systemy rekomendacyjne dzieli siê na 4 kate
     Podej¶cie wspólnej filtracji polega na wyznaczaniu preferencji danego u¿ytkownika
     bazuj±c na preferencjach u¿ytkowników o podobnym gu¶cie. Podobieñstwo to jest
     wyznaczane na podstawie wcze¶niejszych zachowañ u¿ytkownika. Ze wzglêdu na
-    prostotê implementacji i wysok± wydajno¶æ, wspólne filtrowanie
+    prostotê implementacji i wysok± jako¶æpredykcji, wspólne filtrowanie
     jest najbardziej popularn± i najczê¶ciej stosowan± technikê rekomendacji.
     Dodatkow± zalet± tej metody jest jej elastyczno¶æ i mo¿liwo¶æ stosowania w wielu
     dziedzinach - system oparty na wspólnej filtracji jest w stanie udzielaæ dok³adnych
-    rekomendacji bez potrzeby "zrozumienia" samego przedmiotu.
+    rekomendacji bez potrzeby "zrozumienia" samego przedmiotu. Niepotrzebne s±
+    dodatkowe dane na temat u¿ytkowników czy przedmiotów - wystarczy
+    sama historia ocen.
+    
+    Wady wspólnej filtracji s± natomiast nastêpuj±ce:
+    \begin{itemize}
+    \item wprowadzanie nowego u¿ytkownika lub przedmiotu do systemu (ang.
+    \textit{cold start problem})
+    \item ciê¿ko jest uzyskaæ sensowne rekomendacje dla u¿ytkownika o unikalnych 
+    preferencjach
+    \item rzadko¶æ danych - pojedynczy u¿ytkownik ocenia zwykle niewielki u³amek
+    dostêpnych przedmiotów
+    \item w niektórych wersjach \textit{collaborative filtering}
+    problemem mo¿e byæ te¿ skalowalno¶æ.
+    \end{itemize}
     
     W pozosta³ej czê¶ci pracy autor skupi siê na ró¿nych wariantach
     \textit{collaborative filtering} i spróbuje
@@ -316,8 +330,7 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
 \section{Filtracja w oparciu o u¿ytkowników}
     Podej¶cie bazuj±ce na u¿ytkownikach by³o pierwsz± zautomatyzowan±
     metod± wspólnej filtracji. Zosta³o wprowadzone pierwszy raz w ramach
-   \textit{GroupLens Research Project}
-   \footnote{Projekt badawczy prowadzony na Uniwersytecie Minnesota}
+   \textit{GroupLens Research Project}\footnote{Projekt badawczy prowadzony na Uniwersytecie Minnesota}
    [TODO bibliografia].
     
     Za³ó¿my, ¿e dana jest funkcja podobieñstwa $s_{users}: U \times U \rightarrow \mathbb{R}$.
@@ -575,7 +588,7 @@ na jako¶æ systemu rekomendacji.
 \section{Opis eksperymentu} \label{s:experiment}
 \subsection{Opis zbioru danych}
 
-W pracy wykorzystany zosta³ zbiór ocen filmów MovieLens \footnote{https://movielens.org/}. Zbiór sk³ada siê ze 100,000 ocen udzielonych 1682 filmom przez 943
+W pracy wykorzystany zosta³ zbiór ocen filmów MovieLens\footnote{https://movielens.org/}. Zbiór sk³ada siê ze 100,000 ocen udzielonych 1682 filmom przez 943
 u¿ytkowników, przy czym ka¿dy u¿ytkownik oceni³ co najmniej 20 filmów.
 Skala ocen jest piêciopunktowa. Obok samych ocen, zbiór zawiera³ podstawowe informacje na temat filmów (m.in. tytu³, gatunek, datê wydania) oraz u¿ytkowników (wiek, p³eæ, zawód,
 kod pocztowy). Dane zbierane
@@ -656,7 +669,43 @@ $adjusted\_cosine$       &     &      \\ \hline
 
 \section{Wnioski}
 
+\afterpage{\blankpage}
+
 \chapter{Optymalizacja algorytmu opartego na s±siedztwie}\label{r:optimization}
+
+W poni¿szym rozdziale przeanalizowane zostan± szczegó³y algorytmu najbli¿szych s±siadów - 
+wybór zbioru s±siadów oraz wyliczanie wyniku na ich podstawie. Zaprezentowane zostan±
+wyniki dalszych eksperymentów pokazuj±cych, jak obydwa aspekty wp³ywaj± na jako¶æ
+predykcji.
+
+\section{Wybór zbioru s±siadów}
+Rozmiar zbioru $N$ najbli¿szych s±siadów oraz sposób tworzenia tego zbioru
+na podstawie funkcji podobieñstwa mog± mieæ znaczny wp³yw na jako¶æ
+systemu rekomendacji. Przy wiêkszej liczbie u¿ytkowników niemo¿liwe staje siê jednak
+trzymanie ca³ej macierzy podobieñstwa w pamiêci. Równie¿ z powodu zbyt wysokiej 
+z³o¿ono¶ci czasowej przegl±danie ca³ego zbioru $U$ lub $I$ przy ka¿dym zapytaniu
+by³oby nieakcpetowalne. Z tego powodu wyznaczanie zbioru $N$
+jest czêsto podzielone na dwa etapy: etap preprocessingu, w którym dla ka¿dego u¿ytkownika b±d¼ przedmiotu wylicza siê zbiór kandydatów na s±siadów, oraz etap
+w³a¶ciwego wyboru s±siedztwa.
+
+\subsection{Etap preprocessingu}
+
+W tym etapie dla ka¿dego u¿ytkownika $u$ lub przedmiotu $i$ wyznaczany jest podzbiór
+$U' \subset U$ (odpowiednio: $I' \subset I|$), przy czym $|U'| \ll |U|$, który, trzymany
+w pamiêci podrêcznej, bêdzie pó¼niej s³u¿y³ do wyznaczania zbioru s±siadów. Warto przy tym tak dobraæ rozmiar zbioru $U'$, aby dla mo¿liwie du¿ej liczby zapytañ o ocenê $r_{uj}$
+rozmiar zbioru $U' \setminus U_j$ przekracza³ oczekiwany rozmiar $N$.
+Do najbardziej popularnych metod preprocessingu nale¿±:
+\begin{itemize}
+\item wybór $k'$ s±siadów z najwiêksz± warto¶ci± funkcji podobieñstwa
+\item wybór s±siadów, dla których warto¶æ funkcji podobieñstwa przekracza pewien
+ustalony próg $T$
+\item je¶li u¿ywana jest funkcja podobieñstwa bazuj±ca na korelacji (wiêcej w sekcji \ref{subs:user_sim}), mo¿liwe jest odfiltrowanie s±siadów z ujemn± korelacj±
+wzglêdem ocen danego u¿ytkownika b±d¼ przedmiotu.
+\end{itemize}
+
+
+\section{Wyznaczanie oceny na podstawie ocen s±siadów}
+
 
 \chapter{Podsumowanie}
 

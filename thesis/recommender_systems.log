@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.6)  28 JUL 2016 01:40
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.6)  28 JUL 2016 13:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -304,18 +304,18 @@ LaTeX Font Info:    External font `plex10' loaded for size
 
 ]
 Rozdzia\PlPrIeC {\l } 1.
-[5]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 161.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 147.
 
- (/usr/local/texlive/2015/texmf-dist/tex/latex/base/omscmr.fd
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 161.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 147.
+ [5]
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <9> on input line 194.
+(Font)              <9> on input line 208.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <5> on input line 194.
+(Font)              <5> on input line 208.
  [6] [7]
 [8
 
@@ -329,15 +329,15 @@ Rozdzia\PlPrIeC {\l } 3.
 
 ]
 Rozdzia\PlPrIeC {\l } 4.
-[17] [18]
-Rozdzia\PlPrIeC {\l } 5.
-[19
-
-] [20
+[17] [18] [18
 
 ]
+Rozdzia\PlPrIeC {\l } 5.
+[19] [20]
 Rozdzia\PlPrIeC {\l } 6.
-[21] [22
+[21
+
+] [22
 
 ] [23] (./recommender_systems.aux) ) 
 Here is how much of TeX's memory you used:
@@ -371,10 +371,10 @@ mf-dist/fonts/type1/public/pl/plsy10.pfb></usr/local/texlive/2015/texmf-dist/fo
 nts/type1/public/pl/plsy6.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/p
 ublic/pl/plsy8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/pl/pl
 ti10.pfb>
-Output written on recommender_systems.pdf (27 pages, 187480 bytes).
+Output written on recommender_systems.pdf (28 pages, 190613 bytes).
 PDF statistics:
- 177 PDF objects out of 1000 (max. 8388607)
- 126 compressed objects within 2 object streams
+ 180 PDF objects out of 1000 (max. 8388607)
+ 128 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -2,7 +2,7 @@
 \contentsline {section}{\numberline {1.1}Systemy rekomendacyjne i ich znaczenie}{5}
 \contentsline {section}{\numberline {1.2}Fenomen "d\IeC {\l }ugiego ogona"}{5}
 \contentsline {section}{\numberline {1.3}Typy system\'ow rekomendacyjnych}{5}
-\contentsline {section}{\numberline {1.4}The Netflix Prize}{6}
+\contentsline {section}{\numberline {1.4}The Netflix Prize}{7}
 \contentsline {chapter}{\numberline {2}Formalizacja problemu rekomendacji}{9}
 \contentsline {section}{\numberline {2.1}Podstawowe poj\k ecia}{9}
 \contentsline {section}{\numberline {2.2}Oznaczenia}{9}
@@ -22,6 +22,9 @@
 \contentsline {section}{\numberline {4.2}Wyniki}{18}
 \contentsline {section}{\numberline {4.3}Wnioski}{18}
 \contentsline {chapter}{\numberline {5}Optymalizacja algorytmu opartego na s\k asiedztwie}{19}
+\contentsline {section}{\numberline {5.1}Wyb\'or zbioru s\k asiad\'ow}{19}
+\contentsline {subsection}{\numberline {5.1.1}Etap preprocessingu}{19}
+\contentsline {section}{\numberline {5.2}Wyznaczanie oceny na podstawie ocen s\k asiad\'ow}{20}
 \contentsline {chapter}{\numberline {6}Podsumowanie}{21}
 \contentsline {section}{\numberline {6.1}Perspektywy wykorzystania w\nobreakspace {}przemy\'sle}{21}
 \contentsline {chapter}{Bibliografia}{23}
