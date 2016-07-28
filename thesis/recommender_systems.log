@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.6)  28 JUL 2016 13:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.6)  29 JUL 2016 00:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -341,10 +341,10 @@ Rozdzia\PlPrIeC {\l } 6.
 
 ] [23] (./recommender_systems.aux) ) 
 Here is how much of TeX's memory you used:
- 3995 strings out of 493089
- 57413 string characters out of 6134843
+ 3996 strings out of 493089
+ 57428 string characters out of 6134843
  138821 words of memory out of 5000000
- 7443 multiletter control sequences out of 15000+600000
+ 7444 multiletter control sequences out of 15000+600000
  21481 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  36i,12n,38p,294b,406s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -371,7 +371,7 @@ mf-dist/fonts/type1/public/pl/plsy10.pfb></usr/local/texlive/2015/texmf-dist/fo
 nts/type1/public/pl/plsy6.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/p
 ublic/pl/plsy8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/pl/pl
 ti10.pfb>
-Output written on recommender_systems.pdf (28 pages, 190613 bytes).
+Output written on recommender_systems.pdf (28 pages, 193187 bytes).
 PDF statistics:
  180 PDF objects out of 1000 (max. 8388607)
  128 compressed objects within 2 object streams

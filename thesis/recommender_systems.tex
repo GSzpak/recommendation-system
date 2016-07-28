@@ -678,7 +678,7 @@ wybór zbioru s±siadów oraz wyliczanie wyniku na ich podstawie. Zaprezentowane zo
 wyniki dalszych eksperymentów pokazuj±cych, jak obydwa aspekty wp³ywaj± na jako¶æ
 predykcji.
 
-\section{Wybór zbioru s±siadów}
+\section{Wyznaczanie zbioru s±siadów}
 Rozmiar zbioru $N$ najbli¿szych s±siadów oraz sposób tworzenia tego zbioru
 na podstawie funkcji podobieñstwa mog± mieæ znaczny wp³yw na jako¶æ
 systemu rekomendacji. Przy wiêkszej liczbie u¿ytkowników niemo¿liwe staje siê jednak
@@ -703,9 +703,45 @@ ustalony próg $T$
 wzglêdem ocen danego u¿ytkownika b±d¼ przedmiotu.
 \end{itemize}
 
+\subsection{Wybór s±siedztwa}
+
+Maj±c przygotowany zbiór $U'$ b±d¼ $I'$ kandydatów na s±siadów, mo¿na przyst±piæ
+do w³a¶ciwego wyznaczenia zbioru $N$. Podobnie jak w etapie wstêpnego przetwarzania,
+mo¿e to byæ wykonane dwojako:
+\begin{itemize}
+\item poprzez wybranie wszystkich s±siadów, dla których warto¶æ funkcji podobieñstwa
+przekracza próg $T$, bêd±cy parametrem algorytmu - to podej¶cie zapewnia, ¿e
+w zbiorze $N$ znajd± siê tylko "dostatecznie podobni" u¿ytkownicy b±d¼ "dostatecznie
+podobne" przedmioty. Odpowiedni wybór warto¶ci progowej $T$ zale¿y jednak
+od wybranej funkcji podobieñstwa i okre¶lenie jej mo¿e byæ nie³atwym zadaniem -
+st±d rzadko stosuje siê tê metodê w praktyce.
+
+\item poprzez wybranie $k$ "najbardziej podobnych" s±siadów, gdzie $k$ jest parametrem
+algorytmu.
+\end{itemize}
+
+Odpowiedni dobór parametru $k$ mo¿e wyra¼nie poprawiæ jako¶æ rekomendacji.
+Poni¿sze dwa wykresy przedstawiaj± zale¿no¶æ MAE oraz RMSE od warto¶ci $k$ dla obu
+metod wspólnej filtracji. W obu przypadkach wybrano miary, które dawa³y najlepsze wyniki dla
+$k =10$ - w przypadku podej¶cia bazuj±cego na u¿ytkownikach by³y to TODO oraz TODO,
+a w przypadku podej¶cia opartego na przedmiotach - TODO oraz TODO.
 
 \section{Wyznaczanie oceny na podstawie ocen s±siadów}
 
+Ostatnim krokiem w algorytmie wspólnej filtracji jest ustalenie oceny $r_{ui}$ na podstawie
+ocen s±siadów ze zbioru $N$. 
+\subsection{¦rednia wa¿ona}
+Podstawowe podej¶cie - wyliczenie ¶redniej arytmetycznej -
+ma tê wadê, ¿e ignoruje warto¶ci funkcji podobieñstwa
+dla s±siadów. Naturalnym pomys³em jest zatem zast±pienie ¶redniej arytmetycznej ¶redni± wa¿on± (w tej sekcji podawana bêdzie tylko wersja oparta na u¿ytkownikach, wzory dla
+filtracji bazuj±cej na u¿ytkownikach s± analogiczne):
+\begin{equation} \label{result:w_mean}
+    r_{ui} = \frac{\sum_{v \in N_i(u)} s_{users}(u, v) r_{vi}}{\sum_{v \in N_i(u)} |s_{users}(u, v)|}
+\end{equation}
+
+\subsection{Normalizacja wzglêdem ¶redniej}
+
+\subsection{Standaryzacja Z}
 
 \chapter{Podsumowanie}
 
