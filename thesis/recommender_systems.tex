@@ -263,7 +263,10 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
     przedmiotowi $i$ przez u¿ytkownika $u$. Niech $r_u$ oznacza $|I|$ - wymiarowy
     wektor ocen u¿ytkownika $u$ (brak oceny reprezentowany jest przez $0$), 
     a $\mean{r}_u$ - ¶redni± z ocen wystawionych przez
-    tego u¿ytkownika, tj. $\mean{r}_u = \frac{\sum_{i \in I_u} r_{ui}}{|I_u|}$.
+    tego u¿ytkownika, tj.
+    \begin{equation}
+        \mean{r}_u = \frac{\sum_{i \in I_u} r_{ui}}{|I_u|}.
+    \end{equation}
     Podobnie $c_i$ reprezentowaæ bêdzie $|U|$ - wymiarowy wektor ocen wystawionych
     przedmiotowi $i$, za¶ $\mean{c}_i$ - jego ¶redni± notê.
     
@@ -271,7 +274,7 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
     Przy ocenie jako¶ci systemu rekomendacyjnego definiuje siê zwykle ([1], [2] TODO)
     dwa problemy:
     \begin{enumerate}
-    \item Zadanie rekomendacji: maj±c danego u¿ytkownika $u$, wyznaczyæ $n$
+    \item Zadanie rekomendacji - maj±c danego u¿ytkownika $u$, wyznaczyæ $n$
     przedmiotów najbardziej pasuj±cych do gustu tego u¿ytkownika.
 
     \item Zadanie regresji - niech $S_{train} \subseteq U \times I \times R$ bêdzie
@@ -342,17 +345,17 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
         Oblicz $s_{users}(u, u')$\;
     }        
     Wyznacz $N_i(u)$ - zbiór s±siadów, którzy ocenili $i$\; \label{alg:select}
-    Wyznacz $r_{ui}$ na podstawie $\{r_{vi} \; | \; v \in N_i(u)\}1$\; \label{alg:result}
+    Wyznacz predykcjê oceny $\hat{r}_{ui}$ na podstawie $\{r_{vi} \; | \; v \in N_i(u)\}$\; \label{alg:result}
     }
     \end{algorithm}
     
     Najczê¶ciej spotykan± metod± wyznaczania zbioru s±siadów $N_i(u)$
     (linia \ref{alg:select})
     jest wybranie $k$ u¿ytkowników o najwiêkszej warto¶ci funkcji podobieñstwa,
-    gdzie $k$ jest parametrem algorytmu. Podstawow± metod± wyznaczania oceny
+    gdzie $k$ jest parametrem algorytmu. Podstawow± metod± wyznaczania predykcji
     (linia \ref{alg:result}) jest z kolei wziêcie ¶redniej oceny ze zbioru s±siadów:
      \begin{equation} \label{result:mean}
-        r_{ui} = \frac{1}{|N_i(u)|} \sum_{v \in N_i(u) r_{vi}} r_{vi}
+        \hat{r}_{ui} = \frac{1}{|N_i(u)|} \sum_{v \in N_i(u) r_{vi}} r_{vi}
     \end{equation}
 
 \subsection{Wyznaczanie podobieñstwa miêdzy u¿ytkownikami} \label{subs:user_sim}
@@ -669,6 +672,8 @@ $adjusted\_cosine$       &     &      \\ \hline
 
 \section{Wnioski}
 
+Chuj, nie chce mi siê
+
 \afterpage{\blankpage}
 
 \chapter{Optymalizacja algorytmu opartego na s±siedztwie}\label{r:optimization}
@@ -681,7 +686,12 @@ predykcji.
 \section{Wyznaczanie zbioru s±siadów}
 Rozmiar zbioru $N$ najbli¿szych s±siadów oraz sposób tworzenia tego zbioru
 na podstawie funkcji podobieñstwa mog± mieæ znaczny wp³yw na jako¶æ
-systemu rekomendacji. Przy wiêkszej liczbie u¿ytkowników niemo¿liwe staje siê jednak
+systemu rekomendacji. Przyk³adowo, pierwszy system rekomendacji
+GropuLens przyjmowa³ $N_i(u) = U \setminus \{u\}$ - jednak branie pod uwagê
+u¿ytkowników o niskiej korelacji zmniejsza³o jako¶æ predykcji [TODO bibliografia].
+
+Naturalne wydaje siê wiêc wybieranie s±siadów na podstawie warto¶ci funkcji podobieñstwa.
+Przy wiêkszej liczbie u¿ytkowników niemo¿liwe staje siê jednak
 trzymanie ca³ej macierzy podobieñstwa w pamiêci. Równie¿ z powodu zbyt wysokiej 
 z³o¿ono¶ci czasowej przegl±danie ca³ego zbioru $U$ lub $I$ przy ka¿dym zapytaniu
 by³oby nieakcpetowalne. Z tego powodu wyznaczanie zbioru $N$
@@ -699,7 +709,8 @@ Do najbardziej popularnych metod preprocessingu nale¿±:
 \item wybór $k'$ s±siadów z najwiêksz± warto¶ci± funkcji podobieñstwa
 \item wybór s±siadów, dla których warto¶æ funkcji podobieñstwa przekracza pewien
 ustalony próg $T$
-\item je¶li u¿ywana jest funkcja podobieñstwa bazuj±ca na korelacji (wiêcej w sekcji \ref{subs:user_sim}), mo¿liwe jest odfiltrowanie s±siadów z ujemn± korelacj±
+\item je¶li u¿ywana jest funkcja podobieñstwa bazuj±ca na korelacji (przyk³ady
+takich funkcji opsiane by³y w sekcji \ref{subs:user_sim}), mo¿liwe jest odfiltrowanie s±siadów z ujemn± korelacj±
 wzglêdem ocen danego u¿ytkownika b±d¼ przedmiotu.
 \end{itemize}
 
@@ -717,31 +728,78 @@ od wybranej funkcji podobieñstwa i okre¶lenie jej mo¿e byæ nie³atwym zadaniem -
 st±d rzadko stosuje siê tê metodê w praktyce.
 
 \item poprzez wybranie $k$ "najbardziej podobnych" s±siadów, gdzie $k$ jest parametrem
-algorytmu.
+algorytmu. 
 \end{itemize}
 
-Odpowiedni dobór parametru $k$ mo¿e wyra¼nie poprawiæ jako¶æ rekomendacji.
-Poni¿sze dwa wykresy przedstawiaj± zale¿no¶æ MAE oraz RMSE od warto¶ci $k$ dla obu
+Ze wzglêdu na swoj± prostotê i dobre wyniki w praktyce, wybór $k$ najbli¿szych s±siadów
+jest najczê¶ciej stosowanym podej¶ciem we wspó³czesnych systemach rekomendacji.
+Odpowiedni dobór parametru $k$ mo¿e wyra¼nie poprawiæ jako¶æ rekomendacji. Poni¿sze dwa wykresy przedstawiaj± zale¿no¶æ MAE oraz RMSE od warto¶ci $k$ dla obu
 metod wspólnej filtracji. W obu przypadkach wybrano miary, które dawa³y najlepsze wyniki dla
 $k =10$ - w przypadku podej¶cia bazuj±cego na u¿ytkownikach by³y to TODO oraz TODO,
 a w przypadku podej¶cia opartego na przedmiotach - TODO oraz TODO.
 
+
+Lathia i in. [TODO bibliografia] zaproponowali te¿ metodê, w której $k$ bêdzie dobierane
+dynamicznie w celu zmniejszenia b³êdu predykcji - 
+
 \section{Wyznaczanie oceny na podstawie ocen s±siadów}
 
-Ostatnim krokiem w algorytmie wspólnej filtracji jest ustalenie oceny $r_{ui}$ na podstawie
-ocen s±siadów ze zbioru $N$. 
+Ostatnim krokiem w algorytmie wspólnej filtracji jest ustalenie predykcji oceny $\hat{r}_{ui}$ na podstawie ocen s±siadów ze zbioru $N$. 
 \subsection{¦rednia wa¿ona}
 Podstawowe podej¶cie - wyliczenie ¶redniej arytmetycznej -
 ma tê wadê, ¿e ignoruje warto¶ci funkcji podobieñstwa
-dla s±siadów. Naturalnym pomys³em jest zatem zast±pienie ¶redniej arytmetycznej ¶redni± wa¿on± (w tej sekcji podawana bêdzie tylko wersja oparta na u¿ytkownikach, wzory dla
-filtracji bazuj±cej na u¿ytkownikach s± analogiczne):
-\begin{equation} \label{result:w_mean}
-    r_{ui} = \frac{\sum_{v \in N_i(u)} s_{users}(u, v) r_{vi}}{\sum_{v \in N_i(u)} |s_{users}(u, v)|}
+dla s±siadów. Naturalnym pomys³em jest zatem zast±pienie ¶redniej arytmetycznej ¶redni± wa¿on± - dla u¿ytkowników:
+\begin{equation} \label{result:w_mean_users}
+    \hat{r}_{ui} = \frac{\sum_{v \in N_i(u)} s_{users}(u, v) r_{vi}}{\sum_{v \in N_i(u)} |s_{users}(u, v)|}
+\end{equation}
+oraz dla przedmiotów:
+\begin{equation} \label{result:w_mean_items}
+    \hat{r}_{ui} = \frac{\sum_{j \in N_u(i)} s_{items}(i, j) r_{uj}}{\sum_{j \in N_u(i)} |s_{items}(i, j)|}
 \end{equation}
 
-\subsection{Normalizacja wzglêdem ¶redniej}
+U¿ywanie ¶redniej wa¿onej jest najczê¶ciej stosowan± metod± wyliczania oceny [TODO bibliografia].
 
-\subsection{Standaryzacja Z}
+\subsection{Normalizacja wzglêdem ¶redniej (ang. \textit{mean-centering})}
+Jak wspominano we wcze¶niejszych rozdzia³ach, skala ocen u ró¿nych u¿ytkowników
+mo¿e byæ odmienna (niektórzy u¿ytkownicy mog± mieæ tendencjê do dawania ni¿szych ocen, inni z kolei mog± oceniaæ wy³±cznie przedmioty, które im siê podoba³y).
+Zamiast bezpo¶rednich ocen $r_{ui}$ proponuje siê wtedy wykorzystanie ocen $r'_{ui}$
+znormalizowanych wzglêdem ¶redniej oceny danego u¿ytkownika: $r'_{ui} = r_{ui} - \mean{r}_u$. Intuicyjnie, znak
+$r'_{ui}$ ma informowaæ o preferencji u¿ytkownika $u$ wobec
+przedmiotu $i$ - czy jest on nastawiony do $i$ pozytywnie, czy negatywnie.
+Wzór na $\hat{r}_{ui}$ przyjmuje wtedy postaæ:
+\begin{equation} \label{result:w_mean_centered_users}
+    \hat{r}_{ui} = \mean{r}_u + \frac{\sum_{v \in N_i(u)} s_{users}(u, v) (r_{vi} - \mean{r}_v)}{\sum_{v \in N_i(u)} |s_{users}(u, v)|}.
+\end{equation}
+Analogicznie, dla przedmiotów:
+\begin{equation} \label{result:w_mean_centered_items}
+    \hat{r}_{ui} = \mean{c}_i + \frac{\sum_{j \in N_u(i)} s_{items}(i, j)(r_{uj} - \mean{c}_j)}{\sum_{j \in N_u(i)} |s_{items}(i, j)|}
+\end{equation}
+
+\subsection{Standaryzacja Z (ang. \textit{z-score normalization})}
+Powy¿sze podej¶cie mo¿e byæ dalej rozszerzone przez wziêcie pod uwagê odchylenia
+ocen danego u¿ytkownika. Przyk³adowo, u¿ytkownicy $u_1$ i $u_2$ mog± mieæ ¶redni± ocen 3, przy czym $u_1$ wystawia³ wszystkie oceny z zakresu 1-5, a $u_2$ - tylko ocenê 3.
+Wtedy ocena 5 wystawiona przez $u_2$ oznacza wiêksze zadowolenie z przedmiotu
+ni¿ w przypadku u¿ytkownika $u_1$.
+
+Dziel±c odchylenie $r_{ui}$ od ¶redniej
+$\mean{r}_u$ przez odchylenie standardowe ocen danego u¿ytkownika $\sigma_u$,
+dostajemy \textit{standaryzacjê Z} oceny $r_{ui}$:
+\begin{equation}
+z\_score(r_{ui}) = \frac{r_{ui} - \mean{r}_u}{\sigma_u}
+\end{equation} 
+W ten sposób niwelowany jest efekt ró¿nej rozpiêto¶ci ocen u u¿ytkowników. \\
+Stosuj±c standaryzacjê Z, predykcjê $\hat{r}_{ui}$ otrzymuje siê przez
+\begin{equation} \label{result:w_mean_centered_users}
+    \hat{r}_{ui} = \mean{r}_u + \sigma_u\frac{\sum_{v \in N_i(u)} s_{users}(u, v) \frac{r_{vi} - \mean{r}_v}{\sigma_v}}{\sum_{v \in N_i(u)} |s_{users}(u, v)|}.
+\end{equation}
+dla u¿ytkowników oraz
+\begin{equation} \label{result:w_mean_centered_items}
+    \hat{r}_{ui} = \mean{c}_i + \sigma_i\frac{\sum_{j \in N_u(i)} s_{items}(i, j)\frac{r_{uj} - \mean{c}_j}{\sigma_j}}{\sum_{j \in N_u(i)} |s_{items}(i, j)|}
+\end{equation}
+dla przedmiotów.
+
+
+\subsection{Eksperymenty}
 
 \chapter{Podsumowanie}
 
