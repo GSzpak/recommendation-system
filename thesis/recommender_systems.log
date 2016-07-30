@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.6)  29 JUL 2016 20:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.6)  30 JUL 2016 03:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -310,19 +310,18 @@ LaTeX Font Info:    External font `plex10' loaded for size
 
 ]
 Rozdzia\PlPrIeC {\l } 1.
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 147.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 133.
 
 (/usr/local/texlive/2015/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 147.
- [5]
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 133.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <9> on input line 208.
+(Font)              <9> on input line 133.
 LaTeX Font Info:    External font `plex10' loaded for size
-(Font)              <5> on input line 208.
- [6] [7]
+(Font)              <5> on input line 133.
+ [5] [6] [7]
 [8
 
 ]
@@ -351,13 +350,13 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 4000 strings out of 493089
- 57531 string characters out of 6134843
+ 4002 strings out of 493089
+ 57560 string characters out of 6134843
  138821 words of memory out of 5000000
- 7448 multiletter control sequences out of 15000+600000
+ 7450 multiletter control sequences out of 15000+600000
  22028 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,12n,38p,294b,406s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,12n,38p,279b,406s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/pl/plrm.enc}{/usr/local/t
 exlive/2015/texmf-dist/fonts/enc/dvips/pl/plmi.enc}{/usr/local/texlive/2015/tex
 mf-dist/fonts/enc/dvips/pl/plms.enc}{/usr/local/texlive/2015/texmf-dist/fonts/e
@@ -379,7 +378,7 @@ nts/type1/public/pl/plr8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/pu
 blic/pl/plr9.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/pl/plsy
 10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/pl/plsy8.pfb></us
 r/local/texlive/2015/texmf-dist/fonts/type1/public/pl/plti10.pfb>
-Output written on recommender_systems.pdf (30 pages, 196619 bytes).
+Output written on recommender_systems.pdf (30 pages, 198326 bytes).
 PDF statistics:
  182 PDF objects out of 1000 (max. 8388607)
  129 compressed objects within 2 object streams

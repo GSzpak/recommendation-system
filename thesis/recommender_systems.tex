@@ -119,12 +119,21 @@
 Ka¿dego dnia stawiani jeste¶my przed szeregiem wyborów. Któr± ksi±¿kê przeczytaæ?
 Jaki film obejrzeæ? Któr± stronê internetow± odwiedziæ? Jako ¿e ilo¶æ informacji w
 otaczaj±cym nas ¶wiecie ro¶nie du¿o szybciej ni¿ nasze mo¿liwo¶ci poznawcze, konieczne sta³o siê stworzenie technologii, która bêdzie w stanie
-wybraæ informacje najbardziej dla nas u¿yteczne. Tak± rolê we wspó³czesnych aplikacjach internetowych pe³ni± systemy rekomendacyjne. Bazuj±c na dotychczasowej aktywno¶ci u¿ytkownika, systemy rekomendacyjne staraj± siê 
+wybraæ informacje najbardziej dla nas u¿yteczne. Tak± rolê we wspó³czesnych aplikacjach pe³ni± systemy rekomendacyjne. Bazuj±c na dotychczasowej aktywno¶ci u¿ytkownika, systemy rekomendacyjne staraj± siê 
 przewidzieæ jego ocenê wobec danego przedmiotu. Terminy "ocena" i "przedmiot" s±
 oczywi¶cie ogólne i w zale¿no¶ci od zastosowania mog± reprezentowaæ ró¿ne zjawiska - od wystawienia rzeczywistej oceny filmowi, przez kupno przedmiotu w sklepie internetowym, po fakt do³±czenia do grupy na portalu spo³eczno¶ciowym.
 
-Przydatno¶æ systemów rekomendacyjnych obrazuje najlepiej tak zwany "fenomen d³ugiego ogona" (ang. \textit{long tail phenomenon}). + ile w google netflix
-\section{Fenomen "d³ugiego ogona"}
+Stosowanie systemów rekomendacji przynosi korzy¶ci zarówno dla klienta, jak i dla
+sprzedawcy (w³a¶ciciela serwisu). U¿ytkownik od razu otrzymuje tre¶æ, któr± jest zainteresowany - bez konieczno¶ci przegl±dania serwisu. Korzy¶ci sprzedawcy z kolei
+mo¿na by mno¿yæ: od lepszego zrozumienia potrzeb u¿ytkownika, przez
+zwiêkszon± ró¿norodno¶æ sprzedawanych produktów, po wzrost lojalno¶ci klientów - 
+wszystko to przek³ada siê na pomno¿enie zysków. Z tego powodu systemy
+rekomendacji stosowane s± przez najwiêksze firmy:
+\begin{itemize}
+\item Netflix\footnote{https://www.netflix.com} TODO
+\item Google News\footnote{https://news.google.com} TODO
+\item Amazon\footnote{https://www.amazon.com} TODO
+\end{itemize}
 
 \section{Typy systemów rekomendacyjnych}
 W zale¿no¶ci od zastosowanych metod, systemy rekomendacyjne dzieli siê na 4 kategorie:
@@ -205,14 +214,13 @@ W zale¿no¶ci od zastosowanych metod, systemy rekomendacyjne dzieli siê na 4 kate
 
 \section{The Netflix Prize}
 Do znacznego rozwoju badañ nad systemami rekomendacyjnymi przyczyni³
-siê konkurs The Netflix Prize, zorganizowany przez internetow± wypo¿yczalniê filmów Netflix\footnote{https://www.netflix.com} w 2006 roku. Konkurs polega³ na przewidywaniu ocen, jakie u¿ytkownicy wystawiliby filmom, na podstawie historycznych danych. 
+siê konkurs The Netflix Prize, zorganizowany przez internetow± wypo¿yczalniê filmów Netflix w 2006 roku. Konkurs polega³ na przewidywaniu ocen, jakie u¿ytkownicy wystawiliby filmom, na podstawie historycznych danych. 
 Opublikowany zbiór treningowy zawiera³ 100,480,507 ocen wystawionych przez
 480,189 u¿ytkowników 17,770 filmom. Aby otrzymaæ g³ówn± nagrodê - \$1,000,000 - 
 nale¿a³o poprawiæ wynik algorytmu firmy Netflix (o nazwie Cinematch) o co najmniej 10\%.
 Zawody zosta³y rozstrzygniête dopiero w roku 2009, kiedy algorytm zespo³u BellKor's Pragmatic Chaos poprawi³ wynik algorytmu Cinematch o 10.6\%. Zwyciêski
 algorytm by³ algorytmem hybrydowym opartym miêdzy innymi na wspólnej filtracji,
-rozk³adzie macierzy wed³ug warto¶ci osobliwych oraz wzmacnianych drzewach decyzyjnych (ang.
-\textit{gradient boosted decision trees}).
+rozk³adzie macierzy wed³ug warto¶ci osobliwych oraz wzmacnianych drzewach decyzyjnych (ang. \textit{gradient boosted decision trees}). [TODO bibliografia]
 
 \chapter{Formalizacja problemu rekomendacji}\label{r:definitions}
 \section{Podstawowe pojêcia}
@@ -631,12 +639,12 @@ Wyniki dla metody bazuj±cej na u¿ytkownikach w zale¿no¶ci od postaci funkcji pod
 \hline
                          & MAE & RMSE \\ \hline
 \textbf{$baseline$}      & \textbf{0.828} & \textbf{1.031} \\ \hline
-$pearson\_corr$          & 5   & 1    \\ \hline
-$median\_centered\_corr$ & 1   & 5    \\ \hline
-$spearman\_rank\_corr$   & 2   & ?    \\ \hline
-$cosine$                 & 4   & 3    \\ \hline
-$jaccard$                &     &      \\ \hline
-$extended\_jaccard$      &     &      \\ \hline
+$pearson\_corr$          & 0.805   & 1.012    \\ \hline
+$median\_centered\_corr$ & 0.787   & 0.999    \\ \hline
+$spearman\_rank\_corr$   & 0.807   & 1.014    \\ \hline
+$cosine$                 & 0.806   & 1.014    \\ \hline
+$jaccard$                &  0.810   &  1.018    \\ \hline
+$extended\_jaccard$      & 0.806    & 1.018     \\ \hline
 $euclidean1$             &     &      \\ \hline
 $euclidean2$             &     &      \\ \hline
 $MSD$                    &     &      \\ \hline
@@ -683,7 +691,7 @@ wybór zbioru s±siadów oraz wyliczanie wyniku na ich podstawie. Zaprezentowane zo
 wyniki dalszych eksperymentów pokazuj±cych, jak obydwa aspekty wp³ywaj± na jako¶æ
 predykcji.
 
-\section{Wyznaczanie zbioru s±siadów}
+\section{Wyznaczanie zbioru s±siadów} \label{s:neighbours}
 Rozmiar zbioru $N$ najbli¿szych s±siadów oraz sposób tworzenia tego zbioru
 na podstawie funkcji podobieñstwa mog± mieæ znaczny wp³yw na jako¶æ
 systemu rekomendacji. Przyk³adowo, pierwszy system rekomendacji
@@ -742,7 +750,7 @@ a w przypadku podej¶cia opartego na przedmiotach - TODO oraz TODO.
 Lathia i in. [TODO bibliografia] zaproponowali te¿ metodê, w której $k$ bêdzie dobierane
 dynamicznie w celu zmniejszenia b³êdu predykcji - 
 
-\section{Wyznaczanie oceny na podstawie ocen s±siadów}
+\section{Wyznaczanie oceny na podstawie ocen s±siadów} \label{s:result_comp}
 
 Ostatnim krokiem w algorytmie wspólnej filtracji jest ustalenie predykcji oceny $\hat{r}_{ui}$ na podstawie ocen s±siadów ze zbioru $N$. 
 \subsection{¦rednia wa¿ona}
@@ -799,14 +807,30 @@ dla u¿ytkowników oraz
 dla przedmiotów.
 
 
-\subsection{Eksperymenty}
+\subsection{Eksperymenty i wnioski}
 
 \chapter{Podsumowanie}
+W pracy dokonano szczegó³owej analizy metody wspólnej filtracji opartej
+na algorytmie najbli¿szych s±siadów.
+Na wstêpie przedstawiono ró¿ne typy systemów rekomendacyjnych oraz idêê
+stoj±c± za wspóln± filtracj±.
+Opisano dwa podej¶cia do \textit{collaborative filtering} -
+bazuj±ce na u¿ytkownikach oraz bazuj±ce na przedmiotach.
+Przedstawiono te¿ obszerny spis funkcji podobieñstwa u¿ywanych w algorytmie
+najbli¿szych s±siadów.
 
-\section{Perspektywy wykorzystania w~przemy¶le}
-
-Ze wzglêdu na znaczenie strategiczne wyników pracy ten punkt uleg³
-utajnieniu.
+Zasadniczym celem autora by³o jednak pokazanie, ¿e nawet przy tak nieskomplikowanym
+algorytmie, jakim bez w±tpienia jest algorytm najbli¿szych s±siadów, mo¿liwe
+jest znaczne poprawienie wyników predykcji poprzez dog³êbn± analizê kolejnych
+kroków algorytmu. W kolejnych rozdzia³ach przeanalizowano:
+\begin{enumerate}
+\item wybór odpowiedniej funkcji podobieñstwa (rozdzia³ \ref{r:experiment}),
+\item strategie konstruowania zbioru s±siadów (sekcja \ref{s:neighbours}),
+\item metody wyznaczania ostatecznej predykcji na podstawie ocen s±siadów (sekcja \ref{s:result_comp}).
+\end{enumerate}
+Dziêki kolejnym modyfikacjom algorytmu uda³o siê ostatecznie poprawiæ jako¶æ predykcji o niemal 10\% w stosunku do modelu bazowego. Warto zaznaczyæ, ¿e mimo dokonanych
+zmian, zachowane zosta³y dwie zalety algorytmu, które zadecydowa³y o jego popularno¶ci
+- prostota implementacji i skalowalno¶æ.
 
 \begin{thebibliography}{99}
 \addcontentsline{toc}{chapter}{Bibliografia}
