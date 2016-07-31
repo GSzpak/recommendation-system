@@ -346,7 +346,7 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
     
     Za³ó¿my, ¿e dana jest funkcja podobieñstwa $s_{users}: U \times U \rightarrow \mathbb{R}$.
     Schemat wyznaczania oceny u¿ytkownika $u$ dla przedmiotu $i$
-    jest nastêpuj±cy (TODO rys 1.):
+    jest nastêpuj±cy:
     \begin{algorithm}[ht]\label{alg}
     \LinesNumbered{
     \ForEach{$u' \in U \setminus \{u\}$}{
@@ -797,11 +797,11 @@ z\_score(r_{ui}) = \frac{r_{ui} - \mean{r}_u}{\sigma_u}
 \end{equation} 
 W ten sposób niwelowany jest efekt ró¿nej rozpiêto¶ci ocen u u¿ytkowników. \\
 Stosuj±c standaryzacjê Z, predykcjê $\hat{r}_{ui}$ otrzymuje siê przez
-\begin{equation} \label{result:w_mean_centered_users}
+\begin{equation} \label{result:z_score_users}
     \hat{r}_{ui} = \mean{r}_u + \sigma_u\frac{\sum_{v \in N_i(u)} s_{users}(u, v) \frac{r_{vi} - \mean{r}_v}{\sigma_v}}{\sum_{v \in N_i(u)} |s_{users}(u, v)|}.
 \end{equation}
 dla u¿ytkowników oraz
-\begin{equation} \label{result:w_mean_centered_items}
+\begin{equation} \label{result:z_score_items}
     \hat{r}_{ui} = \mean{c}_i + \sigma_i\frac{\sum_{j \in N_u(i)} s_{items}(i, j)\frac{r_{uj} - \mean{c}_j}{\sigma_j}}{\sum_{j \in N_u(i)} |s_{items}(i, j)|}
 \end{equation}
 dla przedmiotów.
