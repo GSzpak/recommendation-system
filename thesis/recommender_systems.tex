@@ -34,6 +34,7 @@
     \thispagestyle{empty}%
     \addtocounter{page}{-1}%
     \newpage}
+\def \hfillx {\hspace*{-\textwidth} \hfill}
 
 % Dane magistranta:
 
@@ -128,11 +129,11 @@ sprzedawcy (w³a¶ciciela serwisu). U¿ytkownik od razu otrzymuje tre¶æ, któr± jest
 mo¿na by mno¿yæ: od lepszego zrozumienia potrzeb u¿ytkownika, przez
 zwiêkszon± ró¿norodno¶æ sprzedawanych produktów, po wzrost lojalno¶ci klientów - 
 wszystko to przek³ada siê na pomno¿enie zysków. Z tego powodu systemy
-rekomendacji stosowane s± przez najwiêksze firmy:
+rekomendacji stosowane s± przez najwiêksze firmy (¼ród³o: \cite{celma}):
 \begin{itemize}
-\item Netflix\footnote{https://www.netflix.com} TODO
-\item Google News\footnote{https://news.google.com} TODO
-\item Amazon\footnote{https://www.amazon.com} TODO
+\item Netflix\footnote{https://www.netflix.com} - 2/3 ogl±danych filmów w wyniku rekomendacji
+\item Google News\footnote{https://news.google.com} - rekomendacje generujê 38\% wiêcej ruchu
+\item Amazon\footnote{https://www.amazon.com} - 35\% sprzeda¿y pochodz±cych z rekomendacji.
 \end{itemize}
 
 \section{Typy systemów rekomendacyjnych}
@@ -220,7 +221,7 @@ Opublikowany zbiór treningowy zawiera³ 100,480,507 ocen wystawionych przez
 nale¿a³o poprawiæ wynik algorytmu firmy Netflix (o nazwie Cinematch) o co najmniej 10\%.
 Zawody zosta³y rozstrzygniête dopiero w roku 2009, kiedy algorytm zespo³u BellKor's Pragmatic Chaos poprawi³ wynik algorytmu Cinematch o 10.6\%. Zwyciêski
 algorytm by³ algorytmem hybrydowym opartym miêdzy innymi na wspólnej filtracji,
-rozk³adzie macierzy wed³ug warto¶ci osobliwych oraz wzmacnianych drzewach decyzyjnych (ang. \textit{gradient boosted decision trees}). [TODO bibliografia]
+rozk³adzie macierzy wed³ug warto¶ci osobliwych oraz wzmacnianych drzewach decyzyjnych (ang. \textit{gradient boosted decision trees}).
 
 \chapter{Formalizacja problemu rekomendacji}\label{r:definitions}
 \section{Podstawowe pojêcia}
@@ -279,7 +280,7 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
     przedmiotowi $i$, za¶ $\mean{c}_i$ - jego ¶redni± notê.
     
 \section{Formalna definicja problemu}
-    Przy ocenie jako¶ci systemu rekomendacyjnego definiuje siê zwykle ([1], [2] TODO)
+    Przy ocenie jako¶ci systemu rekomendacyjnego definiuje siê zwykle (za \cite{ricci,ekstr})
     dwa problemy:
     \begin{enumerate}
     \item Zadanie rekomendacji - maj±c danego u¿ytkownika $u$, wyznaczyæ $n$
@@ -301,7 +302,6 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
     \begin{equation} \label{rmse}
         RMSE(f, S_{test}) = \sqrt{\frac{1}{S_{test}} \sum_{(u,i) \in S_{test}} (f(u,i) - r_{ui})^2}
     \end{equation}
-    TODO normalized mean squared error
     \end{enumerate}
     Zalet± obydwu funkcji jest zachowanie skali, z której pochodz± oceny - przyk³adowo
     w piêciopunktowej skali, reprezentowanej przez liczby ca³kowite z przedzia³u
@@ -326,7 +326,7 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
     wykorzystuj± dostêpne oceny w celu wyuczenia modelu, który nastêpnie
     bêdzie przewidywa³ nieznane warto¶ci $r_{ui}$. W tego typu metodzie u¿ywa siê
     na przyk³ad rozk³adu macierzy u¿yteczno¶ci wed³ug warto¶ci osobliwych,
-    maszyn wektorów wspieraj±cych, sieci Bayesowskie (TODO: bibliografia) oraz
+    maszyn wektorów wspieraj±cych, sieci Bayesowskich oraz
     algorytm Expectation - Maximisation.
     \item wspólna filtracja oparta na s±siedztwie - w tej metodzie ustala siê
     funkcjê podobieñstwa, a nastêpnie u¿ywa siê jej do wyznaczenia zbioru \textit{s±siadów} -
@@ -334,15 +334,14 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
     Ostateczna ocena wyznaczana jest tylko na podstawie ocen s±siadów.
     \end{itemize}
         
-    Szczegó³ow± analizê filtracji opartej na modelu mo¿na znale¼æ w TODO. W dalszej czê¶ci pracy
+    Szczegó³ow± analizê filtracji opartej na modelu mo¿na znale¼æ w \cite{ricci}. W dalszej czê¶ci pracy
     autor skupi siê na podej¶ciu bazuj±cym na s±siedztwie.
     
     
 \section{Filtracja w oparciu o u¿ytkowników}
     Podej¶cie bazuj±ce na u¿ytkownikach by³o pierwsz± zautomatyzowan±
     metod± wspólnej filtracji. Zosta³o wprowadzone pierwszy raz w ramach
-   \textit{GroupLens Research Project}\footnote{Projekt badawczy prowadzony na Uniwersytecie Minnesota}
-   [TODO bibliografia].
+   \textit{GroupLens Research Project}\footnote{Projekt badawczy prowadzony na Uniwersytecie Minnesota} (¼ród³o: \cite{ekstr}).
     
     Za³ó¿my, ¿e dana jest funkcja podobieñstwa $s_{users}: U \times U \rightarrow \mathbb{R}$.
     Schemat wyznaczania oceny u¿ytkownika $u$ dla przedmiotu $i$
@@ -407,7 +406,7 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
     \item \textbf{Zmodyfikowana korelacja Pearsona}
     
     Niektóre systemy interpretuj± medianê ze skali ocen $r_m$ jako neutralne nastawienie
-    u¿ytkownika wobec przedmiotu. Ekstrand i in. zaproponowali w [3] (TODO bibliografia)
+    u¿ytkownika wobec przedmiotu. Ekstrand i in. zaproponowali w \cite{ekstr}
     modyfikacjê wspó³czynnika korelacji Pearsona, w której wektor ocen jest normalizowany
     przy u¿yciu owej mediany zamiast ¶redniej:
     \begin{equation}
@@ -497,7 +496,6 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
     \begin{equation}
        euclidean2(u, v) = e^{-d_2(u, v)} \label{sim:euclidean2}
     \end{equation}
-    TODO: przewaga drugiej
     Te miary mo¿e byæ uogólniona poprzez u¿ycie odleg³o¶ci Minkowskiego:
     \begin{equation}
        d_p(u, v) = \bigg(\sum_{i \in I_u \cap I_v} |r_{ui} - r_{vi}|^p \bigg)^{\frac{1}{p}}
@@ -514,7 +512,7 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
     
     Ró¿nica ¶redniokwadratowa, podobnie jak podobieñstwo euklidesowe,
     nie odzwierciedla ujemnej korelacji miêdzy u¿ytkownikami. Posiadanie informacji
-    o takiej korelacji mo¿e czasami zwiêkszyæ jako¶æ predykcji (TODO bibliografia).
+    o takiej korelacji mo¿e czasami zwiêkszyæ jako¶æ predykcji (\cite{ricci}).
     \end{itemize}
 
 \section{Filtracja w oparciu o przedmioty}
@@ -575,7 +573,7 @@ zdefiniowaæ jako:
 Analogicznie zdefiniowaæ mo¿na pozosta³e miary.
 
 Miarê podobieñstwa przeznaczon± specjalnie dla przedmiotów
-zaproponowali Sarwar i in. w [4]. (TODO bibliografia) Bazuje ona na obserwacji,
+zaproponowali Sarwar i in. w \cite{sarwar}. Bazuje ona na obserwacji,
 i¿ ró¿nice w skalach ocen poszczególnych u¿ytkowników czêsto s± znacznie
 wyra¼niejsze ni¿ w przypadku przedmiotów. Dlatego przy obliczaniu podobieñstwa
 miêdzy przedmiotami wiêkszy sens mo¿e mieæ normalizacja oceny wzglêdem ¶redniej
@@ -586,7 +584,7 @@ adjusted\_cosine(i, j) = \frac{\sum_{u \in U_i \cap U_j}(r_{ui} - \mean{r}_u)(r_
 \end{equation}
 
 W niektórych przypadkach tak okre¶lona funkcja podobieñstwa daje lepsze wyniki ni¿
-zwykle u¿ywane miary (TODO bibliografia).
+zwykle u¿ywane miary.
 
 \afterpage{\blankpage}
 
@@ -615,7 +613,7 @@ podzbiory tworzy³y zbiór treningowy. Ostateczny wynik jest ¶redni± z wyników piê
 przeprowadzonych analiz.
 
 Do oceny jako¶ci predykcji u¿yto funkcji straty opisanych w rozdziale \ref{r:definitions} -
-MAE oraz RMSE.
+$MAE$ oraz $RMSE$.
 
 Zbiór s±siadów wyznaczany by³ przez wziêcie 10 najbardziej podobnych u¿ytkowników b±d¼
 przedmiotów. Ostateczna ocena wyliczana by³a jako ¶rednia z ocen s±siadów (zgodnie ze wzorem \ref{result:mean}).
@@ -639,15 +637,15 @@ Wyniki dla metody bazuj±cej na u¿ytkownikach w zale¿no¶ci od postaci funkcji pod
 \hline
                          & MAE & RMSE \\ \hline
 \textbf{$baseline$}      & \textbf{0.828} & \textbf{1.031} \\ \hline
-$pearson\_corr$          & 0.805   & 1.012    \\ \hline
-$median\_centered\_corr$ & 0.787   & 0.999    \\ \hline
-$spearman\_rank\_corr$   & 0.807   & 1.014    \\ \hline
-$cosine$                 & 0.806   & 1.014    \\ \hline
-$jaccard$                &  0.810   &  1.018    \\ \hline
-$extended\_jaccard$      & 0.806    & 1.018     \\ \hline
-$euclidean1$             &     &      \\ \hline
-$euclidean2$             &     &      \\ \hline
-$MSD$                    &     &      \\ \hline
+$pearson\_corr$          & 0.817   & 1.028    \\ \hline
+$median\_centered\_corr$ & 0.800   & 1.016    \\ \hline
+$spearman\_rank\_corr$   & 0.825   & 1.039    \\ \hline
+$cosine$                 & 0.818   & 1.029    \\ \hline
+$jaccard$                &  0.823   &  1.037    \\ \hline
+$extended\_jaccard$      & 0.818    & 1.026     \\ \hline
+$euclidean1$             &  0.865   &  1.069    \\ \hline
+$euclidean2$             &  0.865   &  1.069    \\ \hline
+$MSD$                    &   \textbf{0.787}  &  \textbf{0.998}    \\ \hline
 \end{tabular}
 \end{table}
 
@@ -665,24 +663,39 @@ Wyniki dla metody bazuj±cej na przedmiotach w zale¿no¶ci od postaci funkcji podo
 \hline
                          & MAE & RMSE \\ \hline
 \textbf{$baseline$}      & \textbf{0.803} & \textbf{1.000} \\ \hline
-$pearson\_corr$          & 5   & 1    \\ \hline
-$median\_centered\_corr$ & 1   & 5    \\ \hline
-$spearman\_rank\_corr$   & 2   & ?    \\ \hline
-$cosine$                 & 4   & 3    \\ \hline
-$jaccard$                &     &      \\ \hline
-$extended\_jaccard$      &     &      \\ \hline
-$euclidean1$             &     &      \\ \hline
-$euclidean2$             &     &      \\ \hline
-$MSD$                    &     &      \\ \hline
-$adjusted\_cosine$       &     &      \\ \hline
+$pearson\_corr$          & 0.749   & 0.959    \\ \hline
+$median\_centered\_corr$ & 0.779   & 0.998    \\ \hline
+$spearman\_rank\_corr$   & 0.764   &  0.976   \\ \hline
+$cosine$                 & 0.763   & 0.981    \\ \hline
+$jaccard$                & 0.753    & 0.966     \\ \hline
+$extended\_jaccard$      &  \textbf{0.742}   & \textbf{0.953}     \\ \hline
+$euclidean1$             &  0.885   &  1.104    \\ \hline
+$euclidean2$             &  0.885   &  1.104    \\ \hline
+$MSD$                    &  0.809  & 1.030     \\ \hline
+$adjusted\_cosine$       & 0.792    & 1.007     \\ \hline
 \end{tabular}
 \end{table}
 
+\hfill \\
+W obu tabelach wyró¿niono wynik predyktora bazowego oraz najlepszy uzyskany wynik.
+
 \section{Wnioski}
 
-Chuj, nie chce mi siê
-
-\afterpage{\blankpage}
+Mimo braku optymalizacji parametru $k$ oraz mimo naiwnej metody wyznaczania
+oceny na podstawie ocen s±siadów, odpowiedni wybór funkcji podobieñstwa poprawia
+wynik predyktora bazowego o oko³o 5\%. Interesuj±cy wydaje siê fakt, i¿ najlepsze
+wynik uzyskano przy u¿yciu miar podobieñstwa raczej rzadko spotykanych w literaturze -
+w przypadku u¿ytkowników by³a to miara $MSD$, a w przypadku przedmiotów -
+$extended\_jaccard$. Miara wymieniana najczê¶ciej - wspó³czynnik korelacji Pearsona -
+da³a z kolei stosunkowo nisk± jako¶æ predykcji w podej¶ciu
+bazuj±cym na u¿ytkownikach.
+Do¶æ zaskakuj±ce s± te¿ rezultaty otrzymane przy wykorzystaniu
+miar opartych na odleg³o¶ci euklidesowej - $euclidean1$ i $euclidean2$. Obie da³y identyczne
+wyniki, co znaczy, ¿e bardzo czêsto zwraca³y ten sam zbiór s±siadów. Co ciekawe,
+jako¶æ predykcji uzyskana przy u¿yciu tych miar by³a w obu przypadkach najgorsza.
+Interesuj±cy jest równie¿ wysoki wynik otrzymany w podej¶ciu opartym na przedmiotach
+przy u¿yciu podobieñstwa Jaccarda - w teorii miara ta wydaje siê najmniej u¿yteczna
+ze wszystkich funkcji podobieñstwa opisanych w rozdziale \ref{r:filtracja}.
 
 \chapter{Optymalizacja algorytmu opartego na s±siedztwie}\label{r:optimization}
 
@@ -696,7 +709,7 @@ Rozmiar zbioru $N$ najbli¿szych s±siadów oraz sposób tworzenia tego zbioru
 na podstawie funkcji podobieñstwa mog± mieæ znaczny wp³yw na jako¶æ
 systemu rekomendacji. Przyk³adowo, pierwszy system rekomendacji
 GropuLens przyjmowa³ $N_i(u) = U \setminus \{u\}$ - jednak branie pod uwagê
-u¿ytkowników o niskiej korelacji zmniejsza³o jako¶æ predykcji [TODO bibliografia].
+u¿ytkowników o niskiej korelacji zmniejsza³o jako¶æ predykcji (\cite{ekstr}).
 
 Naturalne wydaje siê wiêc wybieranie s±siadów na podstawie warto¶ci funkcji podobieñstwa.
 Przy wiêkszej liczbie u¿ytkowników niemo¿liwe staje siê jednak
@@ -747,8 +760,9 @@ $k =10$ - w przypadku podej¶cia bazuj±cego na u¿ytkownikach by³y to TODO oraz TO
 a w przypadku podej¶cia opartego na przedmiotach - TODO oraz TODO.
 
 
-Lathia i in. [TODO bibliografia] zaproponowali te¿ metodê, w której $k$ bêdzie dobierane
-dynamicznie w celu zmniejszenia b³êdu predykcji - 
+W \cite{ekstr} wspominana jest te¿ metoda, w której $k$ jest dobierane
+dynamicznie w celu zmniejszenia b³êdu predykcji - ze wzglêdu na znaczne wyd³u¿enie
+czasu zapytania nie jest ona jednak czêsto stosowana w praktyce.
 
 \section{Wyznaczanie oceny na podstawie ocen s±siadów} \label{s:result_comp}
 
@@ -765,7 +779,7 @@ oraz dla przedmiotów:
     \hat{r}_{ui} = \frac{\sum_{j \in N_u(i)} s_{items}(i, j) r_{uj}}{\sum_{j \in N_u(i)} |s_{items}(i, j)|}
 \end{equation}
 
-U¿ywanie ¶redniej wa¿onej jest najczê¶ciej stosowan± metod± wyliczania oceny [TODO bibliografia].
+U¿ywanie ¶redniej wa¿onej jest najczê¶ciej stosowan± metod± wyliczania oceny (\cite{ricci,ekstr}).
 
 \subsection{Normalizacja wzglêdem ¶redniej (ang. \textit{mean-centering})}
 Jak wspominano we wcze¶niejszych rozdzia³ach, skala ocen u ró¿nych u¿ytkowników
@@ -806,8 +820,50 @@ dla u¿ytkowników oraz
 \end{equation}
 dla przedmiotów.
 
-
 \subsection{Eksperymenty i wnioski}
+
+Poni¿sze dwie tabele przedstawiaj± wyniki otrzymane przez zastosowanie wy¿ej
+wymienionych metod. 
+
+\begin{table}[hb]
+\begin{minipage}{0.5\textwidth}
+\centering
+\captionsetup{justification=centering}
+\captionsetup{width=0.8\textwidth}
+\caption{Wyniki dla podej¶cia opartego na u¿ytkownikach przy $k = 30$ i $s_{users} = pearson\_corr$}
+\begin{tabular}{|c|c|c|}
+\hline
+                         & MAE & RMSE \\ \hline
+¶rednia wa¿ona          & 0.749   & 0.959    \\ \hline
+$mean-centering$ & 0.779   & 0.998    \\ \hline
+$z-score$   & 0.764   &  0.976   \\ \hline
+\end{tabular}
+\end{minipage}
+\hfillx
+\begin{minipage}{0.5\textwidth}
+\centering
+\captionsetup{justification=centering}
+\captionsetup{width=0.8\textwidth}
+\caption{Wyniki dla podej¶cia opartego na przedmiotach przy $k = 30$ i $s_{items} = pearson\_corr$}
+\begin{tabular}{|c|c|c|}
+\hline
+                         & MAE & RMSE \\ \hline
+¶rednia wa¿ona          & 0.749   & 0.959    \\ \hline
+$mean-centering$ & 0.779   & 0.998    \\ \hline
+$z-score$   & 0.764   &  0.976   \\ \hline
+\end{tabular}
+\end{minipage}
+\end{table}
+
+Parametry algorytmu - liczba s±siadów $k$ oraz funkcja podobieñstwa - zosta³y dobrane tak, aby ostatecznie otrzymaæ jak najlepsz± jako¶æ predykcji.
+Dla podej¶cia bazuj±cego na u¿ytkownikach by³y to $s_{users} = $ i $k=$, a dla
+podej¶cia opartego na przedmiotach: $s_{items} = $ i $k = $ TODO. 
+
+Jak widaæ, zastosowanie obu typów normalizacji (wzglêdem ¶redniej oraz standaryzacji Z)
+znacznie poprawi³o jako¶æ predykcji - przyk³adowo, $MAE$ dla podej¶cia opartego na
+przedmiotach zmala³ o ponad 10\% w stosunku do predyktora bazowego opisanego w
+rozdziale \ref{r:experiment}. Nie widaæ natomiast wyra¼nej ró¿nicy miêdzy
+tymi dwoma sposobami normalizacji. Zaskakuj± s³abe wyniki otrzymane przy u¿yciu ¶redniej wa¿onej - u¿ycie jej obni¿y³o wynik w stosunku do podej¶cia stosuj±cego zwyk³± ¶redni± arytmetyczn±.
 
 \chapter{Podsumowanie}
 W pracy dokonano szczegó³owej analizy metody wspólnej filtracji opartej
@@ -835,12 +891,28 @@ zmian, zachowane zosta³y dwie zalety algorytmu, które zadecydowa³y o jego popula
 \begin{thebibliography}{99}
 \addcontentsline{toc}{chapter}{Bibliografia}
 
-\bibitem[Bea65]{beaman} Juliusz Beaman, \textit{Morbidity of the Jolly
-    function}, Mathematica Absurdica, 117 (1965) 338--9.
+\bibitem[Ricci10]{ricci} Francesco Ricci, Lior Rokach, Bracha Shapira, Paul B. Kantor,
+\textit{Recommender Systems Handbook}, Springer, 2010
 
-\bibitem[Blar16]{eb1} Elizjusz Blarbarucki, \textit{O pewnych
-    aspektach pewnych aspektów}, Astrolog Polski, Zeszyt 16, Warszawa
-  1916.
+\bibitem[Raj13]{rajaraman} Anand Rajaraman, Jure Leskovec, Jeffrey D. Ullman, \textit{Mining of Massive Datasets}, 2013
+
+\bibitem[Ekstrand10]{ekstr} Michael D. Ekstrand, John T. Riedl, Joseph A. Konstan,
+\textit{Collaborative Filtering Recommender Systems}, Foundations and Trends in
+Human - Computer Interaction, Vol. 4, No. 2 (2010), s. 81 - 173
+
+\bibitem[Sarwar01]{sarwar} Badrul Sarwar, George Karypis, Joseph Konstan, John Riedl,
+\textit{Item-Based Collaborative Filtering Recommendation Algorithms}, University of Minnesota, Minneapolis 2001
+
+\bibitem[Ge11]{ge} Xinyang Ge, Jia Liu, Qi Qi, Zhenyu Chen,
+\textit{A New Prediction Approach Based on Linear
+Regression for Collaborative Filtering}, Nanjing University, 2011
+
+\bibitem[Koren09]{koren} Y. Koren,
+\textit{The BellKor Solution to the Netflix Grand Prize}, 2009
+
+\bibitem[Celma07]{celma} O. Celma, P.Lamere,
+\textit{ISMIR 2007 tutorial: music recommendation}
+
 
 \end{thebibliography}
 
