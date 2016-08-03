@@ -277,19 +277,20 @@ class RegressionItemItemCollaborativeFilteringPredictor(ItemItemCollaborativeFil
         super(RegressionItemItemCollaborativeFilteringPredictor, self).fit(X, y)
         self.regressor = SVR()
         regressor_X = []
-        regressor_y = y[:10000]
+        regressor_y = []
         i = 0
-        for (user_id, movie_id), rating in itertools.izip(X[:10000], regressor_y):
+        for (user_id, movie_id), rating in itertools.izip(X[:10000], y[:10000]):
             user_id = int(user_id) - 1
             movie_id = int(movie_id) - 1
             neighbours = self._find_nearest_neighbours(movie_id, user_id)
             similarities = [sim_info[0] for sim_info in neighbours]
             if len(similarities) < self.k:
                 similarities += [0.0 for _ in xrange(self.k - len(similarities))]
-            ratings = [sim_info[2] for sim_info in neighbours]
+            ratings = [sim_info[2] - self.precomputed_data['row_means'][sim_info[1]] for sim_info in neighbours]
             if len(ratings) < self.k:
                 ratings += [0.0 for _ in xrange(self.k - len(ratings))]
-            regressor_X.append(similarities + ratings)
+            regressor_X.append(ratings)
+            regressor_y.append(rating - self.precomputed_data['row_means'][movie_id])
             i += 1
             if i % 100 == 0:
                 print i
@@ -304,9 +305,10 @@ class RegressionItemItemCollaborativeFilteringPredictor(ItemItemCollaborativeFil
         similarities = [sim_info[0] for sim_info in neighbours]
         if len(similarities) < self.k:
             similarities += [0.0 for _ in xrange(self.k - len(similarities))]
-        ratings = [sim_info[2] for sim_info in neighbours]
+        ratings = [sim_info[2] - self.precomputed_data['row_means'][sim_info[1]] for sim_info in neighbours]
         if len(ratings) < self.k:
             ratings += [0.0 for _ in xrange(self.k - len(ratings))]
-        to_predict = np.asarray([similarities + ratings])
+        to_predict = np.asarray([ratings])
         prediction = self.regressor.predict(to_predict)
-        return prediction[0]
+        return prediction[0] + self.precomputed_data['row_means'][id_]
+
