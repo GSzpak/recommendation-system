@@ -144,7 +144,7 @@ W zale¿no¶ci od zastosowanych metod, systemy rekomendacyjne dzieli siê na 4 kate
     Podej¶cie wspólnej filtracji polega na wyznaczaniu preferencji danego u¿ytkownika
     bazuj±c na preferencjach u¿ytkowników o podobnym gu¶cie. Podobieñstwo to jest
     wyznaczane na podstawie wcze¶niejszych zachowañ u¿ytkownika. Ze wzglêdu na
-    prostotê implementacji i wysok± jako¶æpredykcji, wspólne filtrowanie
+    prostotê implementacji i wysok± jako¶æ predykcji, wspólne filtrowanie
     jest najbardziej popularn± i najczê¶ciej stosowan± technikê rekomendacji.
     Dodatkow± zalet± tej metody jest jej elastyczno¶æ i mo¿liwo¶æ stosowania w wielu
     dziedzinach - system oparty na wspólnej filtracji jest w stanie udzielaæ dok³adnych
@@ -154,7 +154,7 @@ W zale¿no¶ci od zastosowanych metod, systemy rekomendacyjne dzieli siê na 4 kate
     
     Wady wspólnej filtracji s± natomiast nastêpuj±ce:
     \begin{itemize}
-    \item wprowadzanie nowego u¿ytkownika lub przedmiotu do systemu (ang.
+    \item k³opotliwe wprowadzanie nowego u¿ytkownika lub przedmiotu do systemu (ang.
     \textit{cold start problem})
     \item ciê¿ko jest uzyskaæ sensowne rekomendacje dla u¿ytkownika o unikalnych 
     preferencjach
@@ -175,7 +175,7 @@ W zale¿no¶ci od zastosowanych metod, systemy rekomendacyjne dzieli siê na 4 kate
     mog± byæ na przyk³ad: gatunek, rok produkcji, obsada aktorska, re¿yser.
     Na podstawie warto¶ci atrybutów wyznaczane jest podobieñstwo miêdzy przedmiotami,
     nastêpnie u¿ytkownikowi prezentowane s± przedmioty podobne do dotychczas
-    polubionych. Przyk³adowo, je¶li u¿ytkownik czêsto ogl±da³ filmy sensacyjne
+    polubionych. Przyk³adowo, je¶li u¿ytkownik czêsto ogl±da³ filmy
     wyre¿yserowane przez Martina Scorsese, system bêdzie rekomendowa³ inne filmy
     tego re¿ysera.
     
@@ -198,7 +198,7 @@ W zale¿no¶ci od zastosowanych metod, systemy rekomendacyjne dzieli siê na 4 kate
 
 \item \textbf{Systemy bazuj±ce na osobowo¶ci}
 
-    To stosunkowo nowe podej¶cie, zosta³o zaproponowane przez Ricardo Buettnera w [3].
+    To stosunkowo nowe podej¶cie, zosta³o zaproponowane przez Ricardo Buettnera w \cite{buettner}.
     Polega na stworzeniu profilu osobowo¶ciowego u¿ytkownika na podstawie jego zachowañ
     w sieciach spo³eczno¶ciowych i prezentowaniu tre¶ci dopasowanych do tego profilu.
 
@@ -327,7 +327,7 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
     bêdzie przewidywa³ nieznane warto¶ci $r_{ui}$. W tego typu metodzie u¿ywa siê
     na przyk³ad rozk³adu macierzy u¿yteczno¶ci wed³ug warto¶ci osobliwych,
     maszyn wektorów wspieraj±cych, sieci Bayesowskich oraz
-    algorytm Expectation - Maximisation.
+    algorytmu Expectation - Maximisation.
     \item wspólna filtracja oparta na s±siedztwie - w tej metodzie ustala siê
     funkcjê podobieñstwa, a nastêpnie u¿ywa siê jej do wyznaczenia zbioru \textit{s±siadów} -
     u¿ytkowników b±d¼ przedmiotów charakteryzuj±cych siê podobnym schematem oceniania.
@@ -351,7 +351,7 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
     \ForEach{$u' \in U \setminus \{u\}$}{
         Oblicz $s_{users}(u, u')$\;
     }        
-    Wyznacz $N_i(u)$ - zbiór s±siadów, którzy ocenili $i$\; \label{alg:select}
+    Na podstawie warto¶ci $s_{users}$, wyznacz $N_i(u)$ - zbiór s±siadów, którzy ocenili $i$\; \label{alg:select}
     Wyznacz predykcjê oceny $\hat{r}_{ui}$ na podstawie $\{r_{vi} \; | \; v \in N_i(u)\}$\; \label{alg:result}
     }
     \end{algorithm}
@@ -362,7 +362,7 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
     gdzie $k$ jest parametrem algorytmu. Podstawow± metod± wyznaczania predykcji
     (linia \ref{alg:result}) jest z kolei wziêcie ¶redniej oceny ze zbioru s±siadów:
      \begin{equation} \label{result:mean}
-        \hat{r}_{ui} = \frac{1}{|N_i(u)|} \sum_{v \in N_i(u) r_{vi}} r_{vi}
+        \hat{r}_{ui} = \frac{1}{|N_i(u)|} \sum_{v \in N_i(u)} r_{vi}
     \end{equation}
 
 \subsection{Wyznaczanie podobieñstwa miêdzy u¿ytkownikami} \label{subs:user_sim}
@@ -377,7 +377,6 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
     Poni¿ej znajduje siê przegl±d funkcji podobieñstwa najczê¶ciej opisywanych w literaturze.
     
 \subsubsection{Miary podobieñstwa bazuj±ce na korelacji}
- \subsubsection{Inne miary podobieñstwa}
     \begin{itemize}
     \item \textbf{Wspó³czynnik korelacji liniowej Pearsona}
     
@@ -400,8 +399,9 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
     Jest to najbardziej popularna funkcja do okre¶lania podobieñstwa miêdzy u¿ytkownikami.
     Wad± korelacji Pearsona jest zwracanie wysokiego podobieñstwa dla par u¿ytkowników,
     którzy ocenili niewielk± liczbê takich samych przedmiotów. Jednym z mo¿liwych
-    sposobów obej¶cia tego problemu jest ustalenie progu $T$ i przeskalowanie
-    wyniku, przyk³adowo przez pomno¿enie go przez $min(\frac{|I_u \cap I_v|}{T}, 1)$.
+    sposobów obej¶cia tego problemu jest ustalenie progu $T$ rozmiaru
+    zbioru $I_u \cap I_v$ i przeskalowanie
+    wyniku, przyk³adowo przez pomno¿enie go przez $min(\frac{|I_u \cap I_v|}{T}, 1)$ (\cite{ekstr}).
     
     \item \textbf{Zmodyfikowana korelacja Pearsona}
     
@@ -454,8 +454,7 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
     upodabnia brak oceny do oceny negatywnej. Co wiêcej, u¿ywanie tej funkcji
     podobieñstwa nie bierze pod uwagê statystycznych ró¿nic miêdzy ocenami u¿ytkowników
     (ró¿nych ¶rednich czy wariancji ocen).
-    Mimo wymienionych wad, podobieñstwo cosinusowe daje zaskakuj±co dobre wyniki w praktyce,
-    co poka¿e rozdzia³ \ref{r:experiment}.
+    Mimo wymienionych wad, podobieñstwo cosinusowe daje zaskakuj±co dobre wyniki w praktyce.
     
     \item \textbf{Podobieñstwo Jaccarda}
     
@@ -558,8 +557,8 @@ Zak³adaj±c, ¿e $|U| \gg |I|$ (co jest prawd± w przypadku wiêkszo¶ci serwisów), ³
 zauwa¿yæ, ¿e "przedmiotowe" podej¶cie do wspólnej filtracji pozwala w znacz±cy sposób
 zmniejszyæ z³o¿ono¶æ zarówno czasow±, jak i pamiêciow± algorytmu. Warto przy tym
 zaznaczyæ, ¿e macierz u¿yteczno¶ci jest czêsto macierz± rzadk±, co znacznie przyspiesza
-obliczanie warto¶ci funkcji podobieñstwa i co za tym idzie, czyni metodê wspólnej filtracji
-opart± na s±siedztwie jeszcze bardziej skalowaln±.
+obliczanie warto¶ci funkcji podobieñstwa i  czyni metodê wspólnej filtracji
+opart± na s±siedztwie jeszcze lepiej skalowaln±.
 
 \subsection{Wyznaczanie podobieñstwa miêdzy przedmiotami} \label{subs:item_sim}
 
@@ -585,8 +584,6 @@ adjusted\_cosine(i, j) = \frac{\sum_{u \in U_i \cap U_j}(r_{ui} - \mean{r}_u)(r_
 
 W niektórych przypadkach tak okre¶lona funkcja podobieñstwa daje lepsze wyniki ni¿
 zwykle u¿ywane miary.
-
-\afterpage{\blankpage}
 
 \chapter{Wp³yw miary podobieñstwa na jako¶æ predykcji} \label{r:experiment}
 
@@ -620,8 +617,8 @@ przedmiotów. Ostateczna ocena wyliczana by³a jako ¶rednia z ocen s±siadów (zgodn
 
 Aby uzyskaæ punkt odniesienia, dla obydwu podej¶æ zosta³ równie¿ dodany wynik
 predyktora bazowego (\textit{baseline}) - w przypadku u¿ytkowników zwraca³ on ¶redni±
-ocenê dla danego u¿ytkownika ($r_{ui} = \mean{r}_u$), a w przypadku przedmiotów -
-¶redni± ocenê wystawion± przedmiotowi ($r_{ui} = \mean{c}_i$).
+ocenê dla danego u¿ytkownika ($\hat{r}_{ui} = \mean{r}_u$), a w przypadku przedmiotów -
+¶redni± ocenê wystawion± przedmiotowi ($\hat{r}_{ui} = \mean{c}_i$).
 
 \section{Wyniki}
 Wyniki dla metody bazuj±cej na u¿ytkownikach w zale¿no¶ci od postaci funkcji podobieñstwa $s_{users}$ prezentuje tabela
@@ -870,10 +867,9 @@ $z-score$   & 0.717   &  0.916   \\ \hline
 
 \hfill \\
 Jak widaæ, zastosowanie obu typów normalizacji (wzglêdem ¶redniej oraz standaryzacji Z)
-znacznie poprawi³o jako¶æ predykcji - przyk³adowo, ¶redni bezwzglêdny b³±d dla podej¶cia opartego na
-przedmiotach zmala³ o ponad 10\% (z 0.803 do 0.715) w stosunku do predyktora bazowego opisanego w
-rozdziale \ref{r:experiment}. Nie widaæ natomiast wyra¼nej ró¿nicy miêdzy
-tymi dwoma sposobami normalizacji. Zaskakuj± s³abe wyniki otrzymane przy u¿yciu ¶redniej wa¿onej - u¿ycie jej poprawi³o wynik tylko nieznacznie (w przypadku u¿ytkowników)
+znacznie poprawi³o jako¶æ predykcji - przyk³adowo, u¿ycie $mean-centering$ w podej¶ciu opartym na przedmiotach obni¿y³o ¶redni bezwzglêdny b³±d o ponad 10\% w stosunku do predyktora bazowego opisanego w
+rozdziale \ref{r:experiment} (z 0.803 do 0.715). Nie widaæ natomiast wyra¼nej ró¿nicy miêdzy
+tymi dwoma sposobami normalizacji. Zaskakuj± stosunkowo s³abe wyniki otrzymane przy u¿yciu ¶redniej wa¿onej - u¿ycie jej poprawi³o wynik tylko nieznacznie (w przypadku u¿ytkowników)
 lub nawet go pogorszy³o (w przypadku przedmiotów) w stosunku do podej¶cia stosuj±cego zwyk³± ¶redni± arytmetyczn±.
 
 \afterpage{\blankpage}
@@ -897,7 +893,7 @@ kroków algorytmu. W kolejnych rozdzia³ach przeanalizowano:
 \item strategie konstruowania zbioru s±siadów (sekcja \ref{s:neighbours}),
 \item metody wyznaczania ostatecznej predykcji na podstawie ocen s±siadów (sekcja \ref{s:result_comp}).
 \end{enumerate}
-Dziêki kolejnym modyfikacjom algorytmu uda³o siê ostatecznie poprawiæ jako¶æ predykcji o niemal 10\% w stosunku do modelu bazowego. Warto zaznaczyæ, ¿e mimo dokonanych
+Dziêki kolejnym modyfikacjom algorytmu uda³o siê ostatecznie poprawiæ jako¶æ predykcji o ponad 10\% w stosunku do modelu bazowego. Warto zaznaczyæ, ¿e mimo dokonanych
 zmian, zachowane zosta³y dwie zalety algorytmu, które zadecydowa³y o jego popularno¶ci
 - prostota implementacji i skalowalno¶æ.
 
@@ -925,6 +921,11 @@ Regression for Collaborative Filtering}, Nanjing University, 2011
 
 \bibitem[Celma07]{celma} O. Celma, P.Lamere,
 \textit{ISMIR 2007 tutorial: music recommendation}
+
+\bibitem[Buettner16]{buettner} R.Buettner,
+\textit{Predicting user behavior in electronic markets based on personality-mining in large online social networks: A personality-based product recommender framework
+}, Electronic Markets: The International Journal on Networked Business, s. 1 - 19
+
 
 
 \end{thebibliography}

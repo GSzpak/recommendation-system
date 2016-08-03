@@ -10,9 +10,8 @@
 \contentsline {section}{\numberline {3.1}Filtracja w oparciu o u\.zytkownik\'ow}{11}
 \contentsline {subsection}{\numberline {3.1.1}Wyznaczanie podobie\'nstwa mi\k edzy u\.zytkownikami}{12}
 \contentsline {subsubsection}{Miary podobie\'nstwa bazuj\k ace na korelacji}{12}
-\contentsline {subsubsection}{Inne miary podobie\'nstwa}{12}
 \contentsline {subsubsection}{Inne miary podobie\'nstwa}{13}
-\contentsline {section}{\numberline {3.2}Filtracja w oparciu o przedmioty}{15}
+\contentsline {section}{\numberline {3.2}Filtracja w oparciu o przedmioty}{14}
 \contentsline {subsection}{\numberline {3.2.1}Wyznaczanie podobie\'nstwa mi\k edzy przedmiotami}{15}
 \contentsline {chapter}{\numberline {4}Wp\IeC {\l }yw miary podobie\'nstwa na jako\'s\'c predykcji}{17}
 \contentsline {section}{\numberline {4.1}Opis eksperymentu}{17}
