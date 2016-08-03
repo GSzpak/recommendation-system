@@ -24,7 +24,7 @@
 \usepackage[linesnumbered]{algorithm2e}
 \usepackage{caption}
 \usepackage{afterpage}
-
+\usepackage{graphicx}
 \usepackage{amsmath}
 
 \newcommand*\mean[1]{\bar{#1}}
@@ -613,7 +613,7 @@ podzbiory tworzy³y zbiór treningowy. Ostateczny wynik jest ¶redni± z wyników piê
 przeprowadzonych analiz.
 
 Do oceny jako¶ci predykcji u¿yto funkcji straty opisanych w rozdziale \ref{r:definitions} -
-$MAE$ oraz $RMSE$.
+MAE oraz RMSE.
 
 Zbiór s±siadów wyznaczany by³ przez wziêcie 10 najbardziej podobnych u¿ytkowników b±d¼
 przedmiotów. Ostateczna ocena wyliczana by³a jako ¶rednia z ocen s±siadów (zgodnie ze wzorem \ref{result:mean}).
@@ -754,11 +754,20 @@ algorytmu.
 
 Ze wzglêdu na swoj± prostotê i dobre wyniki w praktyce, wybór $k$ najbli¿szych s±siadów
 jest najczê¶ciej stosowanym podej¶ciem we wspó³czesnych systemach rekomendacji.
-Odpowiedni dobór parametru $k$ mo¿e wyra¼nie poprawiæ jako¶æ rekomendacji. Poni¿sze dwa wykresy przedstawiaj± zale¿no¶æ MAE oraz RMSE od warto¶ci $k$ dla obu
-metod wspólnej filtracji. W obu przypadkach wybrano miary, które dawa³y najlepsze wyniki dla
-$k =10$ - w przypadku podej¶cia bazuj±cego na u¿ytkownikach by³y to TODO oraz TODO,
-a w przypadku podej¶cia opartego na przedmiotach - TODO oraz TODO.
+Odpowiedni dobór parametru $k$ mo¿e wyra¼nie poprawiæ jako¶æ rekomendacji,
+co najlepiej widaæ na wykresie \ref{w:k}. Przedstawia on zale¿no¶æ ¶redniego 
+bezwzglêdnego b³êdu od warto¶ci $k$ dla obu
+metod wspólnej filtracji przy wybranej funkcji podobieñstwa ($median\_centered\_corr$
+dla u¿ytkowników oraz $adjusted\_cosine$ dla przedmiotów.
 
+\begin{figure}[ht!]
+\centering
+\includegraphics[scale=0.8]{recommender.png}
+\caption{Zale¿no¶æ MAE od parametru $k$ \label{w:k}}
+\end{figure}
+
+\hfill \\
+Zwykle optymalna warto¶æ $k$ oscyluje miêdzy 10 a 50.
 
 W \cite{ekstr} wspominana jest te¿ metoda, w której $k$ jest dobierane
 dynamicznie w celu zmniejszenia b³êdu predykcji - ze wzglêdu na znaczne wyd³u¿enie
@@ -822,21 +831,24 @@ dla przedmiotów.
 
 \subsection{Eksperymenty i wnioski}
 
-Poni¿sze dwie tabele przedstawiaj± wyniki otrzymane przez zastosowanie wy¿ej
-wymienionych metod. 
-
-\begin{table}[hb]
+Tabele \ref{t:res1} i \ref{t:res2} przedstawiaj± wyniki otrzymane przy zastosowaniu
+opisanych metod. Parametry algorytmu - liczba s±siadów $k$ oraz funkcja podobieñstwa - zosta³y dobrane tak, aby otrzymaæ jak najlepsz± jako¶æ predykcji. Ostatecznie
+w obu przypadkach
+u¿yto wspó³czynnika korelacji Pearsona jako miary podobieñstwa i warto¶ci $k$ równej 20.
+\hfill \\
+\begin{table}[ht]
 \begin{minipage}{0.5\textwidth}
 \centering
 \captionsetup{justification=centering}
 \captionsetup{width=0.8\textwidth}
-\caption{Wyniki dla podej¶cia opartego na u¿ytkownikach przy $k = 30$ i $s_{users} = pearson\_corr$}
+\caption{Wyniki dla podej¶cia opartego na u¿ytkownikach przy $k = 20$ i $s_{users} = pearson\_corr$}
+\label{t:res1}
 \begin{tabular}{|c|c|c|}
 \hline
                          & MAE & RMSE \\ \hline
-¶rednia wa¿ona          & 0.749   & 0.959    \\ \hline
-$mean-centering$ & 0.779   & 0.998    \\ \hline
-$z-score$   & 0.764   &  0.976   \\ \hline
+¶rednia wa¿ona          & 0.807   & 1.016    \\ \hline
+$mean-centering$ & 0.741   & 0.947    \\ \hline
+$z-score$   & 0.738   &  0.946   \\ \hline
 \end{tabular}
 \end{minipage}
 \hfillx
@@ -844,26 +856,27 @@ $z-score$   & 0.764   &  0.976   \\ \hline
 \centering
 \captionsetup{justification=centering}
 \captionsetup{width=0.8\textwidth}
-\caption{Wyniki dla podej¶cia opartego na przedmiotach przy $k = 30$ i $s_{items} = pearson\_corr$}
+\caption{Wyniki dla podej¶cia opartego na przedmiotach przy $k = 20$ i $s_{items} = pearson\_corr$}
+\label{t:res2}
 \begin{tabular}{|c|c|c|}
 \hline
                          & MAE & RMSE \\ \hline
-¶rednia wa¿ona          & 0.749   & 0.959    \\ \hline
-$mean-centering$ & 0.779   & 0.998    \\ \hline
-$z-score$   & 0.764   &  0.976   \\ \hline
+¶rednia wa¿ona          & 0.758   & 0.972    \\ \hline
+$mean-centering$ & 0.715   & 0.912    \\ \hline
+$z-score$   & 0.717   &  0.916   \\ \hline
 \end{tabular}
 \end{minipage}
 \end{table}
 
-Parametry algorytmu - liczba s±siadów $k$ oraz funkcja podobieñstwa - zosta³y dobrane tak, aby ostatecznie otrzymaæ jak najlepsz± jako¶æ predykcji.
-Dla podej¶cia bazuj±cego na u¿ytkownikach by³y to $s_{users} = $ i $k=$, a dla
-podej¶cia opartego na przedmiotach: $s_{items} = $ i $k = $ TODO. 
-
+\hfill \\
 Jak widaæ, zastosowanie obu typów normalizacji (wzglêdem ¶redniej oraz standaryzacji Z)
-znacznie poprawi³o jako¶æ predykcji - przyk³adowo, $MAE$ dla podej¶cia opartego na
-przedmiotach zmala³ o ponad 10\% w stosunku do predyktora bazowego opisanego w
+znacznie poprawi³o jako¶æ predykcji - przyk³adowo, ¶redni bezwzglêdny b³±d dla podej¶cia opartego na
+przedmiotach zmala³ o ponad 10\% (z 0.803 do 0.715) w stosunku do predyktora bazowego opisanego w
 rozdziale \ref{r:experiment}. Nie widaæ natomiast wyra¼nej ró¿nicy miêdzy
-tymi dwoma sposobami normalizacji. Zaskakuj± s³abe wyniki otrzymane przy u¿yciu ¶redniej wa¿onej - u¿ycie jej obni¿y³o wynik w stosunku do podej¶cia stosuj±cego zwyk³± ¶redni± arytmetyczn±.
+tymi dwoma sposobami normalizacji. Zaskakuj± s³abe wyniki otrzymane przy u¿yciu ¶redniej wa¿onej - u¿ycie jej poprawi³o wynik tylko nieznacznie (w przypadku u¿ytkowników)
+lub nawet go pogorszy³o (w przypadku przedmiotów) w stosunku do podej¶cia stosuj±cego zwyk³± ¶redni± arytmetyczn±.
+
+\afterpage{\blankpage}
 
 \chapter{Podsumowanie}
 W pracy dokonano szczegó³owej analizy metody wspólnej filtracji opartej
