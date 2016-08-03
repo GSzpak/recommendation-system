@@ -1,3 +1,5 @@
+import math
+
 import numpy as np
 from scipy.spatial import distance
 
@@ -63,14 +65,18 @@ def jaccard(ind1, ind2, matrix, _):
     return float(intersection) / sum_ if sum_ > 0 else 0.0
 
 
-def euclidean(ind1, ind2, matrix, _):
+def euclidean1(ind1, ind2, matrix, _):
     v1 = matrix[ind1]
     v2 = matrix[ind2]
     dist = distance.euclidean(v1, v2)
-    if dist:
-        return 1. / dist
-    else:
-        return SIMILARITY_MAX
+    return 1. / (1 + dist)
+
+
+def euclidean2(ind1, ind2, matrix, _):
+    v1 = matrix[ind1]
+    v2 = matrix[ind2]
+    dist = distance.euclidean(v1, v2)
+    return math.exp(-dist)
 
 
 def common_pearson_corr(ind1, ind2, matrix, precomputed_data):
@@ -149,7 +155,6 @@ def spearman_rank_correlation(ind1, ind2, _, precomputed_data):
 
 MEASURES = [
     cosine,
-    euclidean,
     adjusted_cosine_similarity,
     common_pearson_corr,
     extended_jaccard,
@@ -159,6 +164,8 @@ MEASURES = [
     pearson_corr,
     common_spearman_rank_correlation,
     mean_squared_difference,
+    euclidean1,
+    euclidean2,
     spearman_rank_correlation,
 ]
 
