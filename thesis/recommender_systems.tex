@@ -67,8 +67,8 @@
 % (podaæ tytu³/stopieñ imiê i nazwisko opiekuna
 % Instytut
 % ew. Wydzia³ ew. Uczelnia (je¿eli nie MIM UW))
-\opiekun{prof. Andrzeja Skowrona / dr. Marcina Szczuki\\
-  Instytut Matematyki / Instytut Informatyki\\
+\opiekun{dr. Marcina Szczuki\\
+  Instytut Informatyki\\
   }
 
 % miesi±c i~rok:
@@ -236,7 +236,18 @@ rozk³adzie macierzy wed³ug warto¶ci osobliwych oraz wzmacnianych drzewach decyzy
     s± z kolei zwykle wykorzystywane w sklepach internetowych.
     
 \section{Oznaczenia}    
-    Niech $U = \{u_1,u_2,\cdots,u_k\}$ oznacza zbiór u¿ytkowników, $I = \{i_1,i_2,\cdots,i_l\}$ - zbiór przedmiotów, a $R= \{r_1,r_2,\cdots,r_m\}$ - zbiór ocen.
+    Niech $U = \{u_1,u_2,\cdots,u_k\}$ oznacza zbiór u¿ytkowników, $I = \{i_1,i_2,\cdots,i_l\}$ - zbiór przedmiotów, a $R= \{r_1,r_2,\cdots,r_m\}$ - 
+    uporz±dkowany zbiór ocen, gdzie $r_1 < r_2 < \cdots < r_m$. Niech dalej $r_{med}$
+    oznacza medianê zbioru $R$, czyli
+    \begin{equation}
+        r_{med} = r_{\frac{m+1}{2}}
+    \end{equation}
+    dla $m$ nieparzystego
+    oraz
+    \begin{equation}
+        r_{med} = \frac{r_{\frac{m}{2}} + r_{\frac{m}{2} + 1}}{2}
+    \end{equation}
+    dla $m$ parzystego.
     
     \begin{defi}\label{macierz}
       Zbiór $S \subset U \times I \times R$ tworzy macierz o wymiarach $|U| \times |I|$,
@@ -388,14 +399,17 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
     \end{equation}
     gdzie $\mean{x}$, $\mean{y}$ oznaczaj± warto¶ci ¶rednie z tych prób, tj
     $\mean{x} = \frac{\sum_{i=1}^n x_i}{n}$, $\mean{y} = \frac{\sum_{i=1}^n y_i}{n}$.
-    Wspó³czynnik korelacji pearsona przyjmuje warto¶ci z przedzia³u $[-1,1]$. Warto¶ci
+    Wspó³czynnik korelacji Pearsona przyjmuje warto¶ci z przedzia³u $[-1,1]$. Warto¶ci
     bliskie $1$ oznaczaj± siln± zale¿no¶æ liniow± miêdzy $x$ a $y$, warto¶ci bliskie zera - 
     brak liniowej zale¿no¶ci, natomiast warto¶ci bliskie $-1$ - ujemn± liniow± zale¿no¶æ.
     
     W kontek¶cie systemów rekomendacyjnych, wspó³czynnik korelacji okre¶la siê jak poni¿ej:
     \begin{equation}
-        pearson\_corr(u, v) = \frac{\sum_{i \in I_u \cap I_v}(r_{ui} - \mean{r}_u)(r_{vi} - \mean{r}_v)}{\sqrt{\sum_{i \in I_u \cap I_v}(r_{ui} - \mean{r}_u)^2}\sqrt{\sum_{i \in I_u \cap I_v}(r_{vi} - \mean{r}_v)}} \label{sim:pearson}
+        pearson\_corr(u, v) = \frac{\sum_{i \in I_u \cap I_v}(r_{ui} - \mean{r}_u)(r_{vi} - \mean{r}_v)}{\sqrt{\sum_{i \in I_u \cap I_v}(r_{ui} - \mean{r}_u)^2}\sqrt{\sum_{i \in I_u \cap I_v}(r_{vi} - \mean{r}_v)^2}}, \label{sim:pearson}
     \end{equation}
+    gdzie $I_u$, $I_v$ reprezentuj± zbiory przedmiotów ocenionych (odpowiednio) przez
+    u¿ytkowników $u$ i $v$.
+    
     Jest to najbardziej popularna funkcja do okre¶lania podobieñstwa miêdzy u¿ytkownikami.
     Wad± korelacji Pearsona jest zwracanie wysokiego podobieñstwa dla par u¿ytkowników,
     którzy ocenili niewielk± liczbê takich samych przedmiotów. Jednym z mo¿liwych
@@ -405,12 +419,13 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
     
     \item \textbf{Zmodyfikowana korelacja Pearsona}
     
-    Niektóre systemy interpretuj± medianê ze skali ocen $r_m$ jako neutralne nastawienie
+    Niektóre systemy interpretuj± warto¶æ $r_{med}$ (mediany uporz±dkowanego zbioru
+    ocen $R$) jako neutralne nastawienie
     u¿ytkownika wobec przedmiotu. Ekstrand i in. zaproponowali w \cite{ekstr}
     modyfikacjê wspó³czynnika korelacji Pearsona, w której wektor ocen jest normalizowany
     przy u¿yciu owej mediany zamiast ¶redniej:
     \begin{equation}
-        median\_centered\_corr(u, v) = \frac{\sum_{i \in I_u \cap I_v}(r_{ui} - r_m)(r_{vi} - r_m)}{\sqrt{\sum_{i \in I_u \cap I_v}(r_{ui} - r_m)^2}\sqrt{\sum_{i \in I_u \cap I_v}(r_{vi} - r_m)}}
+        median\_centered\_corr(u, v) = \frac{\sum_{i \in I_u \cap I_v}(r_{ui} - r_{med})(r_{vi} - r_{med})}{\sqrt{\sum_{i \in I_u \cap I_v}(r_{ui} - r_{med})^2}\sqrt{\sum_{i \in I_u \cap I_v}(r_{vi} - r_{med})^2}}
     \end{equation}
    
     \item \textbf{Wspó³czynnik korelacji rang Spearmana}
@@ -423,7 +438,7 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
     dla ich pozycji. Oznaczaj±c przez $k_{ui}$ rangê przyznan± przedmiotowi $i$
     w kontek¶cie u¿ytkownika $u$, otrzymujemy wzór:
     \begin{equation}
-        spearman\_rank\_corr(u, v) = \frac{\sum_{i \in I_u \cap I_v}(k_{ui} - \mean{k}_u)(k_{vi} - \mean{k}_v)}{\sqrt{\sum_{i \in I_u \cap I_v}(k_{ui} - \mean{k}_u)^2}\sqrt{\sum_{i \in I_u \cap I_v}(k_{vi} - \mean{k}_v)}}
+        spearman\_rank\_corr(u, v) = \frac{\sum_{i \in I_u \cap I_v}(k_{ui} - \mean{k}_u)(k_{vi} - \mean{k}_v)}{\sqrt{\sum_{i \in I_u \cap I_v}(k_{ui} - \mean{k}_u)^2}\sqrt{\sum_{i \in I_u \cap I_v}(k_{vi} - \mean{k}_v)^2}}
     \end{equation}
         
     G³ówn± zalet± wspó³czynnika Spearmana jest unikniêcie problemu normalizacji
@@ -567,7 +582,7 @@ mog± byæ z powodzeniem uogólnione i zastosowane przy wyznaczaniu podobieñstwa mi
 przedmiotami. Przyk³adowo, wspó³czynnik korelacji liniowej Pearsona (równanie \ref{sim:pearson}) dla przedmiotów mo¿na
 zdefiniowaæ jako:
 \begin{equation}
-  pearson\_corr(i, j) = \frac{\sum_{u \in U_i \cap U_j}(r_{ui} - \mean{c}_i)(r_{uj} - \mean{c}_j)}{\sqrt{\sum_{u \in U_i \cap U_j}(r_{ui} - \mean{c}_i)^2}\sqrt{\sum_{u \in U_i \cap U_v}(r_{uj} - \mean{c}_j)}}
+  pearson\_corr(i, j) = \frac{\sum_{u \in U_i \cap U_j}(r_{ui} - \mean{c}_i)(r_{uj} - \mean{c}_j)}{\sqrt{\sum_{u \in U_i \cap U_j}(r_{ui} - \mean{c}_i)^2}\sqrt{\sum_{u \in U_i \cap U_v}(r_{uj} - \mean{c}_j)^2}}
 \end{equation}
 Analogicznie zdefiniowaæ mo¿na pozosta³e miary.
 
@@ -579,11 +594,13 @@ miêdzy przedmiotami wiêkszy sens mo¿e mieæ normalizacja oceny wzglêdem ¶redniej
 oceny \textit{u¿ytkownika} zamiast \textit{przedmiotu}. Formalnie ta miara, zwana
 \textbf{dopasowanym podobieñstwem cosinusowym (ang. \textit{Adjusted Cosine Similarity})} okre¶lona jest jako:
 \begin{equation}
-adjusted\_cosine(i, j) = \frac{\sum_{u \in U_i \cap U_j}(r_{ui} - \mean{r}_u)(r_{uj} - \mean{r}_u)}{\sqrt{\sum_{u \in U_i \cap U_j}(r_{ui} - \mean{r}_u)^2}\sqrt{\sum_{u \in U_i \cap U_v}(r_{uj} - \mean{r}_u)}} \label{sim:adjusted_cos}
+adjusted\_cosine(i, j) = \frac{\sum_{u \in U_i \cap U_j}(r_{ui} - \mean{r}_u)(r_{uj} - \mean{r}_u)}{\sqrt{\sum_{u \in U_i \cap U_j}(r_{ui} - \mean{r}_u)^2}\sqrt{\sum_{u \in U_i \cap U_v}(r_{uj} - \mean{r}_u)^2}} \label{sim:adjusted_cos}
 \end{equation}
 
 W niektórych przypadkach tak okre¶lona funkcja podobieñstwa daje lepsze wyniki ni¿
 zwykle u¿ywane miary.
+
+\afterpage{\blankpage}
 
 \chapter{Wp³yw miary podobieñstwa na jako¶æ predykcji} \label{r:experiment}
 
