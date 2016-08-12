@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.6)  12 AUG 2016 01:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.2.6)  13 AUG 2016 01:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -466,7 +466,7 @@ ive/2015/texmf-dist/fonts/type1/public/pl/plr9.pfb></usr/local/texlive/2015/tex
 mf-dist/fonts/type1/public/pl/plsy10.pfb></usr/local/texlive/2015/texmf-dist/fo
 nts/type1/public/pl/plsy8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/p
 ublic/pl/plti10.pfb>
-Output written on recommender_systems.pdf (32 pages, 220058 bytes).
+Output written on recommender_systems.pdf (32 pages, 220057 bytes).
 PDF statistics:
  192 PDF objects out of 1000 (max. 8388607)
  135 compressed objects within 2 object streams
