@@ -23,7 +23,6 @@
 %\usepackage[cp1250]{inputenc}
 \usepackage[linesnumbered]{algorithm2e}
 \usepackage{caption}
-\usepackage{afterpage}
 \usepackage{graphicx}
 \usepackage{amsmath}
 
@@ -32,7 +31,6 @@
 \newcommand\blankpage{%
     \null
     \thispagestyle{empty}%
-    \addtocounter{page}{-1}%
     \newpage}
 \def \hfillx {\hspace*{-\textwidth} \hfill}
 
@@ -319,8 +317,6 @@ U¿ytkownik D & 4      & 3               & 5       & 3            & ?      \\ \hl
     $[1,5] $, MAE o warto¶ci $0.7$ oznacza, ¿e algorytm ¶rednio myli³
     siê o $0.7$ punktu.
 
-\afterpage{\blankpage}
-
 
 \chapter{Wspólna filtracja}\label{r:filtracja}    
     G³ówna idea, na której bazuje metoda \textit{collaborative filtering},
@@ -599,8 +595,6 @@ adjusted\_cosine(i, j) = \frac{\sum_{u \in U_i \cap U_j}(r_{ui} - \mean{r}_u)(r_
 
 W niektórych przypadkach tak okre¶lona funkcja podobieñstwa daje lepsze wyniki ni¿
 zwykle u¿ywane miary.
-
-\afterpage{\blankpage}
 
 \chapter{Wp³yw miary podobieñstwa na jako¶æ predykcji} \label{r:experiment}
 
@@ -889,8 +883,6 @@ rozdziale \ref{r:experiment} (z 0.803 do 0.715). Nie widaæ natomiast wyra¼nej ró
 tymi dwoma sposobami normalizacji. Zaskakuj± stosunkowo s³abe wyniki otrzymane przy u¿yciu ¶redniej wa¿onej - u¿ycie jej poprawi³o wynik tylko nieznacznie (w przypadku u¿ytkowników)
 lub nawet go pogorszy³o (w przypadku przedmiotów) w stosunku do podej¶cia stosuj±cego zwyk³± ¶redni± arytmetyczn±.
 
-\afterpage{\blankpage}
-
 \chapter{Podsumowanie}
 W pracy dokonano szczegó³owej analizy metody wspólnej filtracji opartej
 na algorytmie najbli¿szych s±siadów.
@@ -946,8 +938,6 @@ Regression for Collaborative Filtering}, Nanjing University, 2011
 
 
 \end{thebibliography}
-
-\afterpage{\blankpage}
 
 \end{document}
 
